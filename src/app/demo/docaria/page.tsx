@@ -1,6 +1,6 @@
 "use client";
 
-// ─── Doçaria da Vovó ──────────────────────────────────────────────────────────
+// ─── Doçeria da Vovó ──────────────────────────────────────────────────────────
 // Site completo para confeitaria artesanal. Tom: tecnológico e delicado.
 // 9 seções: Hero · Categorias · Produtos · Sobre · Depoimentos ·
 //           Como funciona · Galeria · CTA final · Footer
@@ -168,7 +168,7 @@ const TESTIMONIALS = [
 const GALLERY = [
   "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=640&q=80",
   "https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=640&q=80",
-  "https://images.unsplash.com/photo-1464349095431-e9a21285b19c?w=640&q=80",
+  "https://images.unsplash.com/photo-1562777717-dc6984f65a63?w=640&q=80",
   "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=640&q=80",
   "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=640&q=80",
   "https://images.unsplash.com/photo-1587668178277-295251f900ce?w=640&q=80",
@@ -291,7 +291,7 @@ export default function DocariaPage() {
         {/* ── Nav ──────────────────────────────────────────────────────── */}
         <nav className="doc-nav">
           <a href="#hero" className="doc-nav-logo">
-            Doçaria <em>da Vovó</em>
+            Doçeria <em>da Vovó</em>
           </a>
           <ul className="doc-nav-links">
             <li><a href="#cardapio">Cardápio</a></li>
@@ -458,7 +458,7 @@ export default function DocariaPage() {
               }} />
               <img
                 src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80"
-                alt="Bolo decorado Doçaria da Vovó"
+                alt="Bolo decorado Doçeria da Vovó"
                 loading="lazy"
                 style={{
                   width:"100%", borderRadius:"32px",
@@ -631,7 +631,7 @@ export default function DocariaPage() {
                 animation:"blob 15s ease-in-out infinite",
               }} />
               <img
-                src="https://images.unsplash.com/photo-1551218808-94e220e084d2?w=540&q=80"
+                src="https://images.unsplash.com/photo-1621303837174-89787a7d4729?w=540&q=80"
                 alt="Nossa confeiteira"
                 loading="lazy"
                 style={{
@@ -912,7 +912,7 @@ export default function DocariaPage() {
               {/* Logo + tagline */}
               <div>
                 <div className="pf" style={{ fontSize:"22px", fontWeight:700, color:"#FDF6EC", marginBottom:"12px" }}>
-                  Doçaria <span style={{ color:"#E8C97A" }}>da Vovó</span>
+                  Doçeria <span style={{ color:"#E8C97A" }}>da Vovó</span>
                 </div>
                 <p style={{ fontSize:"14px", lineHeight:1.65, marginBottom:"22px" }}>
                   Doces artesanais feitos com amor e ingredientes frescos. Cada pedaço conta uma história.
@@ -1006,7 +1006,7 @@ export default function DocariaPage() {
               display:"flex", alignItems:"center", justifyContent:"space-between",
               gap:"12px", flexWrap:"wrap", fontSize:"12px",
             }}>
-              <span>© {new Date().getFullYear()} Doçaria da Vovó · Feito com ♥</span>
+              <span>© {new Date().getFullYear()} Doçeria da Vovó · Feito com ♥</span>
               <span style={{ color:"rgba(253,246,236,.3)" }}>
                 Site por{" "}
                 <Link href="/" style={{ color:"#E8C97A", textDecoration:"none" }}>

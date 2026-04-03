@@ -55,7 +55,7 @@ export const sites: Site[] = [
   },
   {
     id: "docaria",
-    name: "Doçaria da Vovó",
+    name: "Doçeria da Vovó",
     slug: "docaria",
     category: "Confeitaria",
     price: 1200,
