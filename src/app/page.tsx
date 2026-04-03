@@ -11,6 +11,7 @@ import SitesGrid from "@/components/sections/SitesGrid";
 import HowItWorks from "@/components/sections/HowItWorks";
 import Pricing from "@/components/sections/Pricing";
 import FAQ from "@/components/sections/FAQ";
+import CTA from "@/components/sections/CTA";
 
 export default function HomePage() {
   return (
@@ -28,6 +29,7 @@ export default function HomePage() {
         <HowItWorks />
         <Pricing />
         <FAQ />
+        <CTA />
       </main>
 
       {/* Rodapé */}

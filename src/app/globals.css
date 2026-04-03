@@ -1,11 +1,12 @@
 @import "tailwindcss";
 
-/* ─── Variáveis de cor globais ─────────────────────────────────────── */
+/* ─── Variáveis ────────────────────────────────────────────────────── */
 :root {
-  --background: #0a0a0f;
+  --background: #07070e;
   --foreground: #f0f0f5;
   --accent: #7c3aed;
   --accent-light: #a78bfa;
+  --grid-color: rgba(124, 58, 237, 0.055);
 }
 
 @theme inline {
@@ -16,26 +17,125 @@
   --font-sans: var(--font-geist-sans);
 }
 
-/* ─── Base ─────────────────────────────────────────────────────────── */
+/* ─── Base ──────────────────────────────────────────────────────────── */
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
 
-/* ─── Scroll suave global ───────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
 }
 
-/* ─── Scrollbar customizada ─────────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 6px;
+/* ─── Scrollbar ─────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+
+/* ─── Tech grid ─────────────────────────────────────────────────────── */
+.tech-grid {
+  background-image:
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 0%, black 30%, transparent 85%);
 }
-::-webkit-scrollbar-track {
-  background: #0a0a0f;
+
+/* ─── Shimmer text ──────────────────────────────────────────────────── */
+.shimmer-text {
+  background: linear-gradient(92deg, #c4b5fd 0%, #ffffff 38%, #a78bfa 55%, #c4b5fd 100%);
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 5s linear infinite;
 }
-::-webkit-scrollbar-thumb {
-  background: var(--accent);
-  border-radius: 3px;
+
+/* ─── Marquee ────────────────────────────────────────────────────────── */
+.marquee-track {
+  animation: marquee 35s linear infinite;
+  will-change: transform;
+}
+
+/* ─── Card shine on hover ────────────────────────────────────────────── */
+.card-shine {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 5;
+}
+.card-shine::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -80%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.06), transparent);
+  transform: skewX(-18deg);
+}
+.group:hover .card-shine::after {
+  animation: card-shine 0.65s ease forwards;
+}
+
+/* ─── Keyframes ─────────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: 250% center; }
+  100% { background-position: -250% center; }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes card-shine {
+  from { transform: translateX(-100%) skewX(-18deg); }
+  to   { transform: translateX(350%)  skewX(-18deg); }
+}
+
+@keyframes float-a {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-16px); }
+}
+@keyframes float-b {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-11px); }
+}
+@keyframes float-c {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-20px); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.93); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.35; }
+  50%       { opacity: 0.65; }
+}
+
+@keyframes dot-ping {
+  0%, 100% { opacity: 1;   transform: scale(1);   }
+  50%       { opacity: 0.4; transform: scale(0.75); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes border-glow {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 1; }
 }
