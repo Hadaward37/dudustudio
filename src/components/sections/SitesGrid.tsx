@@ -7,7 +7,7 @@
 import Link from "next/link";
 import { sites, formatPrice } from "@/lib/sites";
 
-const SITE_ACCENTS = ["#f97316", "#06b6d4", "#8b5cf6"];
+const SITE_ACCENTS = ["#f97316", "#06b6d4", "#8b5cf6", "#ec4899"];
 
 export default function SitesGrid() {
   return (
