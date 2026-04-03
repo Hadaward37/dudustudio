@@ -2,7 +2,7 @@
 // Cada site tem: nome, slug (rota), categoria, preço, descrição e tags visuais.
 // Este array é a fonte única de verdade — usado no hub (home) e nos cards.
 
-export type SiteCategory = "Restaurante" | "Saúde" | "E-commerce" | "Serviços";
+export type SiteCategory = "Restaurante" | "Saúde" | "E-commerce" | "Serviços" | "Confeitaria";
 
 export interface Site {
   id: string;
@@ -51,6 +51,18 @@ export const sites: Site[] = [
       "E-commerce dark editorial para moda e lifestyle. Carrinho funcional, filtros por categoria, página de produto e checkout visual.",
     tags: ["Dark Editorial", "Carrinho", "Filtros", "Checkout"],
     thumbnail: "/assets/thumbnails/ecommerce.jpg",
+    featured: true,
+  },
+  {
+    id: "docaria",
+    name: "Doçaria da Vovó",
+    slug: "docaria",
+    category: "Confeitaria",
+    price: 1200,
+    description:
+      "Site delicado e moderno para confeiteiras que vendem de casa. Cardápio visual, galeria de produtos, depoimentos e pedido direto pelo WhatsApp.",
+    tags: ["Rosa & Dourado", "Cardápio", "WhatsApp", "Galeria"],
+    thumbnail: "/assets/thumbnails/docaria.jpg",
     featured: true,
   },
 ];
