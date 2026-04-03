@@ -2,7 +2,7 @@
 // Cada site tem: nome, slug, categoria, preço, campos de negócio e tags visuais.
 // Este array é a fonte única de verdade — usado no hub (home) e nos cards.
 
-export type SiteCategory = "Restaurante" | "Saúde" | "E-commerce" | "Serviços" | "Confeitaria";
+export type SiteCategory = "Restaurante" | "Saúde" | "E-commerce" | "Serviços" | "Confeitaria" | "Petshop";
 
 export interface Site {
   id: string;
@@ -110,6 +110,29 @@ export const sites: Site[] = [
       "Site delicado e moderno para confeiteiras que vendem de casa. Cardápio visual, galeria de produtos, depoimentos e pedido direto pelo WhatsApp.",
     tags: ["Rosa & Dourado", "Cardápio", "WhatsApp", "Galeria"],
     thumbnail: "/assets/thumbnails/docaria.jpg",
+    featured: true,
+  },
+  {
+    id: "petshop",
+    name: "Aurora Pet",
+    slug: "landing/petshop",
+    category: "Petshop",
+    price: 650,
+    whatsappNumber: "5511999999999",
+    deliveryDays: 3,
+    includes: [
+      "Design premium",
+      "Mobile 100%",
+      "Animações exclusivas",
+      "CTAs via WhatsApp",
+      "SEO básico",
+      "Deploy + domínio",
+      "30 dias de suporte",
+    ],
+    description:
+      "Landing page dark premium para petshops e clínicas veterinárias. Visual de startup tech com animações exclusivas, tilt 3D e CTA direto pelo WhatsApp.",
+    tags: ["Dark Premium", "Animações", "WhatsApp", "Startup"],
+    thumbnail: "/assets/thumbnails/petshop.jpg",
     featured: true,
   },
 ];
