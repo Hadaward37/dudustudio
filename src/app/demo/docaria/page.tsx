@@ -299,7 +299,7 @@ export default function DocariaPage() {
             <li><a href="#depoimentos">Depoimentos</a></li>
             <li><a href="#galeria">Galeria</a></li>
             <li>
-              <a href={waLink("Olá! Gostaria de fazer um pedido 🎂")} target="_blank" rel="noopener noreferrer" className="nav-cta">
+              <a href={waLink("Olá! Vim pelo site da Doçaria da Vovó e gostaria de fazer um pedido 🎂\n\nPoderia me passar as opções disponíveis e os valores?")} target="_blank" rel="noopener noreferrer" className="nav-cta">
                 Fazer pedido →
               </a>
             </li>
@@ -413,7 +413,7 @@ export default function DocariaPage() {
                 🎂 Ver cardápio
               </a>
               <a
-                href={waLink("Olá! Quero fazer um pedido")}
+                href={waLink("Olá! Vim pelo site da Doçaria da Vovó 🎂\n\nGostaria de fazer um pedido. Quais produtos estão disponíveis hoje?")}
                 target="_blank" rel="noopener noreferrer"
                 style={{
                   display:"inline-flex", alignItems:"center", gap:"8px",
@@ -592,7 +592,7 @@ export default function DocariaPage() {
                         R$ {prod.price.toFixed(2).replace(".", ",")}
                       </span>
                       <a
-                        href={waLink(`Olá! Quero pedir: ${prod.name}`)}
+                        href={waLink(`Olá! Gostaria de fazer um pedido 🎂\n\n🍰 Produto: ${prod.name}\n💰 Valor: ${prod.price}\n\nPoderia me informar:\n📅 Data que preciso\n📍 Endereço de entrega\n\nAguardo seu retorno!`)}
                         target="_blank" rel="noopener noreferrer"
                         style={{
                           display:"inline-flex", alignItems:"center", gap:"6px",
@@ -873,7 +873,7 @@ export default function DocariaPage() {
             </p>
 
             <a
-              href={waLink("Olá! Quero fazer um pedido especial 🎂")}
+              href={waLink("Olá! Gostaria de fazer um pedido especial 🎂\n\nTenho um evento em mente e quero saber as opções de personalização.\n\nPoderia me ajudar?")}
               target="_blank" rel="noopener noreferrer"
               style={{
                 display:"inline-flex", alignItems:"center", gap:"12px",
@@ -919,7 +919,7 @@ export default function DocariaPage() {
                 </p>
                 <div style={{ display:"flex", gap:"10px" }}>
                   {[
-                    { bg:"#25D366", icon:"💬", href:waLink("Olá!") },
+                    { bg:"#25D366", icon:"💬", href:waLink("Olá! Vim pelo site da Doçaria da Vovó 🍰") },
                     { bg:"linear-gradient(135deg,#F2A7BB,#D4708A)", icon:"📸", href:"#" },
                   ].map((s, i)=>(
                     <a key={i} href={s.href} target="_blank" rel="noopener noreferrer" style={{
@@ -1019,7 +1019,7 @@ export default function DocariaPage() {
 
         {/* ── WhatsApp flutuante ────────────────────────────────────────── */}
         <a
-          href={waLink("Olá! Quero fazer um pedido 🍰")}
+          href={waLink("Olá! Vim pelo site da Doçaria da Vovó e gostaria de fazer um pedido 🍰\n\nPode me ajudar?")}
           target="_blank" rel="noopener noreferrer"
           className="wf"
           title="Fazer pedido no WhatsApp"
