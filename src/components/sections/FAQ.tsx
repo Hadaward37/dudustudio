@@ -2,34 +2,33 @@
 
 // ─── FAQ ──────────────────────────────────────────────────────────────────────
 // Perguntas frequentes com acordeão animado.
-// TODO: migrar perguntas específicas do index.html original.
 
 import { useState } from "react";
 
 const faqs = [
   {
-    q: "Posso realmente testar o site antes de comprar?",
-    a: "Sim! Cada site tem um demo ao vivo completo. Você navega por todas as páginas, vê as animações e interage com os elementos — tudo antes de pagar.",
+    q: "Como funciona sem backend? O site é completo?",
+    a: "Sim! Usamos o WhatsApp Business como seu sistema. Formulários, reservas e pedidos chegam direto no seu WhatsApp formatados e prontos — sem precisar de nada técnico.",
+  },
+  {
+    q: "Preciso ter WhatsApp Business?",
+    a: "Recomendamos, mas o normal funciona também. O Business permite respostas automáticas e catálogo de produtos, melhorando muito a experiência do cliente.",
+  },
+  {
+    q: "Quanto tempo leva para ficar pronto?",
+    a: "Entre 5 e 7 dias úteis após aprovação do design e recebimento do conteúdo (logo, fotos, textos).",
+  },
+  {
+    q: "O site do demo será exatamente assim?",
+    a: "Sim. O demo é o produto real. Só substitui seu conteúdo — logo, cores, fotos e textos. A estrutura e os efeitos são os mesmos.",
   },
   {
     q: "O que está incluso no preço?",
-    a: "Código-fonte completo, personalização com seus dados (nome, telefone, endereço, fotos), hospedagem recomendada, suporte por 1 mês e entrega em até 48h.",
+    a: "Design, desenvolvimento, deploy, domínio por 1 ano, SSL, SEO técnico, Google Analytics e suporte pós-lançamento.",
   },
   {
-    q: "Preciso pagar mensalidade?",
-    a: "Não. O pagamento é único. Depois da entrega, o site é 100% seu. Você pode hospedar onde quiser.",
-  },
-  {
-    q: "Posso pedir mudanças no design?",
-    a: "Pequenas personalizações (cores, fontes, textos) estão incluídas. Mudanças estruturais podem ter custo adicional — consulte antes de comprar.",
-  },
-  {
-    q: "Como funciona a entrega?",
-    a: "Após o pagamento, você me envia os dados do negócio (nome, contatos, fotos). Em até 48h entrego o site hospedado ou os arquivos finais.",
-  },
-  {
-    q: "O site funciona no celular?",
-    a: "Sim. Todos os templates são 100% responsivos e testados em mobile, tablet e desktop.",
+    q: "E depois do suporte, o que acontece?",
+    a: "O site continua no ar normalmente. Temos dois planos:\n\nHospedagem Simples — R$ 390/mês\nMantém seu site no ar com SSL e backup. Sem alterações inclusas.\n\nManutenção Ativa — R$ 690/mês\nHospedagem + até 2 alterações simples por mês (troca de foto ou texto) com prazo de 5 dias úteis.\n\nAlterações avulsas fora do plano:\nTroca de foto ou texto — R$ 80 · Nova seção — R$ 350 · Novo produto no cardápio — R$ 50 por item",
   },
 ];
 
@@ -37,14 +36,18 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section id="faq" className="py-24 px-4">
+    <section id="faq" className="py-28 px-4" style={{ background: "#07070e" }}>
       <div className="max-w-3xl mx-auto">
+
         {/* Header */}
         <div className="mb-14 text-center">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-violet-400">
+          <p
+            className="mb-3 text-xs font-bold uppercase tracking-[0.2em]"
+            style={{ color: "rgba(167,139,250,0.8)" }}
+          >
             FAQ
           </p>
-          <h2 className="text-4xl sm:text-5xl font-black text-white mb-4">
+          <h2 className="text-4xl sm:text-5xl font-black text-white mb-4 tracking-tight">
             Perguntas frequentes
           </h2>
         </div>
@@ -54,35 +57,54 @@ export default function FAQ() {
           {faqs.map((faq, i) => (
             <div
               key={i}
-              className="rounded-xl border border-white/10 bg-white/5 overflow-hidden"
+              className="rounded-xl overflow-hidden transition-all duration-200"
+              style={{
+                border: openIndex === i
+                  ? "1px solid rgba(124,58,237,0.35)"
+                  : "1px solid rgba(255,255,255,0.07)",
+                background: openIndex === i
+                  ? "rgba(124,58,237,0.05)"
+                  : "rgba(255,255,255,0.02)",
+              }}
             >
               <button
-                className="w-full text-left flex items-center justify-between gap-4 px-6 py-4 text-white/80 hover:text-white transition-colors"
+                className="w-full text-left flex items-center justify-between gap-4 px-6 py-4 transition-colors"
+                style={{ color: openIndex === i ? "#fff" : "rgba(255,255,255,0.7)" }}
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
                 aria-expanded={openIndex === i}
               >
-                <span className="font-medium">{faq.q}</span>
+                <span className="font-medium text-sm sm:text-base">{faq.q}</span>
                 <span
-                  className="text-violet-400 transition-transform duration-300 flex-shrink-0"
+                  className="flex-shrink-0 transition-transform duration-300"
                   style={{
-                    transform: openIndex === i ? "rotate(45deg)" : "rotate(0)",
+                    color: "#a78bfa",
+                    transform: openIndex === i ? "rotate(45deg)" : "rotate(0deg)",
+                    fontSize: "20px",
+                    lineHeight: 1,
                   }}
                 >
                   +
                 </span>
               </button>
 
-              {/* Conteúdo expandido */}
               <div
                 style={{
-                  maxHeight: openIndex === i ? "200px" : "0",
+                  maxHeight: openIndex === i ? "400px" : "0",
                   overflow: "hidden",
-                  transition: "max-height 0.3s ease",
+                  transition: "max-height 0.35s ease",
                 }}
               >
-                <p className="px-6 pb-4 text-sm text-white/50 leading-relaxed">
-                  {faq.a}
-                </p>
+                <div className="px-6 pb-5">
+                  {faq.a.split("\n\n").map((block, bi) => (
+                    <p
+                      key={bi}
+                      className="text-sm leading-relaxed"
+                      style={{ color: "rgba(255,255,255,0.5)", marginBottom: bi < faq.a.split("\n\n").length - 1 ? "12px" : "0" }}
+                    >
+                      {block}
+                    </p>
+                  ))}
+                </div>
               </div>
             </div>
           ))}

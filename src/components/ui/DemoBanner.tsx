@@ -3,7 +3,6 @@
 // ─── DemoBanner ───────────────────────────────────────────────────────────────
 // Banner fixo no topo de TODAS as páginas /demo/*.
 // Informa ao visitante que está num demo e direciona para compra.
-// É renderizado no src/app/demo/layout.tsx.
 
 import Link from "next/link";
 
@@ -19,29 +18,27 @@ export default function DemoBanner() {
     >
       <style>{`
         @keyframes shimmer {
-          0% { background-position: 200% center; }
+          0%   { background-position:  200% center; }
           100% { background-position: -200% center; }
         }
       `}</style>
 
-      {/* Ícone de foguete */}
-      <span className="text-base" aria-hidden>
-        🚀
+      <span className="text-base" aria-hidden>🚀</span>
+
+      <span className="text-white/90 text-xs sm:text-sm text-center">
+        <strong className="text-white">Você está testando um demo</strong>
+        {" — "}
+        <span className="hidden sm:inline">
+          na versão final todos os botões e formulários funcionam direto no seu WhatsApp
+        </span>
+        <span className="sm:hidden">na versão final tudo funciona no seu WhatsApp</span>
       </span>
 
-      {/* Mensagem principal */}
-      <span className="text-white/90">
-        <strong className="text-white">Site Demo</strong> — você está navegando
-        num preview antes de comprar
-      </span>
-
-      {/* Separador */}
       <span className="text-white/40 hidden sm:inline">·</span>
 
-      {/* CTA */}
       <Link
         href="/#pricing"
-        className="hidden sm:inline-flex items-center gap-1 rounded-full bg-white/20 hover:bg-white/30 transition-colors px-3 py-1 text-white text-xs font-semibold"
+        className="hidden sm:inline-flex items-center gap-1 rounded-full bg-white/20 hover:bg-white/30 transition-colors px-3 py-1 text-white text-xs font-semibold whitespace-nowrap"
       >
         Ver preços →
       </Link>
