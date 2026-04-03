@@ -173,20 +173,152 @@ export default function Pricing() {
           ))}
         </div>
 
-        {/* Nota manutenção */}
+        {/* ── Pós-suporte ─────────────────────────────────────────────────── */}
         <div
-          className="rounded-2xl p-6 text-center"
-          style={{ border: "1px solid rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.015)" }}
+          className="rounded-2xl overflow-hidden"
+          style={{
+            border: "1px solid rgba(234,179,8,0.22)",
+            background: "linear-gradient(145deg, rgba(234,179,8,0.04), rgba(124,58,237,0.04))",
+          }}
         >
-          <p className="text-sm font-semibold text-white mb-3">Após o suporte incluso</p>
-          <div className="flex flex-col sm:flex-row justify-center gap-6 text-sm" style={{ color: "rgba(255,255,255,0.45)" }}>
-            <span><span className="text-white font-medium">Hospedagem Simples</span> · R$ 390/mês</span>
-            <span className="hidden sm:inline" style={{ color: "rgba(255,255,255,0.15)" }}>|</span>
-            <span><span className="text-white font-medium">Manutenção Ativa</span> · R$ 690/mês <span style={{ color: "rgba(255,255,255,0.3)" }}>(+ 2 alterações/mês)</span></span>
+          {/* Header faixa */}
+          <div
+            className="flex items-center gap-3 px-6 py-4"
+            style={{
+              borderBottom: "1px solid rgba(234,179,8,0.14)",
+              background: "rgba(234,179,8,0.06)",
+            }}
+          >
+            <span
+              className="flex items-center justify-center w-7 h-7 rounded-full text-sm flex-shrink-0"
+              style={{ background: "rgba(234,179,8,0.15)", border: "1px solid rgba(234,179,8,0.3)" }}
+            >
+              ℹ️
+            </span>
+            <p className="text-sm font-semibold text-white">
+              O que acontece após o suporte incluso?
+            </p>
+            <span
+              className="ml-auto text-xs font-medium px-2.5 py-1 rounded-full flex-shrink-0"
+              style={{
+                background: "rgba(234,179,8,0.12)",
+                border: "1px solid rgba(234,179,8,0.25)",
+                color: "rgba(234,179,8,0.85)",
+              }}
+            >
+              Leia antes de contratar
+            </span>
           </div>
-          <p className="mt-4 text-xs" style={{ color: "rgba(255,255,255,0.28)" }}>
-            Alterações avulsas: foto ou texto R$ 80 · nova seção R$ 350 · produto no cardápio R$ 50
-          </p>
+
+          <div className="p-6">
+            {/* Dois planos de manutenção */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+
+              {/* Hospedagem Simples */}
+              <div
+                className="rounded-xl p-5"
+                style={{
+                  border: "1px solid rgba(255,255,255,0.07)",
+                  background: "rgba(255,255,255,0.03)",
+                }}
+              >
+                <div className="flex items-start justify-between gap-3 mb-3">
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-[0.15em] mb-1" style={{ color: "rgba(167,139,250,0.7)" }}>
+                      Plano
+                    </p>
+                    <h4 className="text-base font-bold text-white">Hospedagem Simples</h4>
+                  </div>
+                  <div className="text-right flex-shrink-0">
+                    <p className="text-xl font-black text-white">R$ 390</p>
+                    <p className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>/mês</p>
+                  </div>
+                </div>
+                <ul className="space-y-1.5">
+                  {["Site no ar com SSL", "Backup automático", "Sem alterações inclusas"].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>
+                      <span style={{ color: "rgba(124,58,237,0.6)", flexShrink: 0 }}>✓</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Manutenção Ativa */}
+              <div
+                className="rounded-xl p-5 relative"
+                style={{
+                  border: "1px solid rgba(124,58,237,0.3)",
+                  background: "rgba(124,58,237,0.07)",
+                }}
+              >
+                <div
+                  className="absolute -top-2.5 left-4 text-xs font-bold px-2.5 py-0.5 rounded-full text-white"
+                  style={{ background: "linear-gradient(135deg, #7c3aed, #4f46e5)" }}
+                >
+                  Recomendado
+                </div>
+                <div className="flex items-start justify-between gap-3 mb-3">
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-[0.15em] mb-1" style={{ color: "#a78bfa" }}>
+                      Plano
+                    </p>
+                    <h4 className="text-base font-bold text-white">Manutenção Ativa</h4>
+                  </div>
+                  <div className="text-right flex-shrink-0">
+                    <p className="text-xl font-black text-white">R$ 690</p>
+                    <p className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>/mês</p>
+                  </div>
+                </div>
+                <ul className="space-y-1.5">
+                  {["Hospedagem + SSL + backup", "2 alterações simples/mês", "Prazo de 5 dias úteis"].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-xs" style={{ color: "rgba(255,255,255,0.65)" }}>
+                      <span style={{ color: "#a78bfa", flexShrink: 0 }}>✓</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Alterações avulsas */}
+            <div
+              className="rounded-xl p-4"
+              style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}
+            >
+              <p className="text-xs font-semibold mb-3" style={{ color: "rgba(255,255,255,0.4)" }}>
+                Alterações avulsas <span style={{ color: "rgba(255,255,255,0.2)" }}>(fora de qualquer plano)</span>
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  { label: "Troca de foto ou texto", price: "R$ 80" },
+                  { label: "Nova seção",              price: "R$ 350" },
+                  { label: "Produto no cardápio",     price: "R$ 50 / item" },
+                ].map((item) => (
+                  <div
+                    key={item.label}
+                    className="flex items-center gap-2 rounded-full px-3 py-1.5"
+                    style={{
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      background: "rgba(255,255,255,0.03)",
+                    }}
+                  >
+                    <span className="text-xs" style={{ color: "rgba(255,255,255,0.45)" }}>{item.label}</span>
+                    <span
+                      className="text-xs font-bold"
+                      style={{
+                        background: "linear-gradient(135deg,#a78bfa,#7c3aed)",
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                      }}
+                    >
+                      {item.price}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Footer */}
