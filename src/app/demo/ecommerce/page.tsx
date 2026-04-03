@@ -8,7 +8,7 @@ const products = [
   { name: "Calça Cargo Preta", price: 249, oldPrice: 349, badge: "sale", colors: ["#1a1a1a","#4a5a4a"], img: "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?w=400&q=70" },
   { name: "Jaqueta Trucker Denim", price: 399, oldPrice: null, badge: "hot", colors: ["#3d4f6b","#1a1a1a"], img: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=400&q=70" },
   { name: "Tênis Chunky Branco", price: 459, oldPrice: 599, badge: "sale", colors: ["#fff","#1a1a1a","#ff3c5f"], img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=70" },
-  { name: "Moletom Oversize Cinza", price: 199, oldPrice: null, badge: "new", colors: ["#888","#1a1a1a","#fff"], img: "https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=400&q=70" },
+  { name: "Moletom Oversize Cinza", price: 199, oldPrice: null, badge: "new", colors: ["#888","#1a1a1a","#fff"], img: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=400&q=70" },
   { name: "Óculos Retrô Tartaruga", price: 149, oldPrice: null, badge: null, colors: ["#8b6914","#1a1a1a"], img: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=400&q=70" },
   { name: "Cinto Couro Preto", price: 99, oldPrice: null, badge: null, colors: ["#1a1a1a","#8b6914"], img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&q=70" },
   { name: "Mochila Urban Preta", price: 279, oldPrice: 349, badge: "sale", colors: ["#1a1a1a","#2a2a2a"], img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&q=70" },
