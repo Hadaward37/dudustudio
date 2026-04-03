@@ -51,6 +51,8 @@ function useScrollReveal() {
 const WA = "5511999999999";
 const waLink = (msg: string) =>
   `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
+const formatPrice = (price: number) =>
+  price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
 const PRODUCTS = [
   {
@@ -592,7 +594,7 @@ export default function DocariaPage() {
                         R$ {prod.price.toFixed(2).replace(".", ",")}
                       </span>
                       <a
-                        href={waLink(`Olá! Gostaria de fazer um pedido 🎂\n\n🍰 Produto: ${prod.name}\n💰 Valor: ${prod.price}\n\nPoderia me informar:\n📅 Data que preciso\n📍 Endereço de entrega\n\nAguardo seu retorno!`)}
+                        href={waLink(`Olá! Gostaria de fazer um pedido 🎂\n\n🍰 Produto: ${prod.name}\n💰 Valor: ${formatPrice(prod.price)}\n\nPoderia me informar:\n📅 Data que preciso\n📍 Endereço de entrega\n\nAguardo seu retorno!`)}
                         target="_blank" rel="noopener noreferrer"
                         style={{
                           display:"inline-flex", alignItems:"center", gap:"6px",
