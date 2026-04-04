@@ -899,13 +899,14 @@ export default function PataVerdePet() {
 
         /* ── Stats ──────────────────────────────────────── */
         .pv-stats-grid {
-          display: grid; text-align: center;
-          grid-template-columns: repeat(auto-fill, minmax(min(200px,100%),1fr));
+          display: grid; text-align: center; width: 100%;
+          grid-template-columns: repeat(2, 1fr);
         }
-        .pv-stat { padding: 2rem 1.5rem; }
-        @media (min-width: 640px) {
+        @media (min-width: 768px) {
+          .pv-stats-grid { grid-template-columns: repeat(4, 1fr); }
           .pv-stat + .pv-stat { border-left: 1px solid #E5E7EB; }
         }
+        .pv-stat { padding: 2rem 1rem; }
         .pv-stat-num {
           font-family: var(--pv-fraunces,'Fraunces',serif); font-weight: 900;
           font-size: clamp(2.5rem,5vw,3.8rem); color: #2D6A4F; line-height: 1;
