@@ -1,0 +1,440 @@
+/* ============================================================
+   DUDUSTUDIO DESIGN SYSTEM v1.0
+   Inspirado em: Linear + Stripe + Vercel + Framer
+   Awwwards winners 2024
+   ============================================================ */
+
+:root {
+
+  /* ==================
+     CORES — PRIMITIVAS
+     ================== */
+
+  /* Neutros (base Linear/Vercel) */
+  --gray-0:   #ffffff;
+  --gray-50:  #fafafa;
+  --gray-100: #f5f5f5;
+  --gray-200: #e5e5e5;
+  --gray-300: #d4d4d4;
+  --gray-400: #a3a3a3;
+  --gray-500: #737373;
+  --gray-600: #525252;
+  --gray-700: #404040;
+  --gray-800: #262626;
+  --gray-900: #171717;
+  --gray-950: #0a0a0a;
+
+  /* Roxo (Linear purple) */
+  --purple-50:  #f5f3ff;
+  --purple-100: #ede9fe;
+  --purple-200: #ddd6fe;
+  --purple-400: #a78bfa;
+  --purple-500: #8b5cf6;
+  --purple-600: #7c3aed;
+  --purple-700: #6d28d9;
+  --purple-900: #4c1d95;
+
+  /* Azul (Stripe/Vercel blue) */
+  --blue-50:  #eff6ff;
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+
+  /* Cyan (accent tech) */
+  --cyan-400: #22d3ee;
+  --cyan-500: #06b6d4;
+
+  /* Verde */
+  --green-400: #4ade80;
+  --green-500: #22c55e;
+  --green-600: #16a34a;
+
+  /* Laranja/Amber */
+  --amber-400: #fbbf24;
+  --amber-500: #f59e0b;
+
+  /* Rosa/Pink */
+  --pink-400: #f472b6;
+  --pink-500: #ec4899;
+
+  /* ==================
+     CORES — SEMÂNTICAS
+     ================== */
+
+  /* Fundo principal (dark como Linear) */
+  --ds-bg:          #0a0a0a;
+  --ds-bg-subtle:   #111111;
+  --ds-bg-surface:  #1a1a1a;
+  --ds-bg-elevated: #222222;
+  --ds-bg-overlay:  #2a2a2a;
+
+  /* Bordas */
+  --ds-border:        rgba(255,255,255,0.08);
+  --ds-border-subtle: rgba(255,255,255,0.04);
+  --ds-border-strong: rgba(255,255,255,0.16);
+
+  /* Texto */
+  --ds-text:         #ededed;
+  --ds-text-subtle:  #a1a1a1;
+  --ds-text-muted:   #6b6b6b;
+  --ds-text-inverse: #0a0a0a;
+
+  /* Accent principal (roxo Linear) */
+  --ds-accent:        #8b5cf6;
+  --ds-accent-subtle: rgba(139,92,246,0.12);
+  --ds-accent-border: rgba(139,92,246,0.3);
+  --ds-accent-hover:  #7c3aed;
+
+  /* Accent secundário (cyan Vercel) */
+  --ds-accent2:        #22d3ee;
+  --ds-accent2-subtle: rgba(34,211,238,0.08);
+
+  /* Accent terciário (amber Stripe) */
+  --ds-accent3:        #f59e0b;
+  --ds-accent3-subtle: rgba(245,158,11,0.1);
+
+  /* Status */
+  --ds-success: #4ade80;
+  --ds-warning: #fbbf24;
+  --ds-error:   #f87171;
+  --ds-info:    #60a5fa;
+
+  /* ==================
+     TIPOGRAFIA
+     ================== */
+
+  --font-display: 'Syne', sans-serif;
+  --font-body:    'Manrope', sans-serif;
+  --font-mono:    'Space Mono', monospace;
+
+  /* Escala modular 1.25 */
+  --text-xs:   0.64rem;
+  --text-sm:   0.8rem;
+  --text-base: 1rem;
+  --text-lg:   1.25rem;
+  --text-xl:   1.563rem;
+  --text-2xl:  1.953rem;
+  --text-3xl:  2.441rem;
+  --text-4xl:  3.052rem;
+  --text-5xl:  3.815rem;
+  --text-6xl:  4.768rem;
+  --text-7xl:  5.96rem;
+  --text-8xl:  7.451rem;
+
+  /* Pesos */
+  --font-light:    300;
+  --font-normal:   400;
+  --font-medium:   500;
+  --font-semibold: 600;
+  --font-bold:     700;
+  --font-black:    800;
+
+  /* Line heights */
+  --leading-none:    1;
+  --leading-tight:   1.1;
+  --leading-snug:    1.25;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.7;
+  --leading-loose:   1.9;
+
+  /* Letter spacing */
+  --tracking-tight:   -0.04em;
+  --tracking-snug:    -0.02em;
+  --tracking-normal:   0em;
+  --tracking-wide:     0.05em;
+  --tracking-wider:    0.1em;
+  --tracking-widest:   0.25em;
+
+  /* ==================
+     ESPAÇAMENTO (4px base)
+     ================== */
+
+  --space-0:  0px;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+  --space-40: 160px;
+
+  /* ==================
+     BORDER RADIUS
+     ================== */
+
+  --radius-none: 0px;
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-2xl:  20px;
+  --radius-3xl:  24px;
+  --radius-full: 9999px;
+
+  /* ==================
+     SOMBRAS
+     ================== */
+
+  --shadow-xs:  0 1px 2px rgba(0,0,0,0.4);
+  --shadow-sm:  0 2px 4px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md:  0 4px 8px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.3);
+  --shadow-lg:  0 8px 16px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.3);
+  --shadow-xl:  0 16px 32px rgba(0,0,0,0.5), 0 8px 16px rgba(0,0,0,0.3);
+  --shadow-2xl: 0 24px 48px rgba(0,0,0,0.6), 0 12px 24px rgba(0,0,0,0.4);
+
+  /* Glows */
+  --shadow-glow-purple: 0 0 20px rgba(139,92,246,0.3), 0 0 40px rgba(139,92,246,0.1);
+  --shadow-glow-cyan:   0 0 20px rgba(34,211,238,0.3),  0 0 40px rgba(34,211,238,0.1);
+  --shadow-glow-amber:  0 0 20px rgba(245,158,11,0.3),  0 0 40px rgba(245,158,11,0.1);
+  --shadow-glow-green:  0 0 20px rgba(74,222,128,0.3),  0 0 40px rgba(74,222,128,0.1);
+
+  /* ==================
+     ANIMAÇÕES
+     ================== */
+
+  --duration-instant: 0ms;
+  --duration-fast:    150ms;
+  --duration-normal:  300ms;
+  --duration-slow:    500ms;
+  --duration-slower:  700ms;
+  --duration-slowest: 1000ms;
+
+  --ease-linear:  linear;
+  --ease-in:      cubic-bezier(0.4, 0, 1, 1);
+  --ease-out:     cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out:  cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce:  cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth:  cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* ==================
+     Z-INDEX
+     ================== */
+
+  --z-below:    -1;
+  --z-base:      0;
+  --z-raised:    10;
+  --z-dropdown:  100;
+  --z-sticky:    200;
+  --z-fixed:     300;
+  --z-modal:     400;
+  --z-toast:     500;
+  --z-tooltip:   600;
+  --z-cursor:    9999;
+
+  /* ==================
+     GLASSMORPHISM
+     ================== */
+
+  --glass-bg:          rgba(255,255,255,0.04);
+  --glass-bg-medium:   rgba(255,255,255,0.07);
+  --glass-bg-strong:   rgba(255,255,255,0.12);
+  --glass-border:      rgba(255,255,255,0.08);
+  --glass-border-medium: rgba(255,255,255,0.14);
+  --glass-blur:        blur(12px);
+  --glass-blur-strong: blur(24px);
+
+  /* ==================
+     GRADIENTES
+     ================== */
+
+  --gradient-purple: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+  --gradient-cyber:  linear-gradient(135deg, #22d3ee 0%, #8b5cf6 50%, #ec4899 100%);
+  --gradient-warm:   linear-gradient(135deg, #f59e0b 0%, #ec4899 100%);
+  --gradient-dark:   linear-gradient(180deg, #111111 0%, #0a0a0a 100%);
+
+  --gradient-mesh-1:
+    radial-gradient(ellipse at 20% 50%, rgba(139,92,246,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(34,211,238,0.1)  0%, transparent 40%),
+    radial-gradient(ellipse at 50% 80%, rgba(236,72,153,0.08) 0%, transparent 40%);
+
+  --gradient-mesh-2:
+    radial-gradient(ellipse at 70% 30%, rgba(139,92,246,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 30% 70%, rgba(34,211,238,0.08) 0%, transparent 40%);
+
+  /* ==================
+     CONTAINERS
+     ================== */
+
+  --container-sm:  640px;
+  --container-md:  768px;
+  --container-lg:  1024px;
+  --container-xl:  1280px;
+  --container-2xl: 1536px;
+}
+
+/* ============================================================
+   KEYFRAMES GLOBAIS
+   ============================================================ */
+
+@keyframes ds-fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ds-fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes ds-scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes ds-slideLeft {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes ds-float-a {
+  0%, 100% { transform: translateY(0px) rotate(-1deg); }
+  50%       { transform: translateY(-14px) rotate(1deg); }
+}
+
+@keyframes ds-float-b {
+  0%, 100% { transform: translateY(0px) rotate(1deg); }
+  50%       { transform: translateY(-20px) rotate(-1deg); }
+}
+
+@keyframes ds-float-c {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+@keyframes ds-pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(139,92,246,0.3); }
+  50%       { box-shadow: 0 0 40px rgba(139,92,246,0.6), 0 0 60px rgba(139,92,246,0.2); }
+}
+
+@keyframes ds-pulse-green {
+  0%, 100% { box-shadow: 0 0 20px rgba(74,222,128,0.3); }
+  50%       { box-shadow: 0 0 40px rgba(74,222,128,0.6); }
+}
+
+@keyframes ds-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+@keyframes ds-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes ds-dot-ping {
+  0%        { transform: scale(1); opacity: 1; }
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+
+@keyframes ds-gradient-shift {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+
+@keyframes ds-led-run {
+  0%   { background-position: 0%   0%; }
+  100% { background-position: 300% 0%; }
+}
+
+@keyframes ds-cursor-scale {
+  0%, 100% { transform: translate(-50%,-50%) scale(1); }
+  50%       { transform: translate(-50%,-50%) scale(1.2); }
+}
+
+/* ============================================================
+   UTILITÁRIOS GLOBAIS
+   ============================================================ */
+
+.ds-gradient-text {
+  background: linear-gradient(135deg, var(--ds-accent), var(--ds-accent2));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: ds-gradient-shift 4s ease infinite;
+}
+
+.ds-shimmer-text {
+  background: linear-gradient(
+    90deg,
+    var(--ds-text, #ededed) 0%,
+    var(--ds-accent, #8b5cf6) 45%,
+    var(--ds-text, #ededed) 55%,
+    var(--ds-text, #ededed) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: ds-shimmer 3s linear infinite;
+}
+
+.ds-glass {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+}
+
+.ds-glass-medium {
+  background: var(--glass-bg-medium);
+  backdrop-filter: var(--glass-blur-strong);
+  border: 1px solid var(--glass-border-medium);
+}
+
+.ds-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity  var(--duration-slow) var(--ease-spring),
+    transform var(--duration-slow) var(--ease-spring);
+}
+
+.ds-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ds-tech-grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+}
+
+/* ============================================================
+   TEMA LIGHT (clínica, doçaria, landing pages claras)
+   ============================================================ */
+
+.theme-light {
+  --ds-bg:          #fafafa;
+  --ds-bg-subtle:   #f5f5f5;
+  --ds-bg-surface:  #ffffff;
+  --ds-bg-elevated: #ffffff;
+
+  --ds-border:        rgba(0,0,0,0.08);
+  --ds-border-subtle: rgba(0,0,0,0.04);
+  --ds-border-strong: rgba(0,0,0,0.16);
+
+  --ds-text:        #171717;
+  --ds-text-subtle: #525252;
+  --ds-text-muted:  #a3a3a3;
+
+  --glass-bg:     rgba(0,0,0,0.03);
+  --glass-border: rgba(0,0,0,0.07);
+
+  --shadow-xs:  0 1px 2px rgba(0,0,0,0.06);
+  --shadow-sm:  0 2px 4px rgba(0,0,0,0.07);
+  --shadow-md:  0 4px 8px rgba(0,0,0,0.08);
+  --shadow-lg:  0 8px 16px rgba(0,0,0,0.1);
+  --shadow-xl:  0 16px 32px rgba(0,0,0,0.12);
+}
