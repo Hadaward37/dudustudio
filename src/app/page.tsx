@@ -421,9 +421,9 @@ export default function HomePage() {
 
           <h1
             ref={titleRef}
-            style={{ fontFamily: 'var(--font-syne)', fontWeight: 800, fontSize: 'clamp(2.8rem,7vw,6.5rem)', lineHeight: 1.05, letterSpacing: '-.03em', color: '#fff', marginBottom: '1.5rem', maxWidth: '14ch', wordBreak: 'keep-all', hyphens: 'none', overflowWrap: 'normal' }}
+            style={{ fontFamily: 'var(--font-syne)', fontWeight: 800, fontSize: 'clamp(2.8rem,7vw,6.5rem)', lineHeight: 1.05, letterSpacing: '-.03em', color: '#fff', marginBottom: '1.5rem' }}
           >
-            Seu site profissional em dias, não meses.
+            Sites que vendem.<br />No ar em dias.
           </h1>
 
           <p style={{ fontFamily: 'var(--font-manrope)', fontWeight: 300, fontSize: 'clamp(1rem,2vw,1.2rem)', color: '#777', lineHeight: 1.7, maxWidth: '520px', marginBottom: '2.5rem' }}>
