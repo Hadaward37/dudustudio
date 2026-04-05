@@ -80,13 +80,12 @@ export default function HomePage() {
   const cursorRingRef = useRef<HTMLDivElement>(null)
   const loadingRef    = useRef<HTMLDivElement>(null)
   const counterRef    = useRef<HTMLSpanElement>(null)
-  const ctaBtnRef     = useRef<HTMLAnchorElement>(null)
-
   const [loaded,       setLoaded]       = useState(false)
   const [navScrolled,  setNavScrolled]  = useState(false)
   const [faqOpen,      setFaqOpen]      = useState<number | null>(null)
   const [isTouch,      setIsTouch]      = useState(false)
   const [ctaHover,     setCtaHover]     = useState(false)
+  const [mobileMenu,   setMobileMenu]   = useState(false)
 
   // ── Touch detection ───────────────────────────────────────────────────────
   useEffect(() => {
@@ -207,7 +206,19 @@ export default function HomePage() {
       raf = requestAnimationFrame(draw)
     }
     draw()
-    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', onResize) }
+
+    // Pausa animação quando aba fica oculta (performance)
+    const onVisibility = () => {
+      if (document.hidden) cancelAnimationFrame(raf)
+      else raf = requestAnimationFrame(draw)
+    }
+    document.addEventListener('visibilitychange', onVisibility)
+
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('resize', onResize)
+      document.removeEventListener('visibilitychange', onVisibility)
+    }
   }, [])
 
   // ── GSAP animations ───────────────────────────────────────────────────────
@@ -327,7 +338,17 @@ export default function HomePage() {
         .nav-a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:${C.accent};transition:width .25s}
         .nav-a:hover{color:${C.accent}}
         .nav-a:hover::after{width:100%}
-        @media(max-width:640px){.nav-a{display:none}}
+        @media(max-width:640px){.nav-a{display:none}.nav-wpp-btn{display:none}}
+
+        .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;background:transparent;border:none;cursor:pointer;padding:4px;z-index:600}
+        .hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:transform .3s,opacity .3s}
+        @media(max-width:640px){.hamburger{display:flex}}
+
+        .mobile-overlay{position:fixed;inset:0;z-index:550;background:rgba(8,8,8,.98);backdrop-filter:blur(16px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;transition:opacity .35s,transform .35s}
+        .mobile-overlay.closed{opacity:0;transform:translateY(-12px);pointer-events:none}
+        .mobile-overlay.open{opacity:1;transform:translateY(0);pointer-events:all}
+        .mobile-nav-a{font-family:var(--font-syne);font-weight:700;font-size:2rem;color:#fff;text-decoration:none;letter-spacing:-.02em;transition:color .2s}
+        .mobile-nav-a:hover{color:${C.accent}}
 
         .site-card{position:relative;border:1px solid rgba(255,255,255,.06);border-radius:12px;overflow:hidden;cursor:pointer;transition:border-color .3s,transform .3s;background:${C.bg2};text-decoration:none;display:block}
         .site-card:hover{border-color:rgba(0,255,136,.25);transform:translateY(-4px)}
@@ -354,12 +375,12 @@ export default function HomePage() {
 
       {/* ── Custom cursor ─────────────────────────────────────────────────── */}
       {!isTouch && <>
-        <div ref={cursorDotRef}  className="c-dot"  />
-        <div ref={cursorRingRef} className="c-ring" />
+        <div ref={cursorDotRef}  className="c-dot"  aria-hidden="true" />
+        <div ref={cursorRingRef} className="c-ring" aria-hidden="true" />
       </>}
 
       {/* ── Loading screen ─────────────────────────────────────────────────── */}
-      <div ref={loadingRef} style={{
+      <div ref={loadingRef} role="status" aria-label="Carregando DuduStudio" style={{
         position: 'fixed', inset: 0, zIndex: 9000,
         background: C.bg, display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
@@ -392,16 +413,41 @@ export default function HomePage() {
           ))}
           <a
             href="https://wa.me/5511999999999" target="_blank" rel="noopener noreferrer"
+            className="nav-wpp-btn"
             style={{ fontFamily: 'var(--font-syne)', fontWeight: 700, fontSize: '.8rem', letterSpacing: '.06em', textTransform: 'uppercase', textDecoration: 'none', color: C.bg, background: C.accent, padding: '.5rem 1.2rem', borderRadius: '6px' }}
           >
             WhatsApp
           </a>
+          <button
+            className="hamburger"
+            onClick={() => setMobileMenu(v => !v)}
+            aria-label={mobileMenu ? 'Fechar menu' : 'Abrir menu'}
+            aria-expanded={mobileMenu}
+          >
+            <span style={{ transform: mobileMenu ? 'rotate(45deg) translate(5px,5px)' : 'none' }} />
+            <span style={{ opacity: mobileMenu ? 0 : 1 }} />
+            <span style={{ transform: mobileMenu ? 'rotate(-45deg) translate(5px,-5px)' : 'none' }} />
+          </button>
         </div>
       </nav>
 
+      {/* ── Mobile menu overlay ─────────────────────────────────────────────── */}
+      <div className={`mobile-overlay ${mobileMenu ? 'open' : 'closed'}`} aria-hidden={!mobileMenu}>
+        {[['Sites','#sites'],['Como Funciona','#como-funciona'],['Preços','#precos'],['FAQ','#faq']].map(([label, href]) => (
+          <a key={href} href={href} className="mobile-nav-a" onClick={() => setMobileMenu(false)}>{label}</a>
+        ))}
+        <a
+          href="https://wa.me/5511999999999" target="_blank" rel="noopener noreferrer"
+          onClick={() => setMobileMenu(false)}
+          style={{ fontFamily: 'var(--font-syne)', fontWeight: 700, fontSize: '1rem', letterSpacing: '.06em', textTransform: 'uppercase', textDecoration: 'none', color: C.bg, background: C.accent, padding: '.75rem 2rem', borderRadius: '8px', marginTop: '1rem' }}
+        >
+          WhatsApp →
+        </a>
+      </div>
+
       {/* ── Hero ───────────────────────────────────────────────────────────── */}
       <section id="hero" style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', overflow: 'hidden', paddingTop: '64px' }}>
-        <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', opacity: .7 }} />
+        <canvas ref={canvasRef} aria-hidden="true" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', opacity: .7 }} />
 
         {/* Glow blobs — parallax layers */}
         <div className="parallax-1" style={{ position: 'absolute', top: '-10%', left: '-15%', width: '600px', height: '600px', borderRadius: '50%', background: 'radial-gradient(circle,rgba(0,255,136,.055) 0%,transparent 70%)', pointerEvents: 'none' }} />
@@ -690,6 +736,7 @@ export default function HomePage() {
               >
                 <button
                   onClick={() => setFaqOpen(faqOpen === i ? null : i)}
+                  aria-expanded={faqOpen === i}
                   style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.2rem 1.4rem', background: 'transparent', border: 'none', cursor: 'pointer', textAlign: 'left', gap: '1rem' }}
                 >
                   <span style={{ fontFamily: 'var(--font-syne)', fontWeight: 700, fontSize: '.92rem', color: faqOpen === i ? C.accent : '#fff' }}>
@@ -724,7 +771,6 @@ export default function HomePage() {
             Escolha o template, personalizamos juntos e coloco no ar em dias.
           </p>
           <a
-            ref={ctaBtnRef}
             href="https://wa.me/5511999999999" target="_blank" rel="noopener noreferrer"
             onClick={handleRipple}
             onMouseEnter={() => setCtaHover(true)}
@@ -763,6 +809,7 @@ export default function HomePage() {
       {/* ── WhatsApp FAB ───────────────────────────────────────────────────── */}
       <a
         href="https://wa.me/5511999999999" target="_blank" rel="noopener noreferrer"
+        aria-label="Falar no WhatsApp"
         style={{ position: 'fixed', bottom: '1.5rem', right: '1.5rem', zIndex: 400, width: '52px', height: '52px', borderRadius: '50%', background: '#25D366', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 20px rgba(37,211,102,.4)', transition: 'transform .2s,box-shadow .2s' }}
         onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.1)'; e.currentTarget.style.boxShadow = '0 6px 28px rgba(37,211,102,.55)' }}
         onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)';   e.currentTarget.style.boxShadow = '0 4px 20px rgba(37,211,102,.4)' }}
