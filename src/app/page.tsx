@@ -421,7 +421,7 @@ export default function HomePage() {
 
           <h1
             ref={titleRef}
-            style={{ fontFamily: 'var(--font-syne)', fontWeight: 800, fontSize: 'clamp(2.8rem,7vw,6.5rem)', lineHeight: 1.05, letterSpacing: '-.03em', color: '#fff', marginBottom: '1.5rem', maxWidth: '14ch' }}
+            style={{ fontFamily: 'var(--font-syne)', fontWeight: 800, fontSize: 'clamp(2.8rem,7vw,6.5rem)', lineHeight: 1.05, letterSpacing: '-.03em', color: '#fff', marginBottom: '1.5rem', maxWidth: '14ch', wordBreak: 'keep-all', hyphens: 'none', overflowWrap: 'normal' }}
           >
             Seu site profissional em dias, não meses.
           </h1>
