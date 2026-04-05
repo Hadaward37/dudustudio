@@ -215,17 +215,15 @@ export default function HomePage() {
     if (!loaded) return
     gsap.registerPlugin(ScrollTrigger)
 
-    // Hero title — letter stagger
+    // Hero title — word stagger (never breaks mid-word)
     const title = titleRef.current
     if (title) {
-      const original = title.textContent ?? ''
-      title.innerHTML = original.split('').map(ch =>
-        ch === ' '
-          ? ' '
-          : `<span class="letter" style="display:inline-block;opacity:0;transform:translateY(36px)">${ch}</span>`
-      ).join('')
-      gsap.to(title.querySelectorAll<HTMLElement>('.letter'), {
-        opacity: 1, y: 0, duration: 0.55, stagger: 0.025, ease: 'power3.out', delay: 0.3,
+      const original = title.innerText ?? ''
+      title.innerHTML = original.split(' ').map(word =>
+        `<span class="word" style="display:inline-block;white-space:nowrap;opacity:0;transform:translateY(28px)">${word}</span>`
+      ).join(' ')
+      gsap.to(title.querySelectorAll<HTMLElement>('.word'), {
+        opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power3.out', delay: 0.3,
       })
     }
 
@@ -423,7 +421,7 @@ export default function HomePage() {
             ref={titleRef}
             style={{ fontFamily: 'var(--font-syne)', fontWeight: 800, fontSize: 'clamp(2.8rem,7vw,6.5rem)', lineHeight: 1.05, letterSpacing: '-.03em', color: '#fff', marginBottom: '1.5rem' }}
           >
-            Sites que vendem.<br />No ar em dias.
+            Sites que vendem. No ar em dias.
           </h1>
 
           <p style={{ fontFamily: 'var(--font-manrope)', fontWeight: 300, fontSize: 'clamp(1rem,2vw,1.2rem)', color: '#777', lineHeight: 1.7, maxWidth: '520px', marginBottom: '2.5rem' }}>
