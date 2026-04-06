@@ -127,7 +127,7 @@ export default function EntradaPage() {
     <div
       className={syne.variable}
       style={{
-        background: '#080808',
+        background: '#000',
         minHeight: '100dvh',
         display: 'flex',
         flexDirection: 'column',
@@ -178,23 +178,23 @@ export default function EntradaPage() {
           <ellipse cx="88" cy="80" rx="58" ry="58" fill="none" stroke="white" strokeWidth="3" />
           <g className="pupil-g" style={{ transition: 'opacity 0.25s' }}>
             <circle ref={leftPupilRef} cx="88" cy="80" r="22" fill="white" />
-            <circle cx="88" cy="80" r="10" fill="#080808" />
+            <circle cx="88" cy="80" r="10" fill="#000" />
           </g>
           <g ref={leftHeartRef} style={{ opacity: 0, transition: 'opacity 0.25s' }}>
             <path d={heartPath} fill={ACCENT} />
           </g>
-          <polygon ref={leftLidRef} points="30,-10 146,-10 146,18 30,18" fill="#080808" />
+          <polygon ref={leftLidRef} points="30,-10 146,-10 146,18 30,18" fill="#000" />
 
           {/* Right eye */}
           <ellipse cx="232" cy="80" rx="58" ry="58" fill="none" stroke="white" strokeWidth="3" />
           <g className="pupil-g" style={{ transition: 'opacity 0.25s' }}>
             <circle ref={rightPupilRef} cx="232" cy="80" r="22" fill="white" />
-            <circle cx="232" cy="80" r="10" fill="#080808" />
+            <circle cx="232" cy="80" r="10" fill="#000" />
           </g>
           <g ref={rightHeartRef} style={{ opacity: 0, transition: 'opacity 0.25s' }}>
             <path d={heartPath} fill={ACCENT} />
           </g>
-          <polygon ref={rightLidRef} points="174,-10 290,-10 290,18 174,18" fill="#080808" />
+          <polygon ref={rightLidRef} points="174,-10 290,-10 290,18 174,18" fill="#000" />
         </svg>
       </div>
 
