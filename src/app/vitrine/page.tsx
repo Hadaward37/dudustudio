@@ -70,7 +70,6 @@ const FAQ_ITEMS = [
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t
-const pad3 = (n: number) => String(Math.floor(n)).padStart(3, '0')
 
 // ── Component ──────────────────────────────────────────────────────────────────
 export default function HomePage() {
@@ -78,9 +77,7 @@ export default function HomePage() {
   const titleRef      = useRef<HTMLHeadingElement>(null)
   const cursorDotRef  = useRef<HTMLDivElement>(null)
   const cursorRingRef = useRef<HTMLDivElement>(null)
-  const loadingRef    = useRef<HTMLDivElement>(null)
-  const counterRef    = useRef<HTMLSpanElement>(null)
-  const [loaded,       setLoaded]       = useState(false)
+  const [loaded] = useState(true)
   const [navScrolled,  setNavScrolled]  = useState(false)
   const [faqOpen,      setFaqOpen]      = useState<number | null>(null)
   const [isTouch,      setIsTouch]      = useState(false)
@@ -92,35 +89,6 @@ export default function HomePage() {
   // ── Touch detection ───────────────────────────────────────────────────────
   useEffect(() => {
     setIsTouch('ontouchstart' in window || navigator.maxTouchPoints > 0)
-  }, [])
-
-  // ── Loading screen ────────────────────────────────────────────────────────
-  useEffect(() => {
-    const duration = 1800
-    const steps    = 100
-    const interval = duration / steps
-    let count = 0
-    const id = setInterval(() => {
-      count++
-      if (counterRef.current) counterRef.current.textContent = pad3(count)
-      if (count >= steps) {
-        clearInterval(id)
-        setTimeout(() => {
-          if (loadingRef.current) {
-            loadingRef.current.style.transition = 'transform 0.9s cubic-bezier(0.76,0,0.24,1)'
-            loadingRef.current.style.transform  = 'translateY(-100%)'
-            setTimeout(() => setLoaded(true), 900)
-          }
-        }, 280)
-      }
-    }, interval)
-    return () => clearInterval(id)
-  }, [])
-
-  // ── Fallback: garante que a loading screen some em até 2s ─────────────────
-  useEffect(() => {
-    const id = setTimeout(() => setLoaded(true), 2000)
-    return () => clearTimeout(id)
   }, [])
 
   // ── Custom cursor ─────────────────────────────────────────────────────────
@@ -382,21 +350,6 @@ export default function HomePage() {
         <div ref={cursorDotRef}  className="c-dot"  aria-hidden="true" />
         <div ref={cursorRingRef} className="c-ring" aria-hidden="true" />
       </>}
-
-      {/* ── Loading screen ─────────────────────────────────────────────────── */}
-      <div ref={loadingRef} role="status" aria-label="Carregando DuduStudio" style={{
-        position: 'fixed', inset: 0, zIndex: 9000,
-        background: C.bg, display: 'flex', flexDirection: 'column',
-        alignItems: 'center', justifyContent: 'center',
-        pointerEvents: loaded ? 'none' : 'all',
-      }}>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(3.5rem,10vw,7.5rem)', color: C.accent, letterSpacing: '.02em', lineHeight: 1 }}>
-          <span ref={counterRef}>000</span>
-        </div>
-        <div style={{ marginTop: '.9rem', fontFamily: 'var(--font-syne)', fontSize: '.72rem', letterSpacing: '.28em', color: '#444', textTransform: 'uppercase' }}>
-          DuduStudio
-        </div>
-      </div>
 
       {/* ── NavBar ─────────────────────────────────────────────────────────── */}
       <nav style={{
