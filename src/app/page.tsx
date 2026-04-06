@@ -191,9 +191,13 @@ export default function EntryPage() {
           opacity: 0;
           animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;
         }
-        .entry-btn {
+        .entry-sub {
           opacity: 0;
           animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.5s forwards;
+        }
+        .entry-btn {
+          opacity: 0;
+          animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.7s forwards;
         }
         @keyframes fadeUp {
           to { opacity: 1; transform: translateY(0); }
@@ -300,6 +304,26 @@ export default function EntryPage() {
         </svg>
       </div>
 
+      {/* Subtitle */}
+      <p
+        className="entry-sub"
+        style={{
+          fontFamily: 'var(--font-syne), sans-serif',
+          fontSize: 'clamp(0.8rem, 2vw, 1rem)',
+          fontWeight: 400,
+          lineHeight: 1.6,
+          textAlign: 'center',
+          color: 'rgba(255,255,255,0.45)',
+          margin: 0,
+          maxWidth: '30ch',
+        }}
+      >
+        Todo negócio merece ser visto.{' '}
+        <span style={{ color: 'rgba(255,255,255,0.7)' }}>
+          Criamos o site que faz seu cliente parar — e comprar.
+        </span>
+      </p>
+
       {/* Button */}
       <div className="entry-btn">
         <button
@@ -310,22 +334,6 @@ export default function EntryPage() {
           Entrar
         </button>
       </div>
-
-      {/* Tagline */}
-      <p
-        className="entry-btn"
-        style={{
-          fontFamily: 'var(--font-syne), sans-serif',
-          fontSize: '0.65rem',
-          fontWeight: 800,
-          letterSpacing: '0.28em',
-          textTransform: 'uppercase',
-          color: 'rgba(255,255,255,0.15)',
-          margin: 0,
-        }}
-      >
-        Sites prontos. Negócio no ar.
-      </p>
     </div>
   )
 }
