@@ -94,19 +94,15 @@ export default function HomePage() {
 
   // ── Loading screen ────────────────────────────────────────────────────────
   useEffect(() => {
-    const duration  = 1800
-    const startTime = performance.now()
-
-    const tick = (now: number) => {
-      const progress = Math.min((now - startTime) / duration, 1)
-      const eased    = 1 - Math.pow(1 - progress, 3)
-
-      if (counterRef.current) counterRef.current.textContent = pad3(eased * 100)
-
-      if (progress < 1) {
-        requestAnimationFrame(tick)
-      } else {
-        if (counterRef.current) counterRef.current.textContent = '100'
+    const duration = 1800
+    const steps    = 100
+    const interval = duration / steps
+    let count = 0
+    const id = setInterval(() => {
+      count++
+      if (counterRef.current) counterRef.current.textContent = pad3(count)
+      if (count >= steps) {
+        clearInterval(id)
         setTimeout(() => {
           if (loadingRef.current) {
             loadingRef.current.style.transition = 'transform 0.9s cubic-bezier(0.76,0,0.24,1)'
@@ -115,8 +111,14 @@ export default function HomePage() {
           }
         }, 280)
       }
-    }
-    requestAnimationFrame(tick)
+    }, interval)
+    return () => clearInterval(id)
+  }, [])
+
+  // ── Fallback: garante que a loading screen some em até 2s ─────────────────
+  useEffect(() => {
+    const id = setTimeout(() => setLoaded(true), 2000)
+    return () => clearTimeout(id)
   }, [])
 
   // ── Custom cursor ─────────────────────────────────────────────────────────
