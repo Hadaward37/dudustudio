@@ -169,7 +169,7 @@ export default function EntryPage() {
   const handleClick = () => {
     setClicked(true)
     // Navigate after a brief heart moment
-    setTimeout(() => router.push('/vitrine'), 700)
+    setTimeout(() => router.push('/sobre'), 700)
   }
 
   return (
