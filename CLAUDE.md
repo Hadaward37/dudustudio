@@ -36,7 +36,9 @@ Nenhum framework de testes configurado.
 
 | Path | Propósito |
 |---|---|
+| /entrada | Splash screen animada — logo letra por letra, olhos interativos, redireciona para / |
 | / | Hub vitrine principal com todas as seções |
+| /vitrine | Hub alternativo com design tokens próprios (accent verde #00ff88) |
 | /demo/pizzaria | Site completo de pizzaria — dark premium, reservas, cardápio |
 | /demo/clinica | Site completo de clínica — light, agendamento, equipe |
 | /demo/ecommerce | Site completo de e-commerce de moda — carrinho, countdown |
@@ -44,6 +46,8 @@ Nenhum framework de testes configurado.
 | /demo/landing/petshop | Landing page petshop — verde floresta, premium |
 
 `src/app/demo/layout.tsx` envolve todas as rotas `/demo` com o DemoBanner fixo no topo.
+
+A rota `/entrada` grava `sessionStorage.setItem('ds_entered', '1')` antes de redirecionar — use essa chave para detectar se o usuário já passou pela splash.
 
 ## Como adicionar um novo site
 

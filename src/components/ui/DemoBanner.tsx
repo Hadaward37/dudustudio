@@ -37,7 +37,7 @@ export default function DemoBanner() {
       <span className="text-white/40 hidden sm:inline">·</span>
 
       <Link
-        href="/#pricing"
+        href="/vitrine#precos"
         className="hidden sm:inline-flex items-center gap-1 rounded-full bg-white/20 hover:bg-white/30 transition-colors px-3 py-1 text-white text-xs font-semibold whitespace-nowrap"
       >
         Ver preços →
