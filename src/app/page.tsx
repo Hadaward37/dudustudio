@@ -36,9 +36,24 @@ export default function EntryPage() {
   const angerCurrent = useRef(0)
   const rafRef       = useRef<number>(0)
   const clickedRef   = useRef(false) // mirror of state for RAF
+  const hoveredRef   = useRef(false) // true while cursor is over the button
 
   // sync clicked state → ref
   useEffect(() => { clickedRef.current = clicked }, [clicked])
+
+  // --- Button hover tracking ---
+  useEffect(() => {
+    const btn = buttonRef.current
+    if (!btn) return
+    const onEnter = () => { hoveredRef.current = true }
+    const onLeave = () => { hoveredRef.current = false }
+    btn.addEventListener('mouseenter', onEnter)
+    btn.addEventListener('mouseleave', onLeave)
+    return () => {
+      btn.removeEventListener('mouseenter', onEnter)
+      btn.removeEventListener('mouseleave', onLeave)
+    }
+  }, [])
 
   // --- Mouse tracking ---
   useEffect(() => {
@@ -102,7 +117,7 @@ export default function EntryPage() {
       const anger = angerCurrent.current
 
       // Show hearts or pupils
-      const showHearts = clickedRef.current
+      const showHearts = clickedRef.current || hoveredRef.current
       const pupilOpacity = showHearts ? 0 : 1
       const heartOpacity = showHearts ? 1 : 0
 
