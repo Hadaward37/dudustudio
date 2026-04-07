@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Syne, Manrope } from 'next/font/google'
-import { sites, formatPrice } from '@/lib/sites'
 
 const syne = Syne({ subsets: ['latin'], weight: ['400', '700', '800'], variable: '--font-syne' })
 const manrope = Manrope({ subsets: ['latin'], weight: ['300', '400', '600'], variable: '--font-manrope' })
@@ -16,16 +15,6 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * t
 const TITLE_WORDS_1 = ['Sites', 'que', 'Param', 'o', 'Scroll.']
 const TITLE_WORDS_2 = ['Criando', 'o', 'Inesperado.']
 
-// accent cor por categoria
-const CATEGORY_ACCENT: Record<string, string> = {
-  Restaurante: '#ff6b35',
-  Saúde: '#22d3ee',
-  'E-commerce': '#8b5cf6',
-  Confeitaria: '#f472b6',
-  Petshop: '#00ff88',
-  Serviços: '#f59e0b',
-}
-
 export default function SobrePage() {
   const router = useRouter()
   const [scrolled, setScrolled] = useState(false)
@@ -33,7 +22,6 @@ export default function SobrePage() {
   const [wordsVisible1, setWordsVisible1] = useState<boolean[]>(Array(TITLE_WORDS_1.length).fill(false))
   const [wordsVisible2, setWordsVisible2] = useState<boolean[]>(Array(TITLE_WORDS_2.length).fill(false))
   const [badgeVisible, setBadgeVisible] = useState(false)
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null)
 
   // Custom cursor
   const dotRef = useRef<HTMLDivElement>(null)
@@ -134,7 +122,7 @@ export default function SobrePage() {
         <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
           {[
             { label: 'Início', action: () => navigateTo('/') },
-            { label: 'Sites', action: () => { const el = document.getElementById('sites'); el?.scrollIntoView({ behavior: 'smooth' }) } },
+            { label: 'Trabalhos', action: () => navigateTo('/trabalhos') },
             { label: 'Contato', action: () => { window.location.href = 'mailto:dudutorro1@gmail.com' } },
           ].map(({ label, action }) => (
             <button key={label} onClick={action} style={{ fontFamily: 'var(--font-manrope), sans-serif', fontWeight: 400, fontSize: '0.875rem', color: 'rgba(255,255,255,0.6)', background: 'none', border: 'none', cursor: 'none', transition: 'color 0.2s', letterSpacing: '0.01em', }}
@@ -184,12 +172,12 @@ export default function SobrePage() {
         {/* CTAs */}
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
           <button
-            onClick={() => { const el = document.getElementById('sites'); el?.scrollIntoView({ behavior: 'smooth' }) }}
+            onClick={() => navigateTo('/trabalhos')}
             style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.85rem 2rem', borderRadius: 999, background: ACCENT, color: '#080808', fontFamily: 'var(--font-syne), sans-serif', fontWeight: 700, fontSize: '0.95rem', border: 'none', cursor: 'none', letterSpacing: '-0.01em', transition: 'transform 0.2s, box-shadow 0.2s', boxShadow: `0 0 32px ${ACCENT}44`, }}
             onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.04)'; e.currentTarget.style.boxShadow = `0 0 48px ${ACCENT}66` }}
             onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = `0 0 32px ${ACCENT}44` }}
           >
-            Ver nosso trabalho →
+            Ver nossos trabalhos →
           </button>
           <a
             href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP}`}
@@ -207,106 +195,6 @@ export default function SobrePage() {
         <div style={{ position: 'absolute', bottom: 32, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, opacity: 0.35, animation: 'fadeUp 1s ease 1.8s both', }}>
           <span style={{ fontFamily: 'var(--font-manrope)', fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>scroll</span>
           <div style={{ width: 1, height: 36, background: 'linear-gradient(to bottom, #fff, transparent)', animation: 'scrollLine 1.5s ease-in-out infinite' }} />
-        </div>
-      </section>
-
-      {/* ── SITES GRID ─────────────────────────────────────────── */}
-      <section id="sites" style={{ position: 'relative', zIndex: 10, padding: 'clamp(4rem, 8vw, 8rem) clamp(1.5rem, 5vw, 4rem)', }}>
-
-        {/* Section header */}
-        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.3rem 0.9rem', borderRadius: 999, border: `1px solid ${ACCENT2}44`, background: `${ACCENT2}0d`, marginBottom: '1.2rem', }}>
-            <span style={{ fontSize: '0.72rem', fontWeight: 600, color: ACCENT2, letterSpacing: '0.08em', textTransform: 'uppercase', fontFamily: 'var(--font-manrope)' }}>
-              Portfólio
-            </span>
-          </div>
-          <h2 style={{ fontFamily: 'var(--font-syne)', fontWeight: 800, fontSize: 'clamp(1.8rem, 4vw, 3rem)', letterSpacing: '-0.03em', margin: '0 0 0.75rem', }}>
-            Cada site é uma experiência.
-          </h2>
-          <p style={{ fontFamily: 'var(--font-manrope)', fontWeight: 300, fontSize: '1rem', color: 'rgba(255,255,255,0.45)', maxWidth: 480, margin: '0 auto', lineHeight: 1.7, }}>
-            Navegue nos demos reais antes de decidir. Personalizamos tudo para o seu negócio.
-          </p>
-        </div>
-
-        {/* Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 340px), 1fr))', gap: '1.5rem', maxWidth: 1200, margin: '0 auto', }}>
-          {sites.map((site) => {
-            const accent = CATEGORY_ACCENT[site.category] ?? ACCENT
-            const isHovered = hoveredCard === site.id
-            return (
-              <div
-                key={site.id}
-                onMouseEnter={() => setHoveredCard(site.id)}
-                onMouseLeave={() => setHoveredCard(null)}
-                style={{
-                  position: 'relative',
-                  borderRadius: 16,
-                  border: `1px solid ${isHovered ? accent + '55' : 'rgba(255,255,255,0.08)'}`,
-                  background: isHovered ? `${accent}08` : 'rgba(255,255,255,0.03)',
-                  padding: '1.75rem',
-                  cursor: 'none',
-                  transition: 'border-color 0.3s, background 0.3s, transform 0.3s, box-shadow 0.3s',
-                  transform: isHovered ? 'translateY(-4px)' : 'translateY(0)',
-                  boxShadow: isHovered ? `0 16px 48px ${accent}18` : '0 0 0 transparent',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '1.25rem',
-                }}
-              >
-                {/* Card top */}
-                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem' }}>
-                  <div>
-                    <span style={{ display: 'inline-block', padding: '0.2rem 0.65rem', borderRadius: 999, background: `${accent}18`, border: `1px solid ${accent}33`, fontSize: '0.7rem', fontWeight: 600, color: accent, letterSpacing: '0.06em', textTransform: 'uppercase', fontFamily: 'var(--font-manrope)', marginBottom: '0.6rem', }}>
-                      {site.category}
-                    </span>
-                    <h3 style={{ fontFamily: 'var(--font-syne)', fontWeight: 700, fontSize: '1.15rem', letterSpacing: '-0.02em', margin: 0, color: '#fff', }}>
-                      {site.name}
-                    </h3>
-                  </div>
-                  <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                    <div style={{ fontFamily: 'var(--font-manrope)', fontSize: '0.7rem', color: 'rgba(255,255,255,0.35)', marginBottom: 2 }}>a partir de</div>
-                    <div style={{ fontFamily: 'var(--font-syne)', fontWeight: 800, fontSize: '1.1rem', color: accent, letterSpacing: '-0.02em' }}>
-                      {formatPrice(site.price)}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Description */}
-                <p style={{ fontFamily: 'var(--font-manrope)', fontWeight: 300, fontSize: '0.875rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.65, margin: 0, }}>
-                  {site.description}
-                </p>
-
-                {/* Tags */}
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
-                  {site.tags.map(tag => (
-                    <span key={tag} style={{ padding: '0.2rem 0.6rem', borderRadius: 999, background: 'rgba(255,255,255,0.06)', fontSize: '0.7rem', color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-manrope)', }}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* CTA */}
-                <div style={{ display: 'flex', gap: '0.75rem', marginTop: 'auto', paddingTop: '0.25rem' }}>
-                  <button
-                    onClick={() => navigateTo(`/demo/${site.slug}`)}
-                    style={{ flex: 1, padding: '0.65rem 0', borderRadius: 10, background: isHovered ? accent : 'rgba(255,255,255,0.06)', color: isHovered ? '#080808' : '#fff', fontFamily: 'var(--font-syne)', fontWeight: 700, fontSize: '0.82rem', border: 'none', cursor: 'none', transition: 'background 0.3s, color 0.3s', letterSpacing: '-0.01em', }}
-                  >
-                    Ver demo →
-                  </button>
-                  <a
-                    href={`https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(`Olá! Tenho interesse no site modelo "${site.name}" (${formatPrice(site.price)}). Podemos conversar?`)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ padding: '0.65rem 1rem', borderRadius: 10, background: 'transparent', border: `1px solid ${accent}33`, color: accent, fontFamily: 'var(--font-syne)', fontWeight: 600, fontSize: '0.82rem', textDecoration: 'none', cursor: 'none', transition: 'border-color 0.3s, background 0.3s', whiteSpace: 'nowrap', }}
-                    onMouseEnter={e => { e.currentTarget.style.background = `${accent}15` }}
-                    onMouseLeave={e => { e.currentTarget.style.background = 'transparent' }}
-                  >
-                    Quero este
-                  </a>
-                </div>
-              </div>
-            )
-          })}
         </div>
       </section>
 
