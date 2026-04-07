@@ -1,7 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Syne, Manrope } from 'next/font/google'
 
@@ -9,82 +8,27 @@ const syne = Syne({ subsets: ['latin'], weight: ['400', '700', '800'], variable:
 const manrope = Manrope({ subsets: ['latin'], weight: ['300', '400', '600'], variable: '--font-manrope' })
 
 const ACCENT = '#00ff88'
-const ACCENT2 = '#7b61ff'
-const lerp = (a: number, b: number, t: number) => a + (b - a) * t
-
-const TITLE_WORDS_1 = ['Sites', 'que', 'Param', 'o', 'Scroll.']
-const TITLE_WORDS_2 = ['Criando', 'o', 'Inesperado.']
 
 export default function SobrePage() {
   const router = useRouter()
   const [scrolled, setScrolled] = useState(false)
   const [leaving, setLeaving] = useState(false)
-  const [wordsVisible1, setWordsVisible1] = useState<boolean[]>(Array(TITLE_WORDS_1.length).fill(false))
-  const [wordsVisible2, setWordsVisible2] = useState<boolean[]>(Array(TITLE_WORDS_2.length).fill(false))
-  const [badgeVisible, setBadgeVisible] = useState(false)
+  const [visible, setVisible] = useState(false)
 
-  // Custom cursor
-  const dotRef = useRef<HTMLDivElement>(null)
-  const ringRef = useRef<HTMLDivElement>(null)
-  const mouseRef = useRef({ x: 0, y: 0 })
-  const ringPos = useRef({ x: 0, y: 0 })
-  const rafCursor = useRef<number>(0)
-
-  // Blob parallax
-  const blob1Ref = useRef<HTMLDivElement>(null)
-  const blob2Ref = useRef<HTMLDivElement>(null)
-  const blob3Ref = useRef<HTMLDivElement>(null)
-
-  // Navigate with exit transition
   const navigateTo = (href: string) => {
     setLeaving(true)
-    setTimeout(() => router.push(href), 380)
+    setTimeout(() => router.push(href), 320)
   }
 
-  // Scroll nav + parallax
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 20)
-      const s = window.scrollY
-      if (blob1Ref.current) blob1Ref.current.style.transform = `translateY(${s * 0.1}px)`
-      if (blob2Ref.current) blob2Ref.current.style.transform = `translateY(${s * 0.06}px)`
-      if (blob3Ref.current) blob3Ref.current.style.transform = `translateY(${s * 0.04}px)`
-    }
+    const timer = setTimeout(() => setVisible(true), 80)
+    return () => clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  // Cursor RAF
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => { mouseRef.current = { x: e.clientX, y: e.clientY } }
-    window.addEventListener('mousemove', onMove)
-    const animate = () => {
-      if (dotRef.current) {
-        dotRef.current.style.left = `${mouseRef.current.x}px`
-        dotRef.current.style.top = `${mouseRef.current.y}px`
-      }
-      ringPos.current.x = lerp(ringPos.current.x, mouseRef.current.x, 0.12)
-      ringPos.current.y = lerp(ringPos.current.y, mouseRef.current.y, 0.12)
-      if (ringRef.current) {
-        ringRef.current.style.left = `${ringPos.current.x}px`
-        ringRef.current.style.top = `${ringPos.current.y}px`
-      }
-      rafCursor.current = requestAnimationFrame(animate)
-    }
-    rafCursor.current = requestAnimationFrame(animate)
-    return () => { window.removeEventListener('mousemove', onMove); cancelAnimationFrame(rafCursor.current) }
-  }, [])
-
-  // Stagger word reveal
-  useEffect(() => {
-    const t0 = setTimeout(() => setBadgeVisible(true), 200)
-    const t1 = TITLE_WORDS_1.map((_, i) =>
-      setTimeout(() => setWordsVisible1(prev => { const n = [...prev]; n[i] = true; return n }), 500 + i * 100)
-    )
-    const t2 = TITLE_WORDS_2.map((_, i) =>
-      setTimeout(() => setWordsVisible2(prev => { const n = [...prev]; n[i] = true; return n }), 1000 + i * 100)
-    )
-    return () => { clearTimeout(t0); t1.forEach(clearTimeout); t2.forEach(clearTimeout) }
   }, [])
 
   return (
@@ -92,154 +36,275 @@ export default function SobrePage() {
       className={`${syne.variable} ${manrope.variable}`}
       style={{
         background: '#080808',
-        minHeight: '100vh',
+        minHeight: '100dvh',
         color: '#fff',
         fontFamily: 'var(--font-manrope), sans-serif',
         position: 'relative',
-        cursor: 'none',
-        animation: leaving ? 'pageOut 0.38s ease forwards' : 'pageIn 0.5s ease forwards',
+        overflowX: 'hidden',
+        animation: leaving ? 'pageOut 0.32s ease forwards' : undefined,
       }}
     >
-      {/* Custom cursor */}
-      <div ref={dotRef} style={{ position: 'fixed', width: 8, height: 8, borderRadius: '50%', background: ACCENT, pointerEvents: 'none', zIndex: 9999, transform: 'translate(-50%,-50%)', }} />
-      <div ref={ringRef} style={{ position: 'fixed', width: 32, height: 32, borderRadius: '50%', border: `1.5px solid ${ACCENT}`, pointerEvents: 'none', zIndex: 9998, transform: 'translate(-50%,-50%)', opacity: 0.5, }} />
+      {/* Subtle radial glow — static, no movement */}
+      <div style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 0,
+        pointerEvents: 'none',
+        background: `radial-gradient(ellipse 80% 60% at 50% -10%, ${ACCENT}0a 0%, transparent 70%)`,
+      }} />
 
-      {/* Grain */}
-      <div style={{ position: 'fixed', inset: 0, backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E")`, opacity: 0.03, pointerEvents: 'none', zIndex: 1, }} />
-
-      {/* Liquid blobs */}
-      <div style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none', overflow: 'hidden' }}>
-        <div ref={blob1Ref} style={{ position: 'absolute', width: '55vw', height: '55vw', borderRadius: '60% 40% 70% 30% / 50% 60% 40% 70%', background: `radial-gradient(circle, ${ACCENT}15 0%, transparent 70%)`, top: '-10vw', left: '-10vw', animation: 'blob1 18s ease-in-out infinite', filter: 'blur(60px)', }} />
-        <div ref={blob2Ref} style={{ position: 'absolute', width: '50vw', height: '50vw', borderRadius: '40% 60% 30% 70% / 70% 30% 60% 40%', background: `radial-gradient(circle, ${ACCENT2}18 0%, transparent 70%)`, top: '15vw', right: '-12vw', animation: 'blob2 22s ease-in-out infinite', filter: 'blur(70px)', }} />
-        <div ref={blob3Ref} style={{ position: 'absolute', width: '40vw', height: '40vw', borderRadius: '70% 30% 50% 50% / 30% 70% 50% 50%', background: 'radial-gradient(circle, #ff6b3518 0%, transparent 70%)', bottom: '10vw', left: '25vw', animation: 'blob3 26s ease-in-out infinite', filter: 'blur(80px)', }} />
-      </div>
+      {/* Fine grain */}
+      <div style={{
+        position: 'fixed',
+        inset: 0,
+        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
+        opacity: 0.025,
+        pointerEvents: 'none',
+        zIndex: 1,
+      }} />
 
       {/* Nav */}
-      <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 clamp(1.5rem, 5vw, 4rem)', height: 64, background: scrolled ? 'rgba(8,8,8,0.88)' : 'transparent', backdropFilter: scrolled ? 'blur(14px)' : 'none', borderBottom: scrolled ? '1px solid rgba(255,255,255,0.06)' : 'none', transition: 'all 0.4s', }}>
-        <button onClick={() => navigateTo('/')} style={{ fontFamily: 'var(--font-syne), sans-serif', fontWeight: 800, fontSize: '1.1rem', letterSpacing: '-0.02em', color: '#fff', background: 'none', border: 'none', cursor: 'none', }}>
+      <nav style={{
+        position: 'fixed',
+        top: 0, left: 0, right: 0,
+        zIndex: 100,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 clamp(1.5rem, 6vw, 5rem)',
+        height: 60,
+        background: scrolled ? 'rgba(8,8,8,0.9)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(12px)' : 'none',
+        borderBottom: scrolled ? '1px solid rgba(255,255,255,0.05)' : 'none',
+        transition: 'background 0.4s, border-color 0.4s',
+      }}>
+        <button
+          onClick={() => navigateTo('/')}
+          style={{
+            fontFamily: 'var(--font-syne)',
+            fontWeight: 800,
+            fontSize: '1rem',
+            letterSpacing: '-0.02em',
+            color: '#fff',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: 0,
+          }}
+        >
           DuduStudio
         </button>
+
         <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
           {[
-            { label: 'Início', action: () => navigateTo('/') },
             { label: 'Trabalhos', action: () => navigateTo('/trabalhos') },
             { label: 'Contato', action: () => { window.location.href = 'mailto:dudutorro1@gmail.com' } },
           ].map(({ label, action }) => (
-            <button key={label} onClick={action} style={{ fontFamily: 'var(--font-manrope), sans-serif', fontWeight: 400, fontSize: '0.875rem', color: 'rgba(255,255,255,0.6)', background: 'none', border: 'none', cursor: 'none', transition: 'color 0.2s', letterSpacing: '0.01em', }}
+            <button
+              key={label}
+              onClick={action}
+              style={{
+                fontFamily: 'var(--font-manrope)',
+                fontWeight: 400,
+                fontSize: '0.82rem',
+                color: 'rgba(255,255,255,0.5)',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                transition: 'color 0.2s',
+                letterSpacing: '0.02em',
+                padding: 0,
+              }}
               onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.6)')}>
+              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.5)')}
+            >
               {label}
             </button>
           ))}
         </div>
       </nav>
 
-      {/* ── HERO ─────────────────────────────────────────────────── */}
-      <section style={{ position: 'relative', zIndex: 10, minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 clamp(1.5rem, 5vw, 4rem)', paddingTop: 80, }}>
+      {/* ── HERO ── */}
+      <section style={{
+        position: 'relative',
+        zIndex: 10,
+        minHeight: '100dvh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        padding: '0 clamp(1.5rem, 6vw, 5rem)',
+        gap: '1.75rem',
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(12px)',
+        transition: 'opacity 0.7s ease, transform 0.7s ease',
+      }}>
 
-        {/* Badge */}
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.35rem 1rem', borderRadius: 999, border: `1px solid ${ACCENT}44`, background: `${ACCENT}0d`, marginBottom: '2rem', opacity: badgeVisible ? 1 : 0, transform: badgeVisible ? 'translateY(0)' : 'translateY(8px)', transition: 'opacity 0.6s, transform 0.6s', }}>
-          <span style={{ width: 6, height: 6, borderRadius: '50%', background: ACCENT, display: 'inline-block', animation: 'pulse 2s ease-in-out infinite', }} />
-          <span style={{ fontFamily: 'var(--font-manrope), sans-serif', fontSize: '0.75rem', fontWeight: 600, color: ACCENT, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-            Estúdio Digital
-          </span>
-        </div>
+        {/* Eyebrow */}
+        <p style={{
+          fontFamily: 'var(--font-manrope)',
+          fontSize: '0.72rem',
+          fontWeight: 600,
+          letterSpacing: '0.14em',
+          textTransform: 'uppercase',
+          color: ACCENT,
+          margin: 0,
+        }}>
+          Estúdio Digital — Brasil
+        </p>
 
-        {/* Title line 1 */}
-        <h1 style={{ fontFamily: 'var(--font-syne), sans-serif', fontWeight: 800, fontSize: 'clamp(2.8rem, 7vw, 6.5rem)', lineHeight: 1.05, letterSpacing: '-0.03em', margin: 0, marginBottom: '0.2em', color: '#fff', }}>
-          {TITLE_WORDS_1.map((word, i) => (
-            <span key={i} style={{ display: 'inline-block', marginRight: '0.22em', opacity: wordsVisible1[i] ? 1 : 0, transform: wordsVisible1[i] ? 'translateY(0)' : 'translateY(24px)', transition: 'opacity 0.5s, transform 0.5s', }}>
-              {word}
-            </span>
-          ))}
+        {/* Headline */}
+        <h1 style={{
+          fontFamily: 'var(--font-syne)',
+          fontWeight: 800,
+          fontSize: 'clamp(2rem, 4.5vw, 3.5rem)',
+          lineHeight: 1.1,
+          letterSpacing: '-0.03em',
+          margin: 0,
+          maxWidth: '14ch',
+          color: '#fff',
+        }}>
+          Sites que fazem o seu cliente parar.
         </h1>
 
-        {/* Title line 2 */}
-        <h2 style={{ fontFamily: 'var(--font-syne), sans-serif', fontWeight: 800, fontSize: 'clamp(2.8rem, 7vw, 6.5rem)', lineHeight: 1.05, letterSpacing: '-0.03em', margin: 0, marginBottom: '1.5rem', color: ACCENT, }}>
-          {TITLE_WORDS_2.map((word, i) => (
-            <span key={i} style={{ display: 'inline-block', marginRight: '0.22em', opacity: wordsVisible2[i] ? 1 : 0, transform: wordsVisible2[i] ? 'translateY(0)' : 'translateY(24px)', transition: 'opacity 0.5s, transform 0.5s', }}>
-              {word}
-            </span>
-          ))}
-        </h2>
+        {/* Divider line */}
+        <div style={{
+          width: 40,
+          height: 1,
+          background: `linear-gradient(to right, transparent, ${ACCENT}88, transparent)`,
+        }} />
 
         {/* Subtitle */}
-        <p style={{ fontFamily: 'var(--font-manrope), sans-serif', fontWeight: 300, fontSize: 'clamp(1rem, 2vw, 1.2rem)', color: 'rgba(255,255,255,0.5)', maxWidth: 560, lineHeight: 1.75, margin: '0 auto 2.5rem', }}>
-          Cada negócio merece um site único. Criamos experiências digitais personalizadas
-          que fazem seu cliente parar, olhar e comprar.
+        <p style={{
+          fontFamily: 'var(--font-manrope)',
+          fontWeight: 300,
+          fontSize: 'clamp(0.9rem, 1.6vw, 1.05rem)',
+          color: 'rgba(255,255,255,0.45)',
+          maxWidth: '42ch',
+          lineHeight: 1.8,
+          margin: 0,
+        }}>
+          Criamos experiências digitais para pequenos negócios que querem ser levados a sério.
+          Do design ao deploy, tudo em um só lugar.
         </p>
 
         {/* CTAs */}
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'center', marginTop: '0.5rem' }}>
           <button
             onClick={() => navigateTo('/trabalhos')}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.85rem 2rem', borderRadius: 999, background: ACCENT, color: '#080808', fontFamily: 'var(--font-syne), sans-serif', fontWeight: 700, fontSize: '0.95rem', border: 'none', cursor: 'none', letterSpacing: '-0.01em', transition: 'transform 0.2s, box-shadow 0.2s', boxShadow: `0 0 32px ${ACCENT}44`, }}
-            onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.04)'; e.currentTarget.style.boxShadow = `0 0 48px ${ACCENT}66` }}
-            onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = `0 0 32px ${ACCENT}44` }}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              padding: '0.75rem 1.75rem',
+              borderRadius: 8,
+              background: ACCENT,
+              color: '#080808',
+              fontFamily: 'var(--font-syne)',
+              fontWeight: 700,
+              fontSize: '0.85rem',
+              border: 'none',
+              cursor: 'pointer',
+              letterSpacing: '-0.01em',
+              transition: 'opacity 0.2s, transform 0.2s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.opacity = '0.88'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+            onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)' }}
           >
-            Ver nossos trabalhos →
+            Ver nossos trabalhos
           </button>
           <a
             href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP}`}
             target="_blank"
             rel="noopener noreferrer"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.85rem 2rem', borderRadius: 999, background: 'transparent', color: '#fff', fontFamily: 'var(--font-syne), sans-serif', fontWeight: 700, fontSize: '0.95rem', textDecoration: 'none', letterSpacing: '-0.01em', border: '1px solid rgba(255,255,255,0.2)', transition: 'border-color 0.2s, transform 0.2s', }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)'; e.currentTarget.style.transform = 'scale(1.04)' }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; e.currentTarget.style.transform = 'scale(1)' }}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              padding: '0.75rem 1.75rem',
+              borderRadius: 8,
+              background: 'transparent',
+              color: 'rgba(255,255,255,0.7)',
+              fontFamily: 'var(--font-syne)',
+              fontWeight: 600,
+              fontSize: '0.85rem',
+              textDecoration: 'none',
+              letterSpacing: '-0.01em',
+              border: '1px solid rgba(255,255,255,0.12)',
+              transition: 'border-color 0.2s, color 0.2s, transform 0.2s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; e.currentTarget.style.color = 'rgba(255,255,255,0.7)'; e.currentTarget.style.transform = 'translateY(0)' }}
           >
-            Falar no WhatsApp →
+            Falar no WhatsApp
           </a>
         </div>
 
-        {/* Scroll hint */}
-        <div style={{ position: 'absolute', bottom: 32, left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, opacity: 0.35, animation: 'fadeUp 1s ease 1.8s both', }}>
-          <span style={{ fontFamily: 'var(--font-manrope)', fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>scroll</span>
-          <div style={{ width: 1, height: 36, background: 'linear-gradient(to bottom, #fff, transparent)', animation: 'scrollLine 1.5s ease-in-out infinite' }} />
+        {/* Stats row */}
+        <div style={{
+          display: 'flex',
+          gap: 'clamp(2rem, 5vw, 4rem)',
+          marginTop: '2rem',
+          paddingTop: '2rem',
+          borderTop: '1px solid rgba(255,255,255,0.06)',
+        }}>
+          {[
+            { value: '5', label: 'sites no portfólio' },
+            { value: '7d', label: 'prazo médio' },
+            { value: '100%', label: 'mobile-first' },
+          ].map(({ value, label }) => (
+            <div key={label} style={{ textAlign: 'center' }}>
+              <div style={{
+                fontFamily: 'var(--font-syne)',
+                fontWeight: 800,
+                fontSize: 'clamp(1.3rem, 2.5vw, 1.8rem)',
+                color: '#fff',
+                letterSpacing: '-0.03em',
+                lineHeight: 1,
+                marginBottom: '0.3rem',
+              }}>
+                {value}
+              </div>
+              <div style={{
+                fontFamily: 'var(--font-manrope)',
+                fontWeight: 300,
+                fontSize: '0.7rem',
+                color: 'rgba(255,255,255,0.35)',
+                letterSpacing: '0.04em',
+                textTransform: 'uppercase',
+              }}>
+                {label}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* ── FOOTER ─────────────────────────────────────────────── */}
-      <footer style={{ position: 'relative', zIndex: 10, textAlign: 'center', padding: '3rem clamp(1.5rem, 5vw, 4rem)', borderTop: '1px solid rgba(255,255,255,0.06)', }}>
-        <p style={{ fontFamily: 'var(--font-manrope)', fontWeight: 300, fontSize: '0.8rem', color: 'rgba(255,255,255,0.3)', margin: 0, }}>
+      {/* Footer */}
+      <footer style={{
+        position: 'relative',
+        zIndex: 10,
+        textAlign: 'center',
+        padding: '2rem clamp(1.5rem, 6vw, 5rem)',
+        borderTop: '1px solid rgba(255,255,255,0.05)',
+      }}>
+        <p style={{
+          fontFamily: 'var(--font-manrope)',
+          fontWeight: 300,
+          fontSize: '0.75rem',
+          color: 'rgba(255,255,255,0.2)',
+          margin: 0,
+          letterSpacing: '0.02em',
+        }}>
           © 2025 DuduStudio · Feito com atenção aos detalhes
         </p>
       </footer>
 
       <style>{`
-        @keyframes pageIn {
-          from { opacity: 0; transform: translateY(16px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
         @keyframes pageOut {
           from { opacity: 1; transform: translateY(0); }
-          to   { opacity: 0; transform: translateY(-12px); }
-        }
-        @keyframes blob1 {
-          0%,100% { border-radius:60% 40% 70% 30%/50% 60% 40% 70%; transform:translate(0,0) scale(1); }
-          33%      { border-radius:40% 60% 30% 70%/60% 40% 70% 30%; transform:translate(3vw,2vw) scale(1.05); }
-          66%      { border-radius:70% 30% 60% 40%/40% 70% 30% 60%; transform:translate(-2vw,4vw) scale(0.95); }
-        }
-        @keyframes blob2 {
-          0%,100% { border-radius:40% 60% 30% 70%/70% 30% 60% 40%; transform:translate(0,0) scale(1); }
-          33%      { border-radius:60% 40% 70% 30%/30% 70% 40% 60%; transform:translate(-4vw,2vw) scale(1.08); }
-          66%      { border-radius:30% 70% 50% 50%/50% 50% 70% 30%; transform:translate(2vw,-3vw) scale(0.92); }
-        }
-        @keyframes blob3 {
-          0%,100% { border-radius:70% 30% 50% 50%/30% 70% 50% 50%; transform:translate(0,0) scale(1); }
-          50%      { border-radius:30% 70% 40% 60%/60% 40% 70% 30%; transform:translate(-3vw,-2vw) scale(1.1); }
-        }
-        @keyframes pulse {
-          0%,100% { opacity:1; transform:scale(1); }
-          50%      { opacity:0.4; transform:scale(0.7); }
-        }
-        @keyframes fadeUp {
-          from { opacity:0; transform:translateY(10px); }
-          to   { opacity:1; transform:translateY(0); }
-        }
-        @keyframes scrollLine {
-          0%   { opacity:0; transform:scaleY(0); transform-origin:top; }
-          50%  { opacity:1; transform:scaleY(1); transform-origin:top; }
-          100% { opacity:0; transform:scaleY(1); transform-origin:bottom; }
+          to   { opacity: 0; transform: translateY(-8px); }
         }
       `}</style>
     </div>
