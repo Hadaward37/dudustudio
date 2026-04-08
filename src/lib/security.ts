@@ -26,7 +26,7 @@ export function createWhatsAppLink(
 
   // Valida que é um número válido (10-13 dígitos)
   if (cleanNumber.length < 10 || cleanNumber.length > 13) {
-    logSecurityEvent('invalid_input', 'whatsapp', `Número inválido: ${number}`)
+    logSecurityEvent('invalid_input', 'whatsapp', { details: `Número inválido: ${number}` })
     return '#'
   }
 
@@ -91,7 +91,7 @@ export function checkRateLimit(
   if (entry.attempts.length >= maxAttempts) {
     entry.blocked = true
     entry.blockedUntil = now + blockDurationMs
-    logSecurityEvent('rate_limit_triggered', key, `Bloqueado após ${maxAttempts} tentativas`)
+    logSecurityEvent('rate_limit_triggered', key, { details: `Bloqueado após ${maxAttempts} tentativas` })
     return {
       allowed: false,
       remainingAttempts: 0,

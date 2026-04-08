@@ -155,6 +155,25 @@ export default function Pricing() {
                     Ver demo →
                   </Link>
                 )}
+
+                {/* DuduShield badge */}
+                <div
+                  style={{
+                    borderTop: "1px solid rgba(255,255,255,0.06)",
+                    paddingTop: "1rem",
+                    marginTop: "0.25rem",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    fontSize: "11px",
+                    color: "rgba(255,255,255,0.3)",
+                    fontFamily: "monospace",
+                  }}
+                >
+                  <span>🔒</span>
+                  <span>DuduShield™ incluso</span>
+                </div>
+
                 <a
                   href={`${WA}?text=${encodeURIComponent(`Olá! Quero o Plano ${plan.name} — R$ ${plan.price.toLocaleString("pt-BR")}`)}`}
                   target="_blank"
@@ -168,23 +187,6 @@ export default function Pricing() {
                 >
                   {plan.cta} →
                 </a>
-              </div>
-
-              {/* Badge segurança */}
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "6px",
-                  marginTop: "12px",
-                  fontSize: "11px",
-                  color: "rgba(255,255,255,0.25)",
-                  fontFamily: "var(--font-mono, monospace)",
-                }}
-              >
-                <span>🔒</span>
-                <span>Site entregue com segurança profissional inclusa</span>
               </div>
             </div>
           ))}
