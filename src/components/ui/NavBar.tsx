@@ -54,19 +54,20 @@ export default function NavBar() {
             { href: "/#how-it-works", label: "Como funciona"  },
             { href: "/#pricing",      label: "Preços"         },
             { href: "/#faq",          label: "FAQ"            },
+            { href: "/dudushield",    label: "DuduShield™"    },
           ].map(({ href, label }) => (
             <Link
               key={href}
               href={href}
               className="px-4 py-1.5 rounded-full text-sm transition-all duration-200 hover:text-white"
-              style={{ color: "rgba(255,255,255,0.5)" }}
+              style={{ color: href === "/dudushield" ? "rgba(139,92,246,0.8)" : "rgba(255,255,255,0.5)" }}
               onMouseEnter={e => {
-                (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.06)";
-                (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.9)";
+                (e.currentTarget as HTMLElement).style.background = href === "/dudushield" ? "rgba(139,92,246,0.1)" : "rgba(255,255,255,0.06)";
+                (e.currentTarget as HTMLElement).style.color = href === "/dudushield" ? "#a78bfa" : "rgba(255,255,255,0.9)";
               }}
               onMouseLeave={e => {
                 (e.currentTarget as HTMLElement).style.background = "transparent";
-                (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.5)";
+                (e.currentTarget as HTMLElement).style.color = href === "/dudushield" ? "rgba(139,92,246,0.8)" : "rgba(255,255,255,0.5)";
               }}
             >
               {label}
@@ -124,13 +125,14 @@ export default function NavBar() {
             { href: "/#how-it-works", label: "Como funciona"  },
             { href: "/#pricing",      label: "Preços"         },
             { href: "/#faq",          label: "FAQ"            },
+            { href: "/dudushield",    label: "DuduShield™"    },
           ].map(({ href, label }) => (
             <Link
               key={href}
               href={href}
               onClick={() => setMobileOpen(false)}
               className="rounded-lg px-4 py-2.5 text-sm transition-colors hover:text-white"
-              style={{ color: "rgba(255,255,255,0.55)" }}
+              style={{ color: href === "/dudushield" ? "rgba(139,92,246,0.8)" : "rgba(255,255,255,0.55)" }}
             >
               {label}
             </Link>
