@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, useCallback } from 'react'
+import Image from 'next/image'
 import { Rajdhani, Barlow, Space_Mono } from 'next/font/google'
 
 const rajdhani = Rajdhani({ subsets: ['latin'], weight: ['600', '700'], variable: '--font-rajdhani' })
@@ -214,10 +215,13 @@ export default function JREsteticaPage() {
         borderBottom: scrolled ? `1px solid ${C.border}` : 'none',
         transition: 'all 0.4s',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-          <span style={{ fontFamily: 'var(--font-rajdhani)', fontWeight: 700, fontSize: '1.5rem', color: C.red, letterSpacing: '-0.02em' }}>JR</span>
-          <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 300, fontSize: '0.8rem', color: C.prata, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Estética Automotiva</span>
-        </div>
+        <Image
+          src="/logos/jr-estetica.jpg"
+          alt="JR Estética Automotiva"
+          width={160}
+          height={60}
+          style={{ objectFit: 'contain' }}
+        />
 
         {/* Desktop nav */}
         <div className="jr-nav-desktop" style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
@@ -581,10 +585,13 @@ export default function JREsteticaPage() {
       <footer style={{ background: '#000', padding: 'clamp(2.5rem,5vw,4rem) clamp(1.25rem,6vw,5rem)', borderTop: `1px solid rgba(255,255,255,0.05)` }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.5rem', maxWidth: 1200, margin: '0 auto', marginBottom: '2rem' }}>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
-              <span style={{ fontFamily: 'var(--font-rajdhani)', fontWeight: 700, fontSize: '1.5rem', color: C.red }}>JR</span>
-              <span style={{ fontFamily: 'var(--font-barlow)', fontWeight: 300, fontSize: '0.78rem', color: C.prata, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Estética Automotiva</span>
-            </div>
+            <Image
+              src="/logos/jr-estetica.jpg"
+              alt="JR Estética Automotiva"
+              width={160}
+              height={60}
+              style={{ objectFit: 'contain', marginBottom: '0.4rem' }}
+            />
             <p style={{ fontFamily: 'var(--font-barlow)', fontWeight: 300, fontSize: '0.78rem', color: C.muted, margin: 0 }}>
               Detalhamento premium. Resultado garantido.
             </p>
