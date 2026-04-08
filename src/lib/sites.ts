@@ -2,7 +2,7 @@
 // Cada site tem: nome, slug, categoria, preço, campos de negócio e tags visuais.
 // Este array é a fonte única de verdade — usado no hub (home) e nos cards.
 
-export type SiteCategory = "Restaurante" | "Saúde" | "E-commerce" | "Serviços" | "Confeitaria" | "Petshop";
+export type SiteCategory = "Restaurante" | "Saúde" | "E-commerce" | "Serviços" | "Confeitaria" | "Petshop" | "Automotivo";
 
 export interface Site {
   id: string;
@@ -133,6 +133,30 @@ export const sites: Site[] = [
       "Landing page dark premium para petshops e clínicas veterinárias. Visual de startup tech com animações exclusivas, tilt 3D e CTA direto pelo WhatsApp.",
     tags: ["Dark Premium", "Animações", "WhatsApp", "Startup"],
     thumbnail: "/assets/thumbnails/petshop.jpg",
+    featured: true,
+  },
+  {
+    id: "estetica-automotiva",
+    name: "JR Estética Automotiva",
+    slug: "landing/estetica-automotiva",
+    category: "Automotivo",
+    price: 1200,
+    whatsappNumber: "5511999999999",
+    deliveryDays: 5,
+    includes: [
+      "Design premium dark",
+      "Mobile 100%",
+      "Seção de serviços",
+      "Galeria antes/depois",
+      "CTAs via WhatsApp",
+      "SEO local",
+      "Deploy + domínio",
+      "30 dias de suporte",
+    ],
+    description:
+      "Landing page dark premium para estéticas automotivas. Visual agressivo em preto e vermelho com seção de serviços, galeria antes/depois e agendamento via WhatsApp.",
+    tags: ["Dark Premium", "Automotivo", "WhatsApp", "Before/After"],
+    thumbnail: "/assets/thumbnails/estetica-automotiva.jpg",
     featured: true,
   },
 ];
