@@ -28,8 +28,6 @@ const C = {
   borderPrata: 'rgba(192,192,192,0.10)',
 }
 
-const lerp = (a: number, b: number, t: number) => a + (b - a) * t
-
 // ─── Hook: scroll reveal ──────────────────────────────────────────────────────
 function useReveal() {
   useEffect(() => {
@@ -127,41 +125,12 @@ export default function JREsteticaPage() {
   const [hovService, setHovService] = useState<number | null>(null)
   const [hovDepo, setHovDepo] = useState<number | null>(null)
 
-  // Custom cursor
-  const dotRef = useRef<HTMLDivElement>(null)
-  const ringRef = useRef<HTMLDivElement>(null)
-  const mouseRef = useRef({ x: 0, y: 0 })
-  const ringPos = useRef({ x: 0, y: 0 })
-  const rafCursor = useRef<number>(0)
-  const onCta = useRef(false)
-
   useReveal()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => { mouseRef.current = { x: e.clientX, y: e.clientY } }
-    window.addEventListener('mousemove', onMove)
-    const animate = () => {
-      if (dotRef.current) {
-        dotRef.current.style.left = `${mouseRef.current.x}px`
-        dotRef.current.style.top = `${mouseRef.current.y}px`
-        dotRef.current.style.background = onCta.current ? '#fff' : C.red
-      }
-      ringPos.current.x = lerp(ringPos.current.x, mouseRef.current.x, 0.1)
-      ringPos.current.y = lerp(ringPos.current.y, mouseRef.current.y, 0.1)
-      if (ringRef.current) {
-        ringRef.current.style.left = `${ringPos.current.x}px`
-        ringRef.current.style.top = `${ringPos.current.y}px`
-      }
-      rafCursor.current = requestAnimationFrame(animate)
-    }
-    rafCursor.current = requestAnimationFrame(animate)
-    return () => { window.removeEventListener('mousemove', onMove); cancelAnimationFrame(rafCursor.current) }
   }, [])
 
   const scrollTo = useCallback((id: string) => {
@@ -178,26 +147,20 @@ export default function JREsteticaPage() {
   return (
     <div
       className={`${rajdhani.variable} ${barlow.variable} ${spaceMono.variable}`}
-      style={{ background: C.bg, color: C.text, fontFamily: 'var(--font-barlow)', cursor: 'none', overflowX: 'hidden' }}
+      style={{ background: C.bg, color: C.text, fontFamily: 'var(--font-barlow)', overflowX: 'hidden' }}
     >
-      {/* ── Custom cursor ── */}
-      <div ref={dotRef} style={{ position: 'fixed', width: 7, height: 7, borderRadius: '50%', background: C.red, pointerEvents: 'none', zIndex: 9999, transform: 'translate(-50%,-50%)', transition: 'background 0.2s' }} />
-      <div ref={ringRef} style={{ position: 'fixed', width: 30, height: 30, borderRadius: '50%', border: `1.5px solid ${C.prata}`, opacity: 0.5, pointerEvents: 'none', zIndex: 9998, transform: 'translate(-50%,-50%)' }} />
-
       {/* ── WhatsApp flutuante ── */}
       <a
         href={waLink(MSG_AGENDAR)}
         target="_blank"
         rel="noopener noreferrer"
-        onMouseEnter={() => { onCta.current = true }}
-        onMouseLeave={() => { onCta.current = false }}
         style={{
           position: 'fixed', bottom: 28, right: 28, zIndex: 500,
           display: 'flex', alignItems: 'center', gap: '0.5rem',
           background: '#25D366', color: '#fff',
           fontFamily: 'var(--font-barlow)', fontWeight: 600, fontSize: '0.85rem',
           padding: '0.75rem 1.25rem', borderRadius: 0, textDecoration: 'none',
-          cursor: 'none', letterSpacing: '0.01em',
+          cursor: 'pointer', letterSpacing: '0.01em',
           animation: 'pulse-btn 2.5s ease-in-out infinite',
           boxShadow: '0 4px 24px rgba(37,211,102,0.3)',
         }}
@@ -207,7 +170,7 @@ export default function JREsteticaPage() {
 
       {/* ── NAV ── */}
       <nav style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 200,
+        position: 'fixed', top: 44, left: 0, right: 0, zIndex: 200,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '0 clamp(1.25rem,5vw,4rem)', height: 64,
         background: scrolled ? 'rgba(5,5,5,0.95)' : 'transparent',
@@ -218,17 +181,17 @@ export default function JREsteticaPage() {
         <Image
           src="/logos/jr-estetica.jpg"
           alt="JR Estética Automotiva"
-          width={160}
-          height={60}
-          style={{ objectFit: 'contain' }}
+          width={200}
+          height={72}
+          style={{ objectFit: 'contain', mixBlendMode: 'screen' }}
         />
 
         {/* Desktop nav */}
         <div className="jr-nav-desktop" style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
           {['Serviços', 'Galeria', 'Depoimentos', 'Contato'].map(l => (
             <button key={l} onClick={() => scrollTo(l.toLowerCase())}
-              onMouseEnter={() => { onCta.current = false }}
-              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 400, fontSize: '0.82rem', color: C.muted, background: 'none', border: 'none', cursor: 'none', letterSpacing: '0.04em', textTransform: 'uppercase', transition: 'color 0.2s' }}
+              onMouseEnter={() => {  }}
+              style={{ fontFamily: 'var(--font-barlow)', fontWeight: 400, fontSize: '0.82rem', color: C.muted, background: 'none', border: 'none', cursor: 'pointer', letterSpacing: '0.04em', textTransform: 'uppercase', transition: 'color 0.2s' }}
               onMouseLeave={e => (e.currentTarget.style.color = C.muted)}
               onFocus={e => (e.currentTarget.style.color = '#fff')}
             >
@@ -239,9 +202,9 @@ export default function JREsteticaPage() {
             href={waLink(MSG_AGENDAR)}
             target="_blank"
             rel="noopener noreferrer"
-            onMouseEnter={() => { onCta.current = true }}
-            onMouseLeave={() => { onCta.current = false }}
-            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 500, fontSize: '0.82rem', color: '#fff', background: C.red, padding: '0.5rem 1.2rem', textDecoration: 'none', cursor: 'none', letterSpacing: '0.04em', textTransform: 'uppercase', transition: 'background 0.2s' }}
+            onMouseEnter={() => {  }}
+            onMouseLeave={() => {  }}
+            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 500, fontSize: '0.82rem', color: '#fff', background: C.red, padding: '0.5rem 1.2rem', textDecoration: 'none', cursor: 'pointer', letterSpacing: '0.04em', textTransform: 'uppercase', transition: 'background 0.2s' }}
           >
             Agendar agora
           </a>
@@ -251,7 +214,7 @@ export default function JREsteticaPage() {
         <button
           className="jr-hamburger"
           onClick={() => setMenuOpen(o => !o)}
-          style={{ background: 'none', border: 'none', cursor: 'none', display: 'none', flexDirection: 'column', gap: 5, padding: 4 }}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'none', flexDirection: 'column', gap: 5, padding: 4 }}
         >
           {[0, 1, 2].map(i => (
             <span key={i} style={{ display: 'block', width: 22, height: 2, background: menuOpen ? C.red : C.prata, transition: 'background 0.2s' }} />
@@ -264,12 +227,12 @@ export default function JREsteticaPage() {
         <div style={{ position: 'fixed', inset: 0, zIndex: 150, background: 'rgba(5,5,5,0.98)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '2rem' }}>
           {['Serviços', 'Galeria', 'Depoimentos', 'Contato'].map(l => (
             <button key={l} onClick={() => scrollTo(l.toLowerCase())}
-              style={{ fontFamily: 'var(--font-rajdhani)', fontWeight: 700, fontSize: '2rem', color: '#fff', background: 'none', border: 'none', cursor: 'none', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+              style={{ fontFamily: 'var(--font-rajdhani)', fontWeight: 700, fontSize: '2rem', color: '#fff', background: 'none', border: 'none', cursor: 'pointer', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
               {l}
             </button>
           ))}
           <a href={waLink(MSG_AGENDAR)} target="_blank" rel="noopener noreferrer"
-            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 600, fontSize: '1rem', color: '#fff', background: C.red, padding: '0.85rem 2rem', textDecoration: 'none', cursor: 'none', marginTop: '1rem' }}>
+            style={{ fontFamily: 'var(--font-barlow)', fontWeight: 600, fontSize: '1rem', color: '#fff', background: C.red, padding: '0.85rem 2rem', textDecoration: 'none', cursor: 'pointer', marginTop: '1rem' }}>
             Agendar agora
           </a>
         </div>
@@ -340,9 +303,9 @@ export default function JREsteticaPage() {
                 href={waLink(MSG_AGENDAR)}
                 target="_blank"
                 rel="noopener noreferrer"
-                onMouseEnter={e => { onCta.current = true; e.currentTarget.style.background = C.redVivo; e.currentTarget.style.boxShadow = '0 0 30px rgba(204,0,0,0.5)' }}
-                onMouseLeave={e => { onCta.current = false; e.currentTarget.style.background = C.red; e.currentTarget.style.boxShadow = 'none' }}
-                style={{ fontFamily: 'var(--font-barlow)', fontWeight: 500, fontSize: '0.95rem', color: '#fff', background: C.red, padding: '1rem 2.5rem', textDecoration: 'none', cursor: 'none', letterSpacing: '0.02em', transition: 'background 0.2s, box-shadow 0.2s', display: 'inline-block' }}
+                onMouseEnter={e => { e.currentTarget.style.background = C.redVivo; e.currentTarget.style.boxShadow = '0 0 30px rgba(204,0,0,0.5)' }}
+                onMouseLeave={e => { e.currentTarget.style.background = C.red; e.currentTarget.style.boxShadow = 'none' }}
+                style={{ fontFamily: 'var(--font-barlow)', fontWeight: 500, fontSize: '0.95rem', color: '#fff', background: C.red, padding: '1rem 2.5rem', textDecoration: 'none', cursor: 'pointer', letterSpacing: '0.02em', transition: 'background 0.2s, box-shadow 0.2s', display: 'inline-block' }}
               >
                 Agendar Agora →
               </a>
@@ -350,7 +313,7 @@ export default function JREsteticaPage() {
                 onClick={() => scrollTo('serviços')}
                 onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(192,192,192,0.08)' }}
                 onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'transparent' }}
-                style={{ fontFamily: 'var(--font-barlow)', fontWeight: 400, fontSize: '0.95rem', color: C.prata, background: 'transparent', border: `1px solid ${C.prata}`, padding: '1rem 2rem', cursor: 'none', letterSpacing: '0.02em', transition: 'background 0.2s' }}
+                style={{ fontFamily: 'var(--font-barlow)', fontWeight: 400, fontSize: '0.95rem', color: C.prata, background: 'transparent', border: `1px solid ${C.prata}`, padding: '1rem 2rem', cursor: 'pointer', letterSpacing: '0.02em', transition: 'background 0.2s' }}
               >
                 Ver serviços ↓
               </button>
@@ -379,9 +342,9 @@ export default function JREsteticaPage() {
               href={waLink(MSG_AGENDAR)}
               target="_blank"
               rel="noopener noreferrer"
-              onMouseEnter={() => { onCta.current = true }}
-              onMouseLeave={() => { onCta.current = false }}
-              style={{ display: 'block', textAlign: 'center', fontFamily: 'var(--font-barlow)', fontWeight: 600, fontSize: '0.82rem', color: '#fff', background: C.red, padding: '0.65rem 0', textDecoration: 'none', cursor: 'none', letterSpacing: '0.04em', textTransform: 'uppercase', transition: 'background 0.2s' }}
+              onMouseEnter={() => {  }}
+              onMouseLeave={() => {  }}
+              style={{ display: 'block', textAlign: 'center', fontFamily: 'var(--font-barlow)', fontWeight: 600, fontSize: '0.82rem', color: '#fff', background: C.red, padding: '0.65rem 0', textDecoration: 'none', cursor: 'pointer', letterSpacing: '0.04em', textTransform: 'uppercase', transition: 'background 0.2s' }}
             >
               Reservar horário
             </a>
@@ -421,7 +384,7 @@ export default function JREsteticaPage() {
                 borderLeft: `3px solid ${hovService === i ? C.redVivo : C.red}`,
                 borderRadius: 4,
                 padding: '1.75rem',
-                cursor: 'none',
+                cursor: 'pointer',
                 transform: hovService === i ? 'translateX(4px)' : 'translateX(0)',
                 transition: 'transform 0.25s ease, border-color 0.25s ease',
                 overflow: 'hidden',
@@ -455,7 +418,7 @@ export default function JREsteticaPage() {
             <div
               key={i}
               className="jr-reveal"
-              style={{ ...revealStyle, transitionDelay: `${i * 0.1}s`, background: C.card, borderRadius: 6, overflow: 'hidden', border: `1px solid ${C.border}`, cursor: 'none' }}
+              style={{ ...revealStyle, transitionDelay: `${i * 0.1}s`, background: C.card, borderRadius: 6, overflow: 'hidden', border: `1px solid ${C.border}`, cursor: 'pointer' }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = C.red }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = C.border }}
             >
@@ -520,7 +483,7 @@ export default function JREsteticaPage() {
                 border: `1px solid ${hovDepo === i ? C.border : C.borderPrata}`,
                 borderRadius: 6,
                 padding: '2rem',
-                cursor: 'none',
+                cursor: 'pointer',
                 overflow: 'hidden',
                 transition: 'border-color 0.25s',
               }}
@@ -557,14 +520,14 @@ export default function JREsteticaPage() {
             href={waLink(MSG_AGENDAR)}
             target="_blank"
             rel="noopener noreferrer"
-            onMouseEnter={e => { onCta.current = true; e.currentTarget.style.background = C.redVivo; e.currentTarget.style.boxShadow = '0 0 40px rgba(204,0,0,0.55)' }}
-            onMouseLeave={e => { onCta.current = false; e.currentTarget.style.background = C.red; e.currentTarget.style.boxShadow = '0 0 24px rgba(204,0,0,0.3)' }}
+            onMouseEnter={e => { e.currentTarget.style.background = C.redVivo; e.currentTarget.style.boxShadow = '0 0 40px rgba(204,0,0,0.55)' }}
+            onMouseLeave={e => { e.currentTarget.style.background = C.red; e.currentTarget.style.boxShadow = '0 0 24px rgba(204,0,0,0.3)' }}
             style={{
               display: 'inline-block',
               fontFamily: 'var(--font-barlow)', fontWeight: 600, fontSize: '1.05rem',
               color: '#fff', background: C.red,
               padding: '1.25rem 4rem',
-              textDecoration: 'none', cursor: 'none',
+              textDecoration: 'none', cursor: 'pointer',
               letterSpacing: '0.04em',
               boxShadow: '0 0 24px rgba(204,0,0,0.3)',
               animation: 'pulse-btn 2.5s ease-in-out infinite',
@@ -588,9 +551,9 @@ export default function JREsteticaPage() {
             <Image
               src="/logos/jr-estetica.jpg"
               alt="JR Estética Automotiva"
-              width={160}
-              height={60}
-              style={{ objectFit: 'contain', marginBottom: '0.4rem' }}
+              width={180}
+              height={68}
+              style={{ objectFit: 'contain', marginBottom: '0.4rem', mixBlendMode: 'screen' }}
             />
             <p style={{ fontFamily: 'var(--font-barlow)', fontWeight: 300, fontSize: '0.78rem', color: C.muted, margin: 0 }}>
               Detalhamento premium. Resultado garantido.
@@ -601,7 +564,7 @@ export default function JREsteticaPage() {
               <button
                 key={l}
                 onClick={() => l !== 'Instagram' ? scrollTo(l.toLowerCase()) : undefined}
-                style={{ fontFamily: 'var(--font-barlow)', fontWeight: 400, fontSize: '0.78rem', color: C.muted, background: 'none', border: 'none', cursor: 'none', letterSpacing: '0.04em', transition: 'color 0.2s' }}
+                style={{ fontFamily: 'var(--font-barlow)', fontWeight: 400, fontSize: '0.78rem', color: C.muted, background: 'none', border: 'none', cursor: 'pointer', letterSpacing: '0.04em', transition: 'color 0.2s' }}
                 onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
                 onMouseLeave={e => (e.currentTarget.style.color = C.muted)}
               >
