@@ -92,7 +92,7 @@ export default function SobrePage() {
             padding: 0,
           }}
         >
-          DuduStudio
+          Dudu<span style={{ color: ACCENT }}>Studio</span>
         </button>
 
         <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
@@ -306,6 +306,9 @@ export default function SobrePage() {
           from { opacity: 1; transform: translateY(0); }
           to   { opacity: 0; transform: translateY(-8px); }
         }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #00ff88; border-radius: 4px; }
       `}</style>
     </div>
   )

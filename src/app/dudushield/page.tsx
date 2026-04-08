@@ -39,7 +39,7 @@ export default function DuduShieldPage() {
       }}>
         <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: '1.1rem', color: '#ededed' }}>
-            Dudu<span style={{ color: '#8b5cf6' }}>Studio</span>
+            Dudu<span style={{ color: '#00ff88' }}>Studio</span>
           </span>
         </a>
         <a href="/#pricing" style={{
@@ -66,7 +66,7 @@ export default function DuduShieldPage() {
           top: '50%', left: '50%',
           transform: 'translate(-50%, -50%)',
           width: '600px', height: '400px',
-          background: 'radial-gradient(ellipse, rgba(139,92,246,0.12) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse, rgba(0,255,136,0.07) 0%, transparent 70%)',
           pointerEvents: 'none',
         }} />
 
@@ -76,21 +76,21 @@ export default function DuduShieldPage() {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '0.5rem',
-            background: 'rgba(139,92,246,0.1)',
-            border: '1px solid rgba(139,92,246,0.3)',
+            background: 'rgba(0,255,136,0.07)',
+            border: '1px solid rgba(0,255,136,0.25)',
             borderRadius: '999px',
             padding: '0.35rem 1rem',
             fontSize: '0.72rem',
             fontFamily: 'Space Mono, monospace',
             letterSpacing: '0.1em',
-            color: '#8b5cf6',
+            color: '#00ff88',
             marginBottom: '2rem',
           }}>
             <span style={{
               width: '6px', height: '6px',
               borderRadius: '50%',
-              background: '#8b5cf6',
-              boxShadow: '0 0 8px #8b5cf6',
+              background: '#00ff88',
+              boxShadow: '0 0 8px #00ff88',
               animation: 'pulse 2s ease-in-out infinite',
             }} />
             PROTEÇÃO ATIVA EM TODOS OS SITES
@@ -136,20 +136,20 @@ export default function DuduShieldPage() {
               fontSize: '0.9rem',
               border: 'none',
               cursor: 'pointer',
-              background: 'linear-gradient(135deg, #8b5cf6, #6d28d9)',
-              color: '#fff',
-              boxShadow: '0 0 30px rgba(139,92,246,0.3)',
+              background: '#00ff88',
+              color: '#080808',
+              boxShadow: '0 0 30px rgba(0,255,136,0.25)',
               transition: 'all 0.3s',
               fontFamily: 'Space Mono, monospace',
               letterSpacing: '0.05em',
             }}
             onMouseEnter={(e) => {
               (e.target as HTMLButtonElement).style.transform = 'translateY(-3px)'
-              ;(e.target as HTMLButtonElement).style.boxShadow = '0 0 50px rgba(139,92,246,0.5)'
+              ;(e.target as HTMLButtonElement).style.boxShadow = '0 0 50px rgba(0,255,136,0.4)'
             }}
             onMouseLeave={(e) => {
               (e.target as HTMLButtonElement).style.transform = 'translateY(0)'
-              ;(e.target as HTMLButtonElement).style.boxShadow = '0 0 30px rgba(139,92,246,0.3)'
+              ;(e.target as HTMLButtonElement).style.boxShadow = '0 0 30px rgba(0,255,136,0.25)'
             }}
           >
             💬 Quero um site protegido →
@@ -203,7 +203,7 @@ export default function DuduShieldPage() {
             fontFamily: 'Space Mono, monospace',
             fontSize: '0.65rem',
             letterSpacing: '0.3em',
-            color: '#8b5cf6',
+            color: '#00ff88',
             textTransform: 'uppercase',
             marginBottom: '1rem',
           }}>
@@ -322,7 +322,7 @@ export default function DuduShieldPage() {
                 alignItems: 'center',
               }}>
                 <span style={{ color: '#a1a1a1' }}>{row.feature}</span>
-                <span style={{ textAlign: 'center', color: row.us ? '#8b5cf6' : '#555' }}>
+                <span style={{ textAlign: 'center', color: row.us ? '#00ff88' : '#555' }}>
                   {row.us ? '✓ DuduStudio' : '—'}
                 </span>
                 <span style={{ textAlign: 'center', color: row.them ? '#a1a1a1' : '#333' }}>
@@ -358,7 +358,7 @@ export default function DuduShieldPage() {
           top: '50%', left: '50%',
           transform: 'translate(-50%, -50%)',
           width: '500px', height: '300px',
-          background: 'radial-gradient(ellipse, rgba(139,92,246,0.08) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse, rgba(0,255,136,0.05) 0%, transparent 70%)',
           pointerEvents: 'none',
         }} />
         <div style={{ position: 'relative', zIndex: 1 }}>
@@ -371,7 +371,7 @@ export default function DuduShieldPage() {
           }}>
             Seu site merece<br />
             <span style={{
-              background: 'linear-gradient(135deg, #8b5cf6, #22d3ee)',
+              background: 'linear-gradient(135deg, #00ff88, #22d3ee)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
@@ -392,20 +392,20 @@ export default function DuduShieldPage() {
                 fontSize: '0.88rem',
                 border: 'none',
                 cursor: 'pointer',
-                background: 'linear-gradient(135deg, #8b5cf6, #6d28d9)',
-                color: '#fff',
-                boxShadow: '0 0 30px rgba(139,92,246,0.3)',
+                background: '#00ff88',
+                color: '#080808',
+                boxShadow: '0 0 30px rgba(0,255,136,0.25)',
                 fontFamily: 'Space Mono, monospace',
                 letterSpacing: '0.05em',
                 transition: 'all 0.3s',
               }}
               onMouseEnter={(e) => {
                 (e.target as HTMLButtonElement).style.transform = 'translateY(-3px)'
-                ;(e.target as HTMLButtonElement).style.boxShadow = '0 0 50px rgba(139,92,246,0.5)'
+                ;(e.target as HTMLButtonElement).style.boxShadow = '0 0 50px rgba(0,255,136,0.4)'
               }}
               onMouseLeave={(e) => {
                 (e.target as HTMLButtonElement).style.transform = 'translateY(0)'
-                ;(e.target as HTMLButtonElement).style.boxShadow = '0 0 30px rgba(139,92,246,0.3)'
+                ;(e.target as HTMLButtonElement).style.boxShadow = '0 0 30px rgba(0,255,136,0.25)'
               }}
             >
               💬 Falar no WhatsApp →
