@@ -169,6 +169,23 @@ export default function Pricing() {
                   {plan.cta} →
                 </a>
               </div>
+
+              {/* Badge segurança */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "6px",
+                  marginTop: "12px",
+                  fontSize: "11px",
+                  color: "rgba(255,255,255,0.25)",
+                  fontFamily: "var(--font-mono, monospace)",
+                }}
+              >
+                <span>🔒</span>
+                <span>Site entregue com segurança profissional inclusa</span>
+              </div>
             </div>
           ))}
         </div>

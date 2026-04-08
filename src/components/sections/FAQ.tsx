@@ -27,6 +27,10 @@ const faqs = [
     a: "Design, desenvolvimento, deploy, domínio por 1 ano, SSL, SEO técnico, Google Analytics e suporte pós-lançamento.",
   },
   {
+    q: "O site tem proteção de segurança?",
+    a: "Sim. Todo site entregue pelo DuduStudio inclui proteção profissional: HTTPS forçado, cabeçalhos de segurança (CSP, HSTS), proteção contra ataques XSS e clickjacking, e rate limiting nos formulários. A mesma estrutura usada por empresas como Vercel e Stripe.",
+  },
+  {
     q: "E depois do suporte, o que acontece?",
     a: "O site continua no ar normalmente. Temos dois planos:\n\nHospedagem Simples — R$ 390/mês\nMantém seu site no ar com SSL e backup. Sem alterações inclusas.\n\nManutenção Ativa — R$ 690/mês\nHospedagem + até 2 alterações simples por mês (troca de foto ou texto) com prazo de 5 dias úteis.\n\nAlterações avulsas fora do plano:\nTroca de foto ou texto — R$ 80 · Nova seção — R$ 350 · Novo produto no cardápio — R$ 50 por item",
   },
