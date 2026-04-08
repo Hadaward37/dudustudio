@@ -27,12 +27,8 @@ const faqs = [
     a: "Design, desenvolvimento, deploy, domínio por 1 ano, SSL, SEO técnico, Google Analytics e suporte pós-lançamento.",
   },
   {
-    q: "O site tem proteção de segurança?",
-    a: "Sim. Todo site entregue pelo DuduStudio inclui proteção profissional: HTTPS forçado, cabeçalhos de segurança (CSP, HSTS), proteção contra ataques XSS e clickjacking, e rate limiting nos formulários. A mesma estrutura usada por empresas como Vercel e Stripe.",
-  },
-  {
     q: "Os sites têm proteção de segurança?",
-    a: "Sim. Todo site entregue inclui o DuduShield™ — nosso sistema proprietário de proteção. Garante HTTPS forçado, proteção contra XSS e clickjacking, rate limiting nos botões de contato e bloqueio de cópia não autorizada. A mesma estrutura usada por Vercel e Stripe.",
+    a: "Sim. Todo site entregue inclui o DuduShield™ — sistema proprietário de proteção do DuduStudio. Garante HTTPS forçado, proteção contra XSS e clickjacking, rate limiting nos botões de contato, fingerprint de dispositivos suspeitos e bloqueio de cópia não autorizada.",
   },
   {
     q: "E depois do suporte, o que acontece?",

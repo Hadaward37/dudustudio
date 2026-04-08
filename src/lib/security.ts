@@ -1,4 +1,4 @@
-import { logSecurityEvent } from './securityLogger'
+import { generateFingerprint, logSecurityEvent } from './securityLogger'
 
 // Sanitiza strings para prevenir XSS
 export function sanitizeString(str: string): string {
@@ -45,7 +45,7 @@ export function isValidPhone(phone: string): boolean {
   return cleaned.length >= 10 && cleaned.length <= 11
 }
 
-// Rate limiter client-side melhorado (com bloqueio temporário)
+// Rate limiter client-side com fingerprint por dispositivo
 interface RateLimitEntry {
   attempts: number[]
   blocked: boolean
@@ -60,15 +60,16 @@ export function checkRateLimit(
   windowMs: number = 60000,
   blockDurationMs: number = 300000,
 ): { allowed: boolean; remainingAttempts: number; message?: string } {
+  const fingerprint = generateFingerprint()
+  const compositeKey = `${key}::${fingerprint}`
   const now = Date.now()
 
-  if (!rateLimitStore[key]) {
-    rateLimitStore[key] = { attempts: [], blocked: false }
+  if (!rateLimitStore[compositeKey]) {
+    rateLimitStore[compositeKey] = { attempts: [], blocked: false }
   }
 
-  const entry = rateLimitStore[key]
+  const entry = rateLimitStore[compositeKey]
 
-  // Verifica se está bloqueado
   if (entry.blocked && entry.blockedUntil) {
     if (now < entry.blockedUntil) {
       const minutesLeft = Math.ceil((entry.blockedUntil - now) / 60000)
@@ -78,20 +79,21 @@ export function checkRateLimit(
         message: `Aguarde ${minutesLeft} minuto(s) antes de tentar novamente.`,
       }
     } else {
-      // Desbloqueio automático
       entry.blocked = false
       entry.blockedUntil = undefined
       entry.attempts = []
     }
   }
 
-  // Remove tentativas fora da janela
   entry.attempts = entry.attempts.filter((t) => now - t < windowMs)
 
   if (entry.attempts.length >= maxAttempts) {
     entry.blocked = true
     entry.blockedUntil = now + blockDurationMs
-    logSecurityEvent('rate_limit_triggered', key, { details: `Bloqueado após ${maxAttempts} tentativas` })
+    logSecurityEvent('rate_limit_triggered', key, {
+      details: `Fingerprint: ${fingerprint} — bloqueado após ${maxAttempts} tentativas`,
+      source: 'frontend',
+    })
     return {
       allowed: false,
       remainingAttempts: 0,
@@ -100,7 +102,8 @@ export function checkRateLimit(
   }
 
   entry.attempts.push(now)
-  const remaining = maxAttempts - entry.attempts.length
-
-  return { allowed: true, remainingAttempts: remaining }
+  return {
+    allowed: true,
+    remainingAttempts: maxAttempts - entry.attempts.length,
+  }
 }
