@@ -98,25 +98,26 @@ export default function SobrePage() {
         <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
           {[
             { label: 'Trabalhos', action: () => navigateTo('/trabalhos') },
+            { label: 'DuduShield™', action: () => navigateTo('/dudushield'), accent: true },
             { label: 'Contato', action: () => { window.location.href = 'mailto:dudutorro1@gmail.com' } },
-          ].map(({ label, action }) => (
+          ].map(({ label, action, accent }) => (
             <button
               key={label}
               onClick={action}
               style={{
                 fontFamily: 'var(--font-manrope)',
-                fontWeight: 400,
+                fontWeight: accent ? 600 : 400,
                 fontSize: '0.82rem',
-                color: 'rgba(255,255,255,0.5)',
+                color: accent ? ACCENT : 'rgba(255,255,255,0.5)',
                 background: 'none',
                 border: 'none',
                 cursor: 'pointer',
-                transition: 'color 0.2s',
+                transition: 'color 0.2s, opacity 0.2s',
                 letterSpacing: '0.02em',
                 padding: 0,
               }}
-              onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.5)')}
+              onMouseEnter={e => (e.currentTarget.style.opacity = '0.75')}
+              onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
             >
               {label}
             </button>
