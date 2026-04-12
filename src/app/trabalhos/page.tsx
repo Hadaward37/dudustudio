@@ -74,7 +74,6 @@ export default function TrabalhosPagina() {
         color: '#fff',
         fontFamily: 'var(--font-manrope), sans-serif',
         position: 'relative',
-        overflowX: 'hidden',
         animation: leaving ? 'pageOut 0.32s ease forwards' : undefined,
       }}
     >

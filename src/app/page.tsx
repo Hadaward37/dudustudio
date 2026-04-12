@@ -386,6 +386,16 @@ export default function HomePage() {
           .hero-stats { flex-wrap: wrap; gap: 1rem; justify-content: center; }
         }
         @media (max-width: 480px) {
+          /* Oculta cards extras de portfólio — evita overflow em 100vh */
+          .portfolio-grid .portfolio-item:nth-child(n+5) { display: none; }
+          .portfolio-ver-todos {
+            display: flex !important; align-items: center; justify-content: center;
+            padding: 0.6rem 1.4rem; border-radius: 999px;
+            border: 1px solid rgba(37,99,235,0.4); color: #2563EB;
+            font-family: var(--font-head); font-size: 0.78rem; font-weight: 600;
+            text-decoration: none; letter-spacing: 0.05em;
+            background: rgba(37,99,235,0.07); margin: 0.5rem auto 0; width: fit-content;
+          }
           .floating-shapes { display: none; }
           .hero-title { font-size: clamp(2rem, 9vw, 3rem) !important; }
           .hero-subtitle { font-size: 0.9rem !important; max-width: 100% !important; }
@@ -584,7 +594,7 @@ export default function HomePage() {
               Nossos <span className="gradient-text">demos</span>
             </h2>
           </div>
-          <div className="portfolio-grid">
+          <div className="portfolio-grid" style={{ marginBottom: '0.75rem' }}>
             {[
               { title: 'Pizzaria Gustoso', cat: 'Restaurante',  href: '/demo/pizzaria',                      v: 'v1' },
               { title: 'Clínica Vita',     cat: 'Saúde',        href: '/demo/clinica',                       v: 'v2' },
@@ -593,7 +603,7 @@ export default function HomePage() {
               { title: 'Pata Verde Pet',   cat: 'Landing Page', href: '/demo/landing/petshop',               v: 'v5' },
               { title: 'JR Estética',      cat: 'Landing Page', href: '/demo/landing/estetica-automotiva',   v: 'v6' },
             ].map((p, i) => (
-              <a key={i} href={p.href} className="fp-card portfolio-item">
+              <a key={i} href={p.href} className={`fp-card portfolio-item portfolio-item-${i + 1}`}>
                 <div className="portfolio-card">
                   <div className={`portfolio-visual ${p.v}`}>
                     <div className="p-shape p-cube" />
@@ -608,6 +618,10 @@ export default function HomePage() {
               </a>
             ))}
           </div>
+          {/* Link "Ver todos" visível só no mobile (cards 5-6 ficam ocultos) */}
+          <a href="/trabalhos" className="portfolio-ver-todos" style={{ display: 'none' }}>
+            Ver todos os demos →
+          </a>
         </div>
       </section>
 
