@@ -89,10 +89,10 @@ export function NavBar() {
           className="nav-links-desktop"
         >
           {[
-            { label: 'Sobre', href: '#sobre' },
-            { label: 'Serviços', href: '#servicos' },
+            { label: 'Sobre', href: '/#sobre' },
+            { label: 'Serviços', href: '/#servicos' },
             { label: 'Demos', href: '/trabalhos' },
-            { label: 'Processo', href: '#processo' },
+            { label: 'Processo', href: '/#processo' },
             { label: 'DuduShield™', href: '/dudushield' },
           ].map(link => (
             <li key={link.label}>

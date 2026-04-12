@@ -460,7 +460,7 @@ export default function HomePage() {
       {/* ══════════════════════════════════════════════════════════════════════
           SEÇÃO 2 — SOBRE
       ══════════════════════════════════════════════════════════════════════ */}
-      <section className="fp-section" style={{ zIndex: 2, background: 'rgba(10,10,18,0.55)' }}>
+      <section id="sobre" className="fp-section" style={{ zIndex: 2, background: 'rgba(10,10,18,0.55)' }}>
         <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 24px', position: 'relative', zIndex: 3, width: '100%' }}>
           <div className="sobre-grid">
 
@@ -525,7 +525,7 @@ export default function HomePage() {
       {/* ══════════════════════════════════════════════════════════════════════
           SEÇÃO 3 — SERVIÇOS
       ══════════════════════════════════════════════════════════════════════ */}
-      <section className="fp-section" style={{ zIndex: 2 }}>
+      <section id="servicos" className="fp-section" style={{ zIndex: 2 }}>
         <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 24px', position: 'relative', zIndex: 3, width: '100%' }}>
           <div className="section-header">
             <div className="fp-label section-tag">— Serviços</div>
@@ -594,7 +594,7 @@ export default function HomePage() {
       {/* ══════════════════════════════════════════════════════════════════════
           SEÇÃO 5 — PROCESSO
       ══════════════════════════════════════════════════════════════════════ */}
-      <section className="fp-section" style={{ zIndex: 2 }}>
+      <section id="processo" className="fp-section" style={{ zIndex: 2 }}>
         <div style={{ maxWidth: 800, margin: '0 auto', padding: '0 24px', position: 'relative', zIndex: 3, width: '100%' }}>
           <div className="section-header">
             <div className="fp-label section-tag">— Como trabalhamos</div>

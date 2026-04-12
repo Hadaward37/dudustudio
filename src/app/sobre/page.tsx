@@ -3,17 +3,17 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Syne, Manrope } from 'next/font/google'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const syne = Syne({ subsets: ['latin'], weight: ['400', '700', '800'], variable: '--font-syne' })
 const manrope = Manrope({ subsets: ['latin'], weight: ['300', '400', '600'], variable: '--font-manrope' })
 
-const ACCENT = '#00ff88'
+const ACCENT = '#2563EB'
 
 export default function SobrePage() {
   const router = useRouter()
-  const [scrolled, setScrolled] = useState(false)
   const [leaving, setLeaving] = useState(false)
-  const [visible, setVisible] = useState(false)
 
   const navigateTo = (href: string) => {
     setLeaving(true)
@@ -21,14 +21,24 @@ export default function SobrePage() {
   }
 
   useEffect(() => {
-    const timer = setTimeout(() => setVisible(true), 80)
-    return () => clearTimeout(timer)
-  }, [])
+    gsap.registerPlugin(ScrollTrigger)
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    // Entrada do hero
+    gsap.fromTo(
+      '.sobre-reveal',
+      { opacity: 0, y: 36 },
+      { opacity: 1, y: 0, duration: 0.8, stagger: 0.13, ease: 'power3.out', delay: 0.1 }
+    )
+
+    // Stat items
+    gsap.fromTo(
+      '.sobre-stat',
+      { opacity: 0, scale: 0.88 },
+      { opacity: 1, scale: 1, duration: 0.6, stagger: 0.1, ease: 'back.out(1.4)',
+        scrollTrigger: { trigger: '.sobre-stats', start: 'top 85%' } }
+    )
+
+    return () => { ScrollTrigger.getAll().forEach(t => t.kill()) }
   }, [])
 
   return (
@@ -44,236 +54,123 @@ export default function SobrePage() {
         animation: leaving ? 'pageOut 0.32s ease forwards' : undefined,
       }}
     >
-      {/* Subtle radial glow — static, no movement */}
+      {/* Radial glow */}
       <div style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 0,
-        pointerEvents: 'none',
+        position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none',
         background: `radial-gradient(ellipse 80% 60% at 50% -10%, ${ACCENT}0a 0%, transparent 70%)`,
       }} />
 
       {/* Fine grain */}
       <div style={{
-        position: 'fixed',
-        inset: 0,
+        position: 'fixed', inset: 0,
         backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
-        opacity: 0.025,
-        pointerEvents: 'none',
-        zIndex: 1,
+        opacity: 0.025, pointerEvents: 'none', zIndex: 1,
       }} />
-
-      {/* Nav */}
-      <nav style={{
-        position: 'fixed',
-        top: 0, left: 0, right: 0,
-        zIndex: 100,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '0 clamp(1.5rem, 6vw, 5rem)',
-        height: 60,
-        background: scrolled ? 'rgba(8,8,8,0.9)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(255,255,255,0.05)' : 'none',
-        transition: 'background 0.4s, border-color 0.4s',
-      }}>
-        <button
-          onClick={() => navigateTo('/')}
-          style={{
-            fontFamily: 'var(--font-syne)',
-            fontWeight: 800,
-            fontSize: '1rem',
-            letterSpacing: '-0.02em',
-            color: '#fff',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            padding: 0,
-          }}
-        >
-          Dudu<span style={{ color: '#2563EB' }}>Studio</span>
-        </button>
-
-        <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-          {[
-            { label: 'Trabalhos', action: () => navigateTo('/trabalhos') },
-            { label: 'DuduShield™', action: () => navigateTo('/dudushield'), accent: true },
-            { label: 'Contato', action: () => { window.location.href = 'mailto:dudutorro1@gmail.com' } },
-          ].map(({ label, action, accent }) => (
-            <button
-              key={label}
-              onClick={action}
-              style={{
-                fontFamily: 'var(--font-manrope)',
-                fontWeight: accent ? 600 : 400,
-                fontSize: '0.82rem',
-                color: accent ? ACCENT : 'rgba(255,255,255,0.5)',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                transition: 'color 0.2s, opacity 0.2s',
-                letterSpacing: '0.02em',
-                padding: 0,
-              }}
-              onMouseEnter={e => (e.currentTarget.style.opacity = '0.75')}
-              onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-      </nav>
 
       {/* ── HERO ── */}
       <section style={{
-        position: 'relative',
-        zIndex: 10,
+        position: 'relative', zIndex: 10,
         minHeight: '100dvh',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
+        display: 'flex', flexDirection: 'column',
+        alignItems: 'center', justifyContent: 'center',
         textAlign: 'center',
-        padding: '0 clamp(1.5rem, 6vw, 5rem)',
+        padding: 'calc(80px + 3rem) clamp(1.5rem, 6vw, 5rem) 4rem',
         gap: '1.75rem',
-        opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(12px)',
-        transition: 'opacity 0.7s ease, transform 0.7s ease',
       }}>
 
         {/* Eyebrow */}
-        <p style={{
-          fontFamily: 'var(--font-manrope)',
-          fontSize: '0.72rem',
-          fontWeight: 600,
-          letterSpacing: '0.14em',
-          textTransform: 'uppercase',
-          color: ACCENT,
-          margin: 0,
+        <p className="sobre-reveal" style={{
+          fontFamily: 'var(--font-manrope)', fontSize: '0.72rem', fontWeight: 600,
+          letterSpacing: '0.14em', textTransform: 'uppercase', color: ACCENT, margin: 0,
         }}>
           Estúdio Digital — Brasil
         </p>
 
         {/* Headline */}
-        <h1 style={{
-          fontFamily: 'var(--font-syne)',
-          fontWeight: 800,
-          fontSize: 'clamp(2rem, 4.5vw, 3.5rem)',
-          lineHeight: 1.1,
-          letterSpacing: '-0.03em',
-          margin: 0,
-          maxWidth: '14ch',
-          color: '#fff',
+        <h1 className="sobre-reveal" style={{
+          fontFamily: 'var(--font-syne)', fontWeight: 800,
+          fontSize: 'clamp(2rem, 4.5vw, 3.5rem)', lineHeight: 1.1,
+          letterSpacing: '-0.03em', margin: 0, maxWidth: '14ch',
         }}>
           Sites que fazem o seu cliente parar.
         </h1>
 
-        {/* Divider line */}
-        <div style={{
-          width: 40,
-          height: 1,
+        {/* Divider */}
+        <div className="sobre-reveal" style={{
+          width: 40, height: 1,
           background: `linear-gradient(to right, transparent, ${ACCENT}88, transparent)`,
         }} />
 
         {/* Subtitle */}
-        <p style={{
-          fontFamily: 'var(--font-manrope)',
-          fontWeight: 300,
-          fontSize: 'clamp(0.9rem, 1.6vw, 1.05rem)',
-          color: 'rgba(255,255,255,0.45)',
-          maxWidth: '42ch',
-          lineHeight: 1.8,
-          margin: 0,
+        <p className="sobre-reveal" style={{
+          fontFamily: 'var(--font-manrope)', fontWeight: 300,
+          fontSize: 'clamp(0.9rem, 1.6vw, 1.05rem)', color: 'rgba(255,255,255,0.45)',
+          maxWidth: '42ch', lineHeight: 1.8, margin: 0,
         }}>
           Criamos experiências digitais para pequenos negócios que querem ser levados a sério.
           Do design ao deploy, tudo em um só lugar.
         </p>
 
         {/* CTAs */}
-        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'center', marginTop: '0.5rem' }}>
+        <div className="sobre-reveal" style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'center' }}>
           <button
             onClick={() => navigateTo('/trabalhos')}
             style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              padding: '0.75rem 1.75rem',
-              borderRadius: 8,
-              background: ACCENT,
-              color: '#080808',
-              fontFamily: 'var(--font-syne)',
-              fontWeight: 700,
-              fontSize: '0.85rem',
-              border: 'none',
-              cursor: 'pointer',
-              letterSpacing: '-0.01em',
+              display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+              padding: '0.75rem 1.75rem', borderRadius: 8,
+              background: 'linear-gradient(135deg, #2563EB, #0EA5E9)',
+              color: '#fff', fontFamily: 'var(--font-syne)',
+              fontWeight: 700, fontSize: '0.85rem', border: 'none',
+              cursor: 'pointer', letterSpacing: '-0.01em',
               transition: 'opacity 0.2s, transform 0.2s',
+              boxShadow: '0 0 24px rgba(37,99,235,0.3)',
             }}
-            onMouseEnter={e => { e.currentTarget.style.opacity = '0.88'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+            onMouseEnter={e => { e.currentTarget.style.opacity = '0.88'; e.currentTarget.style.transform = 'translateY(-2px)' }}
             onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)' }}
           >
             Ver nossos trabalhos
           </button>
           <a
             href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP}`}
-            target="_blank"
-            rel="noopener noreferrer"
+            target="_blank" rel="noopener noreferrer"
             style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              padding: '0.75rem 1.75rem',
-              borderRadius: 8,
-              background: 'transparent',
-              color: 'rgba(255,255,255,0.7)',
-              fontFamily: 'var(--font-syne)',
-              fontWeight: 600,
-              fontSize: '0.85rem',
-              textDecoration: 'none',
-              letterSpacing: '-0.01em',
+              display: 'inline-flex', alignItems: 'center', gap: '0.4rem',
+              padding: '0.75rem 1.75rem', borderRadius: 8,
+              background: 'transparent', color: 'rgba(255,255,255,0.7)',
+              fontFamily: 'var(--font-syne)', fontWeight: 600, fontSize: '0.85rem',
+              textDecoration: 'none', letterSpacing: '-0.01em',
               border: '1px solid rgba(255,255,255,0.12)',
               transition: 'border-color 0.2s, color 0.2s, transform 0.2s',
             }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(37,99,235,0.5)'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.transform = 'translateY(-2px)' }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'; e.currentTarget.style.color = 'rgba(255,255,255,0.7)'; e.currentTarget.style.transform = 'translateY(0)' }}
           >
             Falar no WhatsApp
           </a>
         </div>
 
-        {/* Stats row */}
-        <div style={{
-          display: 'flex',
-          gap: 'clamp(2rem, 5vw, 4rem)',
-          marginTop: '2rem',
-          paddingTop: '2rem',
+        {/* Stats */}
+        <div className="sobre-stats" style={{
+          display: 'flex', gap: 'clamp(2rem, 5vw, 4rem)',
+          marginTop: '2rem', paddingTop: '2rem',
           borderTop: '1px solid rgba(255,255,255,0.06)',
         }}>
           {[
-            { value: '5', label: 'sites no portfólio' },
+            { value: '6', label: 'sites no portfólio' },
             { value: '7d', label: 'prazo médio' },
             { value: '100%', label: 'mobile-first' },
           ].map(({ value, label }) => (
-            <div key={label} style={{ textAlign: 'center' }}>
+            <div key={label} className="sobre-stat" style={{ textAlign: 'center' }}>
               <div style={{
-                fontFamily: 'var(--font-syne)',
-                fontWeight: 800,
-                fontSize: 'clamp(1.3rem, 2.5vw, 1.8rem)',
-                color: '#fff',
-                letterSpacing: '-0.03em',
-                lineHeight: 1,
-                marginBottom: '0.3rem',
+                fontFamily: 'var(--font-syne)', fontWeight: 800,
+                fontSize: 'clamp(1.3rem, 2.5vw, 1.8rem)', color: ACCENT,
+                letterSpacing: '-0.03em', lineHeight: 1, marginBottom: '0.3rem',
               }}>
                 {value}
               </div>
               <div style={{
-                fontFamily: 'var(--font-manrope)',
-                fontWeight: 300,
-                fontSize: '0.7rem',
-                color: 'rgba(255,255,255,0.35)',
-                letterSpacing: '0.04em',
-                textTransform: 'uppercase',
+                fontFamily: 'var(--font-manrope)', fontWeight: 300, fontSize: '0.7rem',
+                color: 'rgba(255,255,255,0.35)', letterSpacing: '0.04em', textTransform: 'uppercase',
               }}>
                 {label}
               </div>
@@ -284,19 +181,13 @@ export default function SobrePage() {
 
       {/* Footer */}
       <footer style={{
-        position: 'relative',
-        zIndex: 10,
-        textAlign: 'center',
+        position: 'relative', zIndex: 10, textAlign: 'center',
         padding: '2rem clamp(1.5rem, 6vw, 5rem)',
         borderTop: '1px solid rgba(255,255,255,0.05)',
       }}>
         <p style={{
-          fontFamily: 'var(--font-manrope)',
-          fontWeight: 300,
-          fontSize: '0.75rem',
-          color: 'rgba(255,255,255,0.2)',
-          margin: 0,
-          letterSpacing: '0.02em',
+          fontFamily: 'var(--font-manrope)', fontWeight: 300, fontSize: '0.75rem',
+          color: 'rgba(255,255,255,0.2)', margin: 0, letterSpacing: '0.02em',
         }}>
           © 2025 DuduStudio · Feito com atenção aos detalhes
         </p>
@@ -307,9 +198,10 @@ export default function SobrePage() {
           from { opacity: 1; transform: translateY(0); }
           to   { opacity: 0; transform: translateY(-8px); }
         }
+        .sobre-reveal { opacity: 0; }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #00ff88; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #2563EB; border-radius: 4px; }
       `}</style>
     </div>
   )
