@@ -394,6 +394,14 @@ export default function HomePage() {
           .hero-stats { flex-wrap: wrap; gap: 1rem; justify-content: center; }
         }
         @media (max-width: 480px) {
+          /* Serviços: grade 2×2 compacta para caber em 100vh */
+          .servicos-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 0.6rem !important; }
+          .servico-card { padding: 0.85rem !important; }
+          .servico-card p { display: none !important; }
+          .servico-tags { display: none !important; }
+          .servico-card h3 { font-size: 0.82rem !important; margin-bottom: 0.25rem !important; }
+          .servico-number { margin-bottom: 0.4rem !important; }
+          .servico-icon-wrap { margin-bottom: 0.4rem !important; }
           /* Oculta cards extras de portfólio — evita overflow em 100vh */
           .portfolio-grid .portfolio-item:nth-child(n+4) { display: none; }
           .portfolio-ver-todos {
