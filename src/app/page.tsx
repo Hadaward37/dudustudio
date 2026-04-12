@@ -383,7 +383,27 @@ export default function HomePage() {
         @media (max-width: 600px) {
           .servicos-grid  { grid-template-columns: 1fr; }
           .portfolio-grid { grid-template-columns: 1fr; }
-          .hero-stats { flex-wrap: wrap; gap: 1rem; }
+          .hero-stats { flex-wrap: wrap; gap: 1rem; justify-content: center; }
+        }
+        @media (max-width: 480px) {
+          .floating-shapes { display: none; }
+          .hero-title { font-size: clamp(2rem, 9vw, 3rem) !important; }
+          .hero-subtitle { font-size: 0.9rem !important; max-width: 100% !important; }
+          .hero-buttons { flex-direction: column; align-items: stretch; }
+          .hero-buttons .btn { justify-content: center; width: 100%; }
+          .hero-stats { flex-direction: column; align-items: center; gap: 0.75rem; }
+          .stat-divider { display: none; }
+          .fp-section { padding: 0 16px; }
+          .section-title { font-size: clamp(1.6rem, 7vw, 2.2rem) !important; }
+          .contato-form-wrap { padding: 1.5rem 1rem !important; }
+          .contato-grid { gap: 2rem; }
+          .footer-grid { grid-template-columns: 1fr !important; gap: 1.5rem; }
+          .footer-bottom { flex-direction: column; gap: 0.5rem; }
+          .sobre-grid { gap: 2rem; }
+          .servicos-grid { gap: 0.75rem; }
+          .portfolio-grid { grid-template-columns: 1fr !important; }
+          .servico-card { padding: 1.25rem; }
+          .hero-tag { font-size: 0.6rem !important; }
         }
       `}</style>
 

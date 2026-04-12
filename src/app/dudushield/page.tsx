@@ -188,7 +188,7 @@ export default function DuduShieldPage() {
       <section className="ds-section" style={{ padding: '2rem 2rem 6rem', position: 'relative', zIndex: 2 }}>
         <div style={{
           maxWidth: '900px', margin: '0 auto',
-          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))',
+          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
           gap: '1px', background: 'rgba(255,255,255,0.06)',
           border: '1px solid rgba(255,255,255,0.06)', borderRadius: '16px', overflow: 'hidden',
         }}>
@@ -241,11 +241,7 @@ export default function DuduShieldPage() {
               { feature: 'Anti-cópia',                 us: true, them: false },
               { feature: 'Monitoramento',              us: true, them: false },
             ].map((row, i) => (
-              <div key={i} style={{
-                display: 'grid', gridTemplateColumns: '1fr 120px 120px',
-                background: 'rgba(15,15,15,0.7)', padding: '0.875rem 1.25rem',
-                fontSize: '0.82rem', alignItems: 'center',
-              }}>
+              <div key={i} className="ds-table-row">
                 <span style={{ color: '#a1a1a1' }}>{row.feature}</span>
                 <span style={{ textAlign: 'center', color: row.us ? '#2563EB' : '#555' }}>
                   {row.us ? '✓ DuduStudio' : '—'}
@@ -256,11 +252,7 @@ export default function DuduShieldPage() {
               </div>
             ))}
           </div>
-          <div style={{
-            display: 'grid', gridTemplateColumns: '1fr 120px 120px',
-            padding: '0.5rem 1.25rem', fontSize: '0.65rem', color: '#444',
-            fontFamily: 'Space Mono, monospace',
-          }}>
+          <div className="ds-table-header">
             <span />
             <span style={{ textAlign: 'center' }}>DuduStudio</span>
             <span style={{ textAlign: 'center' }}>Freelancer comum</span>
@@ -294,7 +286,7 @@ export default function DuduShieldPage() {
           <p className="ds-reveal" style={{ color: '#a1a1a1', fontSize: '1rem', marginBottom: '2.5rem' }}>
             Todo site do DuduStudio já vem com o DuduShield™ ativo.
           </p>
-          <div className="ds-reveal" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div className="ds-reveal ds-cta-buttons" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <button
               onClick={handleWhatsApp}
               style={{
@@ -339,6 +331,15 @@ export default function DuduShieldPage() {
 
       <style>{`
         .ds-hero-el { opacity: 0; }
+        .ds-table-row { display: grid; grid-template-columns: 1fr 110px 110px; background: rgba(15,15,15,0.7); padding: 0.875rem 1.25rem; font-size: 0.82rem; align-items: center; }
+        .ds-table-header { display: grid; grid-template-columns: 1fr 110px 110px; padding: 0.5rem 1.25rem; font-size: 0.65rem; color: #444; font-family: Space Mono, monospace; }
+        @media (max-width: 480px) {
+          .ds-table-row { grid-template-columns: 1fr 72px 72px; padding: 0.65rem 0.75rem; font-size: 0.72rem; }
+          .ds-table-header { grid-template-columns: 1fr 72px 72px; padding: 0.4rem 0.75rem; font-size: 0.58rem; }
+          .ds-cta-buttons { flex-direction: column !important; }
+          .ds-cta-buttons button, .ds-cta-buttons a { width: 100%; text-align: center; }
+          section { padding-left: 1rem !important; padding-right: 1rem !important; }
+        }
         @keyframes pulse {
           0%, 100% { opacity: 1; transform: scale(1); }
           50% { opacity: 0.5; transform: scale(0.8); }

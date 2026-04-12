@@ -152,7 +152,7 @@ export default function TrabalhosPagina() {
       }}>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 340px), 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))',
           gap: '1.25rem', maxWidth: 1200, margin: '0 auto',
         }}>
           {sites.map((site) => {
@@ -229,7 +229,7 @@ export default function TrabalhosPagina() {
                 </div>
 
                 {/* CTAs */}
-                <div style={{ display: 'flex', gap: '0.6rem', marginTop: 'auto', paddingTop: '0.25rem' }}>
+                <div className="trab-btn-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', marginTop: 'auto', paddingTop: '0.25rem' }}>
                   <button
                     onClick={() => navigateTo(`/demo/${site.slug}`)}
                     style={{
@@ -332,6 +332,10 @@ export default function TrabalhosPagina() {
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #2563EB; border-radius: 4px; }
+        @media (max-width: 480px) {
+          .trab-btn-row { flex-direction: column !important; }
+          .trab-btn-row button, .trab-btn-row a { width: 100% !important; text-align: center; justify-content: center; }
+        }
       `}</style>
     </div>
   )

@@ -110,7 +110,7 @@ export default function SobrePage() {
         </p>
 
         {/* CTAs */}
-        <div className="sobre-reveal" style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+        <div className="sobre-reveal sobre-cta-row" style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', justifyContent: 'center' }}>
           <button
             onClick={() => navigateTo('/trabalhos')}
             style={{
@@ -197,6 +197,11 @@ export default function SobrePage() {
           to   { opacity: 0; transform: translateY(-8px); }
         }
         .sobre-reveal { opacity: 0; }
+        @media (max-width: 480px) {
+          .sobre-cta-row { flex-direction: column !important; align-items: stretch !important; }
+          .sobre-cta-row button, .sobre-cta-row a { width: 100% !important; justify-content: center !important; }
+          .sobre-stats { gap: 1.5rem !important; }
+        }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #2563EB; border-radius: 4px; }
