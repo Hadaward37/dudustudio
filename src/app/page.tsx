@@ -387,7 +387,7 @@ export default function HomePage() {
         }
         @media (max-width: 480px) {
           /* Oculta cards extras de portfólio — evita overflow em 100vh */
-          .portfolio-grid .portfolio-item:nth-child(n+5) { display: none; }
+          .portfolio-grid .portfolio-item:nth-child(n+4) { display: none; }
           .portfolio-ver-todos {
             display: flex !important; align-items: center; justify-content: center;
             padding: 0.6rem 1.4rem; border-radius: 999px;
