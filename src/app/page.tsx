@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Syne } from 'next/font/google'
+import { EnergyCore } from '@/components/ui/EnergyCore'
 
 const syne = Syne({ subsets: ['latin'], weight: ['800'], variable: '--font-syne' })
 
@@ -186,8 +187,31 @@ export default function EntryPage() {
         fontFamily: 'var(--font-syne), sans-serif',
         userSelect: 'none',
         overflow: 'hidden',
+        position: 'relative',
       }}
     >
+      {/* ── 3D Energy Core background ── */}
+      <EnergyCore />
+
+      {/* ── Cinematic overlay ── */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        background: 'radial-gradient(ellipse at center, rgba(0,255,136,0.04) 0%, rgba(0,0,0,0.88) 65%)',
+        zIndex: 1,
+        pointerEvents: 'none',
+      }} />
+
+      {/* ── Page content ── */}
+      <div style={{
+        position: 'relative',
+        zIndex: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '3.5rem',
+        width: '100%',
+      }}>
       <style>{`
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -349,6 +373,7 @@ export default function EntryPage() {
           Entrar
         </button>
       </div>
+      </div>{/* end content layer */}
     </div>
   )
 }
