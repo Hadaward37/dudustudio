@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Syne, Manrope } from 'next/font/google'
 import { sites, formatPrice } from '@/lib/sites'
@@ -8,21 +8,20 @@ import { sites, formatPrice } from '@/lib/sites'
 const syne = Syne({ subsets: ['latin'], weight: ['400', '700', '800'], variable: '--font-syne' })
 const manrope = Manrope({ subsets: ['latin'], weight: ['300', '400', '600'], variable: '--font-manrope' })
 
-const ACCENT = '#00ff88'
-const ACCENT2 = '#7b61ff'
+const ACCENT = '#2563EB'
+const ACCENT2 = '#818cf8'
 
 const CATEGORY_ACCENT: Record<string, string> = {
   Restaurante: '#ff6b35',
   Saúde: '#22d3ee',
   'E-commerce': '#8b5cf6',
   Confeitaria: '#f472b6',
-  Petshop: '#00ff88',
+  Petshop: '#4ade80',
   Serviços: '#f59e0b',
 }
 
 export default function TrabalhosPagina() {
   const router = useRouter()
-  const [scrolled, setScrolled] = useState(false)
   const [leaving, setLeaving] = useState(false)
   const [hoveredCard, setHoveredCard] = useState<string | null>(null)
 
@@ -30,12 +29,6 @@ export default function TrabalhosPagina() {
     setLeaving(true)
     setTimeout(() => router.push(href), 320)
   }
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
 
   return (
     <div
@@ -68,67 +61,6 @@ export default function TrabalhosPagina() {
         pointerEvents: 'none',
         zIndex: 1,
       }} />
-
-      {/* Nav */}
-      <nav style={{
-        position: 'fixed',
-        top: 0, left: 0, right: 0,
-        zIndex: 100,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '0 clamp(1.5rem, 6vw, 5rem)',
-        height: 60,
-        background: scrolled ? 'rgba(8,8,8,0.9)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(255,255,255,0.05)' : 'none',
-        transition: 'background 0.4s, border-color 0.4s',
-      }}>
-        <button
-          onClick={() => navigateTo('/sobre')}
-          style={{
-            fontFamily: 'var(--font-syne)',
-            fontWeight: 800,
-            fontSize: '1rem',
-            letterSpacing: '-0.02em',
-            color: '#fff',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            padding: 0,
-          }}
-        >
-          Dudu<span style={{ color: '#2563EB' }}>Studio</span>
-        </button>
-        <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-          {[
-            { label: 'Início', action: () => navigateTo('/sobre') },
-            { label: 'DuduShield™', action: () => navigateTo('/dudushield'), accent: true },
-            { label: 'Contato', action: () => { window.location.href = 'mailto:dudutorro1@gmail.com' } },
-          ].map(({ label, action, accent }) => (
-            <button
-              key={label}
-              onClick={action}
-              style={{
-                fontFamily: 'var(--font-manrope)',
-                fontWeight: accent ? 600 : 400,
-                fontSize: '0.82rem',
-                color: accent ? ACCENT : 'rgba(255,255,255,0.5)',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                transition: 'opacity 0.2s',
-                letterSpacing: '0.02em',
-                padding: 0,
-              }}
-              onMouseEnter={e => (e.currentTarget.style.opacity = '0.75')}
-              onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-      </nav>
 
       {/* ── HERO DA PÁGINA ── */}
       <section style={{
@@ -408,7 +340,7 @@ export default function TrabalhosPagina() {
         }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #00ff88; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #2563EB; border-radius: 4px; }
       `}</style>
     </div>
   )
