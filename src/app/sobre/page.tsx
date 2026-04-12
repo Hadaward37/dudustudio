@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import { Syne, Manrope } from 'next/font/google'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { AquarioCanvas } from '@/components/ui/AquarioCanvas'
+import { CustomCursor } from '@/components/ui/CustomCursor'
 
 const syne = Syne({ subsets: ['latin'], weight: ['400', '700', '800'], variable: '--font-syne' })
 const manrope = Manrope({ subsets: ['latin'], weight: ['300', '400', '600'], variable: '--font-manrope' })
@@ -54,22 +56,18 @@ export default function SobrePage() {
         animation: leaving ? 'pageOut 0.32s ease forwards' : undefined,
       }}
     >
-      {/* Radial glow */}
-      <div style={{
-        position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none',
-        background: `radial-gradient(ellipse 80% 60% at 50% -10%, ${ACCENT}0a 0%, transparent 70%)`,
-      }} />
+      <AquarioCanvas />
+      <CustomCursor />
 
-      {/* Fine grain */}
+      {/* Overlay escuro */}
       <div style={{
-        position: 'fixed', inset: 0,
-        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
-        opacity: 0.025, pointerEvents: 'none', zIndex: 1,
+        position: 'fixed', inset: 0, zIndex: 1, pointerEvents: 'none',
+        background: 'radial-gradient(ellipse at center, rgba(5,5,8,0.5) 0%, rgba(5,5,8,0.82) 100%)',
       }} />
 
       {/* ── HERO ── */}
       <section style={{
-        position: 'relative', zIndex: 10,
+        position: 'relative', zIndex: 2,
         minHeight: '100dvh',
         display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
@@ -181,7 +179,7 @@ export default function SobrePage() {
 
       {/* Footer */}
       <footer style={{
-        position: 'relative', zIndex: 10, textAlign: 'center',
+        position: 'relative', zIndex: 2, textAlign: 'center',
         padding: '2rem clamp(1.5rem, 6vw, 5rem)',
         borderTop: '1px solid rgba(255,255,255,0.05)',
       }}>
