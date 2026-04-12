@@ -688,7 +688,7 @@ export default function HomePage() {
               <div className="contato-items">
                 {[
                   { icon: '💬', label: 'WhatsApp', text: 'Clique para conversar', href: `${WA}?text=${encodeURIComponent('Olá! Vim pelo DuduStudio e quero saber mais.')}` },
-                  { icon: '📱', label: 'Instagram', text: '@dudustudio', href: '#' },
+                  { icon: '📱', label: 'Instagram', text: '@dudustudio2026', href: 'https://instagram.com/dudustudio2026' },
                 ].map(c => (
                   <div key={c.label} className="fp-step contato-item">
                     <div className="contato-icon">{c.icon}</div>
@@ -752,7 +752,7 @@ export default function HomePage() {
               <h4>Contato</h4>
               <ul>
                 <li><a href={WA} target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
-                <li><a href="#">Instagram</a></li>
+                <li><a href="https://instagram.com/dudustudio2026" target="_blank" rel="noopener noreferrer">Instagram</a></li>
               </ul>
             </div>
           </div>
