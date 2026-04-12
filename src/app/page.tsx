@@ -898,7 +898,7 @@ export default function HomePage() {
         <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
           <p className="section-label ds-reveal" style={{ marginBottom: '0.8rem' }}>Diferenciais</p>
           <h2 className="ds-reveal ds-reveal-d1" style={{ fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3rem)', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
-            Por que DuduStudio?
+            Por que Dudu<span style={{ color: '#2563EB' }}>Studio</span>?
           </h2>
         </div>
 
