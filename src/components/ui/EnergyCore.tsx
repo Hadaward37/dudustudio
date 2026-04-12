@@ -9,152 +9,160 @@ export function EnergyCore() {
     if (!mountRef.current) return
 
     let animId: number
-    let smoothId: number
 
     async function init() {
       const THREE = await import('three')
-
       const mount = mountRef.current!
-      const W = mount.clientWidth
-      const H = mount.clientHeight
 
-      // SCENE
       const scene = new THREE.Scene()
 
-      // CAMERA
-      const camera = new THREE.PerspectiveCamera(75, W / H, 0.1, 1000)
-      camera.position.z = 5
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        mount.clientWidth / mount.clientHeight,
+        0.1,
+        1000
+      )
+      camera.position.z = 6
 
-      // RENDERER
-      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
-      renderer.setSize(W, H)
-      renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
+      const renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true
+      })
+
+      renderer.setSize(mount.clientWidth, mount.clientHeight)
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
       renderer.setClearColor(0x000000, 0)
+
       mount.appendChild(renderer.domElement)
 
-      // LIGHTS
-      const light = new THREE.PointLight(0x00ff88, 3)
-      light.position.set(5, 5, 5)
-      scene.add(light)
-      scene.add(new THREE.AmbientLight(0x00ff88, 0.3))
-
-      // SPHERE
-      const sphere = new THREE.Mesh(
-        new THREE.SphereGeometry(1, 128, 128),
-        new THREE.MeshStandardMaterial({
-          color: 0x003322,
-          emissive: 0x00ff88,
-          emissiveIntensity: 1.2,
-          metalness: 0.8,
-          roughness: 0.15,
-        })
-      )
-      scene.add(sphere)
-
-      // RING
-      const ring = new THREE.Mesh(
-        new THREE.TorusGeometry(1.6, 0.02, 16, 100),
-        new THREE.MeshStandardMaterial({
-          color: 0x00ff88,
-          emissive: 0x00ff88,
-          emissiveIntensity: 2,
-          metalness: 1,
-          roughness: 0,
-        })
-      )
-      ring.rotation.x = Math.PI / 4
-      scene.add(ring)
-
-      // PARTICLES
-      const count = 2000
-      const pos = new Float32Array(count * 3)
-      const vel: { x: number; y: number; z: number }[] = []
+      const count = 500
+      const positions = new Float32Array(count * 3)
+      const velocity: { x: number; y: number; z: number }[] = []
 
       for (let i = 0; i < count; i++) {
-        const a = Math.random() * Math.PI * 2
-        pos[i * 3]     = Math.cos(a)
-        pos[i * 3 + 1] = (Math.random() - 0.5)
-        pos[i * 3 + 2] = Math.sin(a)
-        vel.push({
-          x: pos[i * 3]     * 0.025,
-          y: pos[i * 3 + 1] * 0.018,
-          z: pos[i * 3 + 2] * 0.025,
+        positions[i * 3]     = (Math.random() - 0.5) * 10
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 10
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 10
+
+        velocity.push({
+          x: (Math.random() - 0.5) * 0.002,
+          y: (Math.random() - 0.5) * 0.002,
+          z: (Math.random() - 0.5) * 0.002
         })
       }
 
       const geo = new THREE.BufferGeometry()
-      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
+      geo.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+
       const mat = new THREE.PointsMaterial({
         color: 0x00ff88,
-        size: 0.035,
+        size: 0.03,
         transparent: true,
-        opacity: 0.75,
+        opacity: 0.7
       })
-      const particles = new THREE.Points(geo, mat)
-      scene.add(particles)
 
-      // MOUSE
+      const points = new THREE.Points(geo, mat)
+      scene.add(points)
+
+      const maxConnections = 3
+      const maxDist = 1.2
+
+      const lineGeo = new THREE.BufferGeometry()
+      const lineMat = new THREE.LineBasicMaterial({
+        color: 0x00ff88,
+        transparent: true,
+        opacity: 0.15
+      })
+
+      const lineMesh = new THREE.LineSegments(lineGeo, lineMat)
+      scene.add(lineMesh)
+
       let targetX = 0
       let targetY = 0
+
       const handleMouse = (e: MouseEvent) => {
-        targetX = (e.clientX / innerWidth  - 0.5) * 2
-        targetY = (e.clientY / innerHeight - 0.5) * 2
+        targetX = (e.clientX / window.innerWidth  - 0.5) * 2
+        targetY = (e.clientY / window.innerHeight - 0.5) * 2
       }
+
       window.addEventListener('mousemove', handleMouse)
 
-      // ANIMATE
-      function animate() {
-        animId = requestAnimationFrame(animate)
-        const time = Date.now() * 0.001
+      function updateLines() {
+        const pos = geo.attributes.position.array as Float32Array
+        const vertices: number[] = []
 
-        sphere.scale.setScalar(1 + Math.sin(time * 2) * 0.04)
-        sphere.rotation.y += 0.008
-        ring.rotation.z   += 0.005
-        ring.rotation.y   += 0.003
-
-        const p = geo.attributes.position.array as Float32Array
         for (let i = 0; i < count; i++) {
-          p[i * 3]     += vel[i].x
-          p[i * 3 + 1] += vel[i].y
-          p[i * 3 + 2] += vel[i].z
-          const d = Math.sqrt(p[i*3]**2 + p[i*3+1]**2 + p[i*3+2]**2)
-          if (d > 6) {
-            const a = Math.random() * Math.PI * 2
-            p[i * 3]     = Math.cos(a)
-            p[i * 3 + 1] = (Math.random() - 0.5)
-            p[i * 3 + 2] = Math.sin(a)
+          let connections = 0
+
+          for (let j = i + 1; j < count; j++) {
+            if (connections >= maxConnections) break
+
+            const dx = pos[i * 3]     - pos[j * 3]
+            const dy = pos[i * 3 + 1] - pos[j * 3 + 1]
+            const dz = pos[i * 3 + 2] - pos[j * 3 + 2]
+
+            const dist = dx * dx + dy * dy + dz * dz
+
+            if (dist < maxDist) {
+              vertices.push(
+                pos[i * 3], pos[i * 3 + 1], pos[i * 3 + 2],
+                pos[j * 3], pos[j * 3 + 1], pos[j * 3 + 2]
+              )
+              connections++
+            }
           }
         }
+
+        lineGeo.setAttribute(
+          'position',
+          new THREE.Float32BufferAttribute(vertices, 3)
+        )
+      }
+
+      function animate() {
+        animId = requestAnimationFrame(animate)
+
+        const pos = geo.attributes.position.array as Float32Array
+
+        for (let i = 0; i < count; i++) {
+          pos[i * 3]     += velocity[i].x
+          pos[i * 3 + 1] += velocity[i].y
+          pos[i * 3 + 2] += velocity[i].z
+
+          if (pos[i * 3]     >  5 || pos[i * 3]     < -5) velocity[i].x *= -1
+          if (pos[i * 3 + 1] >  5 || pos[i * 3 + 1] < -5) velocity[i].y *= -1
+          if (pos[i * 3 + 2] >  5 || pos[i * 3 + 2] < -5) velocity[i].z *= -1
+        }
+
         geo.attributes.position.needsUpdate = true
+
+        updateLines()
+
+        points.rotation.y   += (targetX * 0.2 - points.rotation.y)   * 0.03
+        points.rotation.x   += (targetY * 0.2 - points.rotation.x)   * 0.03
+        lineMesh.rotation.copy(points.rotation)
+
         renderer.render(scene, camera)
       }
+
       animate()
 
-      // SMOOTH MOUSE
-      function smoothMove() {
-        smoothId = requestAnimationFrame(smoothMove)
-        sphere.rotation.y += (targetX * 0.5 - sphere.rotation.y) * 0.05
-        sphere.rotation.x += (targetY * 0.3 - sphere.rotation.x) * 0.05
-        ring.rotation.x   += (targetY * 0.2 - ring.rotation.x)   * 0.03
-      }
-      smoothMove()
-
-      // RESIZE
       const handleResize = () => {
-        if (!mount) return
-        const W2 = mount.clientWidth
-        const H2 = mount.clientHeight
-        camera.aspect = W2 / H2
+        camera.aspect = mount.clientWidth / mount.clientHeight
         camera.updateProjectionMatrix()
-        renderer.setSize(W2, H2)
+        renderer.setSize(mount.clientWidth, mount.clientHeight)
       }
+
       window.addEventListener('resize', handleResize)
 
       return () => {
         cancelAnimationFrame(animId)
-        cancelAnimationFrame(smoothId)
         window.removeEventListener('mousemove', handleMouse)
         window.removeEventListener('resize', handleResize)
+        geo.dispose()
+        lineGeo.dispose()
+        mat.dispose()
+        lineMat.dispose()
         renderer.dispose()
         if (mount.contains(renderer.domElement)) {
           mount.removeChild(renderer.domElement)
@@ -169,7 +177,7 @@ export function EnergyCore() {
   return (
     <div
       ref={mountRef}
-      style={{ width: '100%', height: '100%', position: 'absolute', inset: 0, zIndex: 0 }}
+      style={{ position: 'absolute', inset: 0, zIndex: 0 }}
     />
   )
 }
