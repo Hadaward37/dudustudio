@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import { AntiClone } from "@/components/ui/AntiClone";
 import { NavBar } from "@/components/ui/NavBar";
+import { LoaderWrapper } from "@/components/ui/LoaderWrapper";
 import "./globals.css";
 
 // Fonte principal do DuduStudio
@@ -30,8 +31,10 @@ export default function RootLayout({
     <html lang="pt-BR" className={`${geistSans.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <AntiClone />
-        <NavBar />
-        {children}
+        <LoaderWrapper>
+          <NavBar />
+          {children}
+        </LoaderWrapper>
       </body>
     </html>
   );
