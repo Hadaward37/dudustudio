@@ -136,6 +136,25 @@ html {
   to   { transform: rotate(360deg); }
 }
 
+@keyframes spinCube {
+  from { transform: rotateX(0deg) rotateY(0deg); }
+  to   { transform: rotateX(360deg) rotateY(360deg); }
+}
+
+/* ─── NavBar responsive ──────────────────────────────────────────────── */
+.nav-links-desktop { display: flex; }
+.nav-hamburger     { display: none; }
+
+@media (max-width: 768px) {
+  .nav-links-desktop { display: none !important; }
+  .nav-hamburger     { display: flex !important; }
+}
+
+/* ─── Full-page sections ─────────────────────────────────────────────── */
+.fp-section:first-of-type {
+  padding-top: 80px;
+}
+
 @keyframes border-glow {
   0%, 100% { opacity: 0.4; }
   50%       { opacity: 1; }
