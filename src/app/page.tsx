@@ -9,10 +9,11 @@ import { sites, formatPrice } from '@/lib/sites'
 
 const syne = Syne({ subsets: ['latin'], weight: ['400', '700', '800'], variable: '--font-syne' })
 
-const A1 = '#FF5C00'
-const A2 = '#FF8C42'
-const A3 = '#F59E0B'
-const BG = '#050508'
+const A1   = '#2563EB'
+const A2   = '#0EA5E9'
+const A3   = '#38BDF8'
+const PINK = '#818CF8'
+const BG   = '#050508'
 
 const wa = (msg: string) =>
   `https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP}?text=${encodeURIComponent(msg)}`
@@ -130,6 +131,10 @@ export default function HomePage() {
         .nav-link:hover { color: #fff; }
 
         /* 3D Cube logo */
+        @keyframes spinCube {
+          from { transform: rotateY(0deg); }
+          to   { transform: rotateY(360deg); }
+        }
         .cube-scene {
           perspective: 120px;
           width: 42px; height: 42px;
@@ -139,9 +144,8 @@ export default function HomePage() {
           width: 100%; height: 100%;
           position: relative;
           transform-style: preserve-3d;
-          transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
+          animation: spinCube 8s linear infinite !important;
         }
-        .cube-scene:hover .cube { transform: rotateY(-90deg); }
         .cube-face {
           position: absolute;
           width: 42px; height: 42px;
@@ -151,18 +155,31 @@ export default function HomePage() {
           font-size: 0.78rem;
           letter-spacing: 0.05em;
           border-radius: 6px;
+          backface-visibility: hidden;
         }
         .cube-face--front {
-          background: rgba(255,92,0,0.12);
-          border: 1px solid rgba(255,92,0,0.25);
+          background: rgba(37,99,235,0.15);
+          border: 1px solid rgba(37,99,235,0.35);
           color: ${A1};
           transform: translateZ(21px);
         }
         .cube-face--right {
-          background: rgba(255,140,66,0.12);
-          border: 1px solid rgba(255,140,66,0.25);
+          background: rgba(14,165,233,0.15);
+          border: 1px solid rgba(14,165,233,0.35);
           color: ${A2};
           transform: rotateY(90deg) translateZ(21px);
+        }
+        .cube-face--back {
+          background: rgba(37,99,235,0.15);
+          border: 1px solid rgba(37,99,235,0.35);
+          color: ${A1};
+          transform: rotateY(180deg) translateZ(21px);
+        }
+        .cube-face--left {
+          background: rgba(14,165,233,0.15);
+          border: 1px solid rgba(14,165,233,0.35);
+          color: ${A2};
+          transform: rotateY(270deg) translateZ(21px);
         }
 
         /* Mobile menu */
@@ -186,18 +203,18 @@ export default function HomePage() {
         .hero-ctas  { animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.65s both; }
         .hero-badge { animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.85s both; }
 
-        @keyframes gradientShift {
+        @keyframes gradShift {
           0%   { background-position: 0% 50%; }
           50%  { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
         }
         .gradient-text {
-          background: linear-gradient(135deg, ${A1} 0%, ${A2} 40%, ${A3} 70%, ${A1} 100%);
-          background-size: 200% auto;
+          background: linear-gradient(135deg, ${A1} 0%, ${A2} 40%, ${PINK} 70%, ${A1} 100%);
+          background-size: 200% 200%;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
-          animation: gradientShift 4s ease infinite;
+          animation: gradShift 6s ease infinite;
         }
 
         /* Scroll indicator */
@@ -289,8 +306,8 @@ export default function HomePage() {
         }
         .demo-card:hover {
           transform: translateY(-6px);
-          border-color: rgba(255,92,0,0.3);
-          box-shadow: 0 16px 48px rgba(255,92,0,0.1);
+          border-color: rgba(37,99,235,0.3);
+          box-shadow: 0 16px 48px rgba(37,99,235,0.1);
         }
 
         /* Filter tabs */
@@ -324,8 +341,8 @@ export default function HomePage() {
           transition: border-color 0.3s, box-shadow 0.3s;
         }
         .why-card:hover {
-          border-color: rgba(255,92,0,0.35);
-          box-shadow: 0 0 40px rgba(255,92,0,0.08);
+          border-color: rgba(37,99,235,0.35);
+          box-shadow: 0 0 40px rgba(37,99,235,0.08);
         }
 
         /* Process */
@@ -348,8 +365,8 @@ export default function HomePage() {
         .tech-grid-bg {
           position: absolute; inset: 0; pointer-events: none;
           background-image:
-            linear-gradient(rgba(255,92,0,0.04) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,92,0,0.04) 1px, transparent 1px);
+            linear-gradient(rgba(37,99,235,0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(37,99,235,0.04) 1px, transparent 1px);
           background-size: 60px 60px;
           mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
         }
@@ -394,6 +411,8 @@ export default function HomePage() {
             <div className="cube">
               <div className="cube-face cube-face--front">DS</div>
               <div className="cube-face cube-face--right">DS</div>
+              <div className="cube-face cube-face--back">DS</div>
+              <div className="cube-face cube-face--left">DS</div>
             </div>
           </div>
           <span style={{ fontFamily: 'var(--font-syne), sans-serif', fontWeight: 800, fontSize: '1.1rem', letterSpacing: '-0.02em', color: '#f0f0f0' }}>
@@ -466,7 +485,7 @@ export default function HomePage() {
         {/* Overlay gradient */}
         <div style={{
           position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none',
-          background: 'radial-gradient(ellipse 70% 70% at 50% 50%, rgba(255,92,0,0.06) 0%, rgba(5,5,8,0.75) 60%, rgba(5,5,8,0.98) 100%)',
+          background: 'radial-gradient(ellipse 70% 70% at 50% 50%, rgba(37,99,235,0.06) 0%, rgba(5,5,8,0.75) 60%, rgba(5,5,8,0.98) 100%)',
         }} />
 
         {/* Content */}
@@ -555,7 +574,7 @@ export default function HomePage() {
         borderTop: '1px solid rgba(255,255,255,0.05)',
         borderBottom: '1px solid rgba(255,255,255,0.05)',
         padding: '1rem 0',
-        background: 'rgba(255,92,0,0.03)',
+        background: 'rgba(37,99,235,0.03)',
       }}>
         <div className="marquee-track">
           {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
@@ -607,7 +626,7 @@ export default function HomePage() {
             <div className="flip-card" style={{ height: '100%' }}>
               <div className="flip-inner" style={{ height: '100%' }}>
                 {/* Front */}
-                <div className="flip-front" style={{ background: 'rgba(255,92,0,0.06)', border: `1px solid ${A1}22` }}>
+                <div className="flip-front" style={{ background: 'rgba(37,99,235,0.06)', border: `1px solid ${A1}22` }}>
                   <p style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.65rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: A1, marginBottom: '1rem' }}>Nossa missão</p>
                   <p style={{ fontFamily: 'var(--font-syne), sans-serif', fontWeight: 700, fontSize: '1.4rem', lineHeight: 1.4, marginBottom: '1.5rem' }}>
                     Todo negócio merece uma presença digital profissional — independente do tamanho.
@@ -619,7 +638,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Back */}
-                <div className="flip-back" style={{ background: 'rgba(255,140,66,0.06)', border: `1px solid ${A2}22` }}>
+                <div className="flip-back" style={{ background: 'rgba(14,165,233,0.06)', border: `1px solid ${A2}22` }}>
                   <p style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '0.65rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: A2, marginBottom: '1.2rem' }}>Nossa stack</p>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem' }}>
                     {['Next.js 15', 'TypeScript', 'Three.js', 'GSAP', 'Tailwind v4', 'Vercel', 'WhatsApp API', 'Figma'].map(tech => (
@@ -694,7 +713,7 @@ export default function HomePage() {
                   borderRadius: 16,
                   padding: '2rem',
                   border: plan.highlight ? `1px solid ${A1}55` : '1px solid rgba(255,255,255,0.07)',
-                  background: plan.highlight ? `rgba(255,92,0,0.06)` : 'rgba(255,255,255,0.02)',
+                  background: plan.highlight ? `rgba(37,99,235,0.06)` : 'rgba(255,255,255,0.02)',
                   position: 'relative',
                   cursor: 'default',
                 }}
@@ -766,7 +785,7 @@ export default function HomePage() {
               {/* Thumbnail placeholder */}
               <div style={{
                 height: 200,
-                background: `linear-gradient(135deg, rgba(255,92,0,0.12) 0%, rgba(5,5,8,0.8) 100%)`,
+                background: `linear-gradient(135deg, rgba(37,99,235,0.12) 0%, rgba(5,5,8,0.8) 100%)`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 position: 'relative', overflow: 'hidden',
               }}>
@@ -823,7 +842,7 @@ export default function HomePage() {
       </section>
 
       {/* ── PROCESSO ──────────────────────────────────────────────────────────── */}
-      <section id="processo" style={{ padding: 'clamp(5rem, 10vw, 8rem) 1.5rem', position: 'relative', background: 'rgba(255,92,0,0.02)' }}>
+      <section id="processo" style={{ padding: 'clamp(5rem, 10vw, 8rem) 1.5rem', position: 'relative', background: 'rgba(37,99,235,0.02)' }}>
         <div className="tech-grid-bg" />
         <div style={{ maxWidth: 700, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
@@ -898,7 +917,7 @@ export default function HomePage() {
       <section style={{
         padding: 'clamp(5rem, 10vw, 8rem) 1.5rem',
         position: 'relative', overflow: 'hidden',
-        background: 'rgba(255,92,0,0.03)',
+        background: 'rgba(37,99,235,0.03)',
         textAlign: 'center',
       }}>
         <div className="glow-orb" style={{ width: 600, height: 400, background: `${A1}12`, top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }} />

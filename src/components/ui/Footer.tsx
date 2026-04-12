@@ -12,7 +12,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-white/40">
         {/* Logo + copyright */}
         <p>
-          <span className="font-bold text-white/70">DuduStudio</span> ©{" "}
+          <span className="font-bold text-white">Dudu</span><span className="font-bold" style={{ color: '#2563EB' }}>Studio</span>{" "}©{" "}
           {year} — Todos os direitos reservados
         </p>
 

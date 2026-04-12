@@ -31,13 +31,13 @@ export function Loader({ onComplete }: Props) {
         letterSpacing: '-0.03em', color: '#f0f0f0',
         animation: 'loaderPulse 1.5s ease-in-out infinite',
       }}>
-        Dudu<span style={{ color: '#FF5C00' }}>Studio</span>
+        Dudu<span style={{ color: '#2563EB' }}>Studio</span>
       </p>
 
-      <div style={{ width: 240, height: 2, background: 'rgba(255,92,0,0.15)', borderRadius: 2, overflow: 'hidden' }}>
+      <div style={{ width: 240, height: 2, background: 'rgba(37,99,235,0.15)', borderRadius: 2, overflow: 'hidden' }}>
         <div style={{
           height: '100%', width: `${pct}%`,
-          background: 'linear-gradient(90deg, #FF5C00, #FF8C42)',
+          background: 'linear-gradient(90deg, #2563EB, #0EA5E9)',
           borderRadius: 2, transition: 'width 0.12s ease',
         }} />
       </div>

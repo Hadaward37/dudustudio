@@ -228,6 +228,18 @@ export default function HomePage() {
       )
     })
 
+    // Hero background scale on scroll (depth illusion)
+    gsap.to('#hero canvas, .parallax-1, .parallax-2, .parallax-3, .hero-orb-wrap', {
+      scale: 1.1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true,
+      },
+    })
+
     return () => ScrollTrigger.getAll().forEach(t => t.kill())
   }, [loaded])
 
@@ -247,6 +259,21 @@ export default function HomePage() {
     window.addEventListener('scroll', fn, { passive: true })
     return () => window.removeEventListener('scroll', fn)
   }, [loaded, isTouch])
+
+  // ── Hero mouse parallax ───────────────────────────────────────────────────
+  useEffect(() => {
+    if (isTouch) return
+    const fn = (e: MouseEvent) => {
+      const cx = window.innerWidth  / 2
+      const cy = window.innerHeight / 2
+      const dx = (e.clientX - cx) / cx
+      const dy = (e.clientY - cy) / cy
+      gsap.to('.hero-text-layer', { x: dx * -12, y: dy * -8,  duration: 1.2, ease: 'power2.out' })
+      gsap.to('.hero-orb-wrap',   { x: dx *  22, y: dy *  15, duration: 1.5, ease: 'power2.out' })
+    }
+    window.addEventListener('mousemove', fn, { passive: true })
+    return () => window.removeEventListener('mousemove', fn)
+  }, [isTouch])
 
   // ── Counter animations ────────────────────────────────────────────────────
   useEffect(() => {
@@ -343,6 +370,9 @@ export default function HomePage() {
         @keyframes ripple{to{width:400px;height:400px;opacity:0}}
         @keyframes float-dot{0%,100%{transform:scale(1)}50%{transform:scale(1.4)}}
         @keyframes float-slow{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+
+        .hero-orb-wrap{position:absolute;right:clamp(-80px,6vw,120px);top:50%;transform:translateY(-50%);pointer-events:none;will-change:transform}
+        @media(max-width:900px){.hero-orb-wrap{opacity:.18;right:-100px}}
       `}</style>
 
       {/* ── Custom cursor ─────────────────────────────────────────────────── */}
@@ -362,7 +392,7 @@ export default function HomePage() {
         transition: 'background .4s,backdrop-filter .4s,border-color .4s',
       }}>
         <span style={{ fontFamily: 'var(--font-syne)', fontWeight: 800, fontSize: '1.1rem', color: '#fff', letterSpacing: '-.02em', marginRight: 'auto' }}>
-          Dudu<span style={{ color: C.accent }}>Studio</span>
+          Dudu<span style={{ color: '#2563EB' }}>Studio</span>
         </span>
         <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
           {[['Sites','#sites'],['Como Funciona','#como-funciona'],['Preços','#precos'],['FAQ','#faq']].map(([label, href]) => (
@@ -411,7 +441,64 @@ export default function HomePage() {
         <div className="parallax-2" style={{ position: 'absolute', bottom: '0%',  right: '-10%', width: '600px', height: '600px', borderRadius: '50%', background: 'radial-gradient(circle,rgba(123,97,255,.07) 0%,transparent 70%)',  pointerEvents: 'none' }} />
         <div className="parallax-3" style={{ position: 'absolute', top: '30%',   left: '40%',   width: '500px', height: '500px', borderRadius: '50%', background: 'radial-gradient(circle,rgba(255,107,53,.04) 0%,transparent 70%)', pointerEvents: 'none' }} />
 
-        <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '1200px', margin: '0 auto', padding: 'clamp(4rem,8vh,6rem) clamp(1rem,5vw,3rem)' }}>
+        {/* ── 3D Orb ──────────────────────────────────────────────────────── */}
+        <div className="hero-orb-wrap">
+          <svg viewBox="0 0 380 380" width="380" height="380" fill="none" aria-hidden="true">
+            <defs>
+              <radialGradient id="og" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="#00ff88" stopOpacity="0.1"/>
+                <stop offset="100%" stopColor="#00ff88" stopOpacity="0"/>
+              </radialGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="3" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+
+            {/* Glow bg */}
+            <circle cx="190" cy="190" r="165" fill="url(#og)"/>
+
+            {/* Sphere rings */}
+            <circle cx="190" cy="190" r="155" stroke="rgba(0,255,136,0.1)" strokeWidth="1"/>
+            <circle cx="190" cy="190" r="115" stroke="rgba(0,255,136,0.06)" strokeWidth="1"/>
+            <circle cx="190" cy="190" r="70"  stroke="rgba(0,255,136,0.05)" strokeWidth="1"/>
+
+            {/* Orbital paths */}
+            <ellipse cx="190" cy="190" rx="155" ry="48" stroke="rgba(0,255,136,0.22)" strokeWidth="1"/>
+            <ellipse cx="190" cy="190" rx="48"  ry="155" stroke="rgba(0,255,136,0.13)" strokeWidth="1"/>
+            <ellipse cx="190" cy="190" rx="115" ry="36"  stroke="rgba(0,255,136,0.1)"  strokeWidth="1" strokeDasharray="4 6"/>
+
+            {/* Planet 1 — outer equatorial */}
+            <g filter="url(#glow)">
+              <animateTransform attributeName="transform" type="rotate" from="0 190 190" to="360 190 190" dur="7s" repeatCount="indefinite"/>
+              <circle cx="345" cy="190" r="6" fill="#00ff88"/>
+            </g>
+
+            {/* Planet 2 — polar orbit */}
+            <g>
+              <animateTransform attributeName="transform" type="rotate" from="60 190 190" to="420 190 190" dur="11s" repeatCount="indefinite"/>
+              <circle cx="190" cy="35" r="4" fill="rgba(0,255,136,0.75)"/>
+            </g>
+
+            {/* Planet 3 — inner, counter-clockwise */}
+            <g>
+              <animateTransform attributeName="transform" type="rotate" from="0 190 190" to="-360 190 190" dur="15s" repeatCount="indefinite"/>
+              <circle cx="305" cy="190" r="3" fill="rgba(0,255,136,0.5)"/>
+            </g>
+
+            {/* Center */}
+            <circle cx="190" cy="190" r="5"  fill="#00ff88" filter="url(#glow)"/>
+            <circle cx="190" cy="190" r="16" fill="rgba(0,255,136,0.12)"/>
+
+            {/* Floating particles */}
+            <circle cx="80"  cy="110" r="1.5" fill="rgba(0,255,136,0.3)"/>
+            <circle cx="310" cy="280" r="1.5" fill="rgba(0,255,136,0.3)"/>
+            <circle cx="270" cy="90"  r="1"   fill="rgba(0,255,136,0.25)"/>
+            <circle cx="100" cy="290" r="1"   fill="rgba(0,255,136,0.25)"/>
+          </svg>
+        </div>
+
+        <div className="hero-text-layer" style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: '1200px', margin: '0 auto', padding: 'clamp(4rem,8vh,6rem) clamp(1rem,5vw,3rem)' }}>
           {/* Badge */}
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '.5rem', background: 'rgba(0,255,136,.07)', border: '1px solid rgba(0,255,136,.18)', borderRadius: '100px', padding: '.35rem 1rem', marginBottom: '1.5rem' }}>
             <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: C.accent, display: 'inline-block', animation: 'float-dot 1.8s ease-in-out infinite' }} />
@@ -751,7 +838,7 @@ export default function HomePage() {
       {/* ── Footer ─────────────────────────────────────────────────────────── */}
       <footer style={{ borderTop: '1px solid rgba(255,255,255,.05)', padding: '2.5rem clamp(1rem,5vw,3rem)', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1.2rem' }}>
         <span style={{ fontFamily: 'var(--font-syne)', fontWeight: 800, fontSize: '1rem', color: '#fff', letterSpacing: '-.02em' }}>
-          Dudu<span style={{ color: C.accent }}>Studio</span>
+          Dudu<span style={{ color: '#2563EB' }}>Studio</span>
         </span>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem' }}>
           {[['Sites','#sites'],['Como Funciona','#como-funciona'],['Preços','#precos'],['FAQ','#faq']].map(([label, href]) => (

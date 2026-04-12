@@ -92,7 +92,7 @@ export default function SobrePage() {
             padding: 0,
           }}
         >
-          Dudu<span style={{ color: ACCENT }}>Studio</span>
+          Dudu<span style={{ color: '#2563EB' }}>Studio</span>
         </button>
 
         <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>

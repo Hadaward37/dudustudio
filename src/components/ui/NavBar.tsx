@@ -29,15 +29,8 @@ export default function NavBar() {
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 font-black text-lg tracking-tight">
-          <span
-            style={{
-              background: "linear-gradient(135deg, #c4b5fd, #7c3aed)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
-            DuduStudio
-          </span>
+          <span style={{ color: '#ffffff' }}>Dudu</span>
+          <span style={{ color: '#2563EB' }}>Studio</span>
         </Link>
 
         {/* Links desktop — pill central */}
@@ -60,14 +53,14 @@ export default function NavBar() {
               key={href}
               href={href}
               className="px-4 py-1.5 rounded-full text-sm transition-all duration-200 hover:text-white"
-              style={{ color: href === "/dudushield" ? "rgba(139,92,246,0.8)" : "rgba(255,255,255,0.5)" }}
+              style={{ color: href === "/dudushield" ? "rgba(37,99,235,0.9)" : "rgba(255,255,255,0.5)" }}
               onMouseEnter={e => {
-                (e.currentTarget as HTMLElement).style.background = href === "/dudushield" ? "rgba(139,92,246,0.1)" : "rgba(255,255,255,0.06)";
-                (e.currentTarget as HTMLElement).style.color = href === "/dudushield" ? "#a78bfa" : "rgba(255,255,255,0.9)";
+                (e.currentTarget as HTMLElement).style.background = href === "/dudushield" ? "rgba(37,99,235,0.1)" : "rgba(255,255,255,0.06)";
+                (e.currentTarget as HTMLElement).style.color = href === "/dudushield" ? "#2563EB" : "rgba(255,255,255,0.9)";
               }}
               onMouseLeave={e => {
                 (e.currentTarget as HTMLElement).style.background = "transparent";
-                (e.currentTarget as HTMLElement).style.color = href === "/dudushield" ? "rgba(139,92,246,0.8)" : "rgba(255,255,255,0.5)";
+                (e.currentTarget as HTMLElement).style.color = href === "/dudushield" ? "rgba(37,99,235,0.9)" : "rgba(255,255,255,0.5)";
               }}
             >
               {label}
@@ -81,8 +74,8 @@ export default function NavBar() {
             href="/#sites"
             className="group relative inline-flex items-center gap-1.5 rounded-full px-5 py-2 text-sm font-semibold text-white overflow-hidden transition-opacity hover:opacity-90"
             style={{
-              background: "linear-gradient(135deg, #7c3aed, #4f46e5)",
-              boxShadow: "0 0 20px rgba(124,58,237,0.3)",
+              background: "linear-gradient(135deg, #2563EB, #0EA5E9)",
+              boxShadow: "0 0 20px rgba(37,99,235,0.3)",
             }}
           >
             Ver demos
@@ -132,7 +125,7 @@ export default function NavBar() {
               href={href}
               onClick={() => setMobileOpen(false)}
               className="rounded-lg px-4 py-2.5 text-sm transition-colors hover:text-white"
-              style={{ color: href === "/dudushield" ? "rgba(139,92,246,0.8)" : "rgba(255,255,255,0.55)" }}
+              style={{ color: href === "/dudushield" ? "rgba(37,99,235,0.9)" : "rgba(255,255,255,0.55)" }}
             >
               {label}
             </Link>
@@ -141,7 +134,7 @@ export default function NavBar() {
             href="/#sites"
             onClick={() => setMobileOpen(false)}
             className="mt-2 rounded-full px-4 py-2.5 text-center text-sm font-semibold text-white"
-            style={{ background: "linear-gradient(135deg, #7c3aed, #4f46e5)" }}
+            style={{ background: "linear-gradient(135deg, #2563EB, #0EA5E9)" }}
           >
             Ver demos →
           </Link>

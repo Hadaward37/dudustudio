@@ -39,17 +39,17 @@ export default function DuduShieldPage() {
       }}>
         <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: '1.1rem', color: '#ededed' }}>
-            Dudu<span style={{ color: '#00ff88' }}>Studio</span>
+            Dudu<span style={{ color: '#2563EB' }}>Studio</span>
           </span>
         </a>
-        <a href="/#pricing" style={{
+        <a href="/trabalhos" style={{
           fontSize: '0.8rem',
           color: '#a1a1a1',
           textDecoration: 'none',
           fontFamily: 'Space Mono, monospace',
           letterSpacing: '0.05em',
         }}>
-          Ver preços →
+          Ver demos →
         </a>
       </nav>
 
@@ -154,6 +154,30 @@ export default function DuduShieldPage() {
           >
             💬 Quero um site protegido →
           </button>
+
+          {/* Scroll indicator */}
+          <div style={{
+            marginTop: '4rem',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '0.4rem',
+          }}>
+            <span style={{
+              fontFamily: 'Space Mono, monospace',
+              fontSize: '0.6rem',
+              letterSpacing: '0.2em',
+              color: 'rgba(255,255,255,0.2)',
+              textTransform: 'uppercase',
+            }}>
+              ver como funciona
+            </span>
+            <div style={{ animation: 'scrollBounce 1.5s ease-in-out infinite' }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(0,255,136,0.4)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 5v14M5 12l7 7 7-7" />
+              </svg>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -411,7 +435,7 @@ export default function DuduShieldPage() {
               💬 Falar no WhatsApp →
             </button>
             <a
-              href="/#sites"
+              href="/trabalhos"
               style={{
                 padding: '1rem 2.5rem',
                 borderRadius: '8px',
@@ -456,6 +480,13 @@ export default function DuduShieldPage() {
           0%, 100% { opacity: 1; transform: scale(1); }
           50% { opacity: 0.5; transform: scale(0.8); }
         }
+        @keyframes scrollBounce {
+          0%, 100% { transform: translateY(0); opacity: 0.4; }
+          50% { transform: translateY(6px); opacity: 1; }
+        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #00ff88; border-radius: 4px; }
       `}</style>
     </div>
   )

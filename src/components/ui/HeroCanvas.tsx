@@ -30,26 +30,26 @@ export function HeroCanvas() {
       const ambient = new THREE.AmbientLight(0xffffff, 0.4)
       scene.add(ambient)
 
-      const light1 = new THREE.PointLight(0xFF5C00, 3, 20)
+      const light1 = new THREE.PointLight(0x2563eb, 4, 20)
       light1.position.set(3, 3, 3)
       scene.add(light1)
 
-      const light2 = new THREE.PointLight(0xFF8C42, 2, 15)
+      const light2 = new THREE.PointLight(0x0ea5e9, 3, 15)
       light2.position.set(-3, -2, 2)
       scene.add(light2)
 
-      const light3 = new THREE.PointLight(0xF59E0B, 1.5, 12)
+      const light3 = new THREE.PointLight(0x818cf8, 2, 12)
       light3.position.set(0, 4, -2)
       scene.add(light3)
 
       // ── Torus knot (main hero object) ────────────────────────────────────
       const torusGeo = new THREE.TorusKnotGeometry(1.2, 0.38, 128, 16, 2, 3)
       const torusMat = new THREE.MeshStandardMaterial({
-        color: 0xFF5C00,
-        emissive: 0xFF5C00,
-        emissiveIntensity: 0.15,
-        roughness: 0.25,
-        metalness: 0.8,
+        color: 0x1d4ed8,
+        emissive: 0x1e3a8a,
+        emissiveIntensity: 0.8,
+        roughness: 0.2,
+        metalness: 0.9,
         wireframe: false,
       })
       const torusKnot = new THREE.Mesh(torusGeo, torusMat)
@@ -58,10 +58,10 @@ export function HeroCanvas() {
       // ── Icosahedron wireframe (orbiting) ─────────────────────────────────
       const icoGeo = new THREE.IcosahedronGeometry(0.6, 1)
       const icoMat = new THREE.MeshBasicMaterial({
-        color: 0xFF8C42,
+        color: 0x38bdf8,
         wireframe: true,
         transparent: true,
-        opacity: 0.5,
+        opacity: 0.65,
       })
       const ico = new THREE.Mesh(icoGeo, icoMat)
       ico.position.set(2.8, 0.5, 0)
@@ -70,10 +70,10 @@ export function HeroCanvas() {
       // ── Octahedron wireframe (orbiting opposite) ──────────────────────────
       const octGeo = new THREE.OctahedronGeometry(0.5, 0)
       const octMat = new THREE.MeshBasicMaterial({
-        color: 0xF59E0B,
+        color: 0x818cf8,
         wireframe: true,
         transparent: true,
-        opacity: 0.4,
+        opacity: 0.55,
       })
       const oct = new THREE.Mesh(octGeo, octMat)
       oct.position.set(-2.5, -0.8, 0.5)
@@ -86,13 +86,15 @@ export function HeroCanvas() {
         [3.5, -1.5, -1], [-3.2, 1.8, -0.5], [1.5, 2.8, -1.5], [-1.8, -2.5, -1],
         [4.2, 1.2, -2], [-4, -1, -1.5],
       ]
-      sPositions.forEach(([x, y, z]) => {
+      const SPHERE_COLORS = [0x2563eb, 0x0ea5e9, 0x818cf8, 0x38bdf8, 0x60a5fa, 0x2563eb]
+      sPositions.forEach(([x, y, z], idx) => {
         const r   = 0.08 + Math.random() * 0.12
         const geo = new THREE.SphereGeometry(r, 8, 8)
+        const col = SPHERE_COLORS[idx % SPHERE_COLORS.length]
         const mat = new THREE.MeshStandardMaterial({
-          color: Math.random() > 0.5 ? 0xFF5C00 : 0xFF8C42,
-          emissive: 0xFF5C00, emissiveIntensity: 0.4,
-          roughness: 0.3, metalness: 0.6,
+          color: col,
+          emissive: col, emissiveIntensity: 0.6,
+          roughness: 0.2, metalness: 0.7,
         })
         const mesh = new THREE.Mesh(geo, mat)
         mesh.position.set(x, y, z)
@@ -111,8 +113,8 @@ export function HeroCanvas() {
       const pGeo = new THREE.BufferGeometry()
       pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3))
       const pMat = new THREE.PointsMaterial({
-        color: 0xFF5C00, size: 0.018,
-        transparent: true, opacity: 0.35,
+        color: 0x2563eb, size: 0.022,
+        transparent: true, opacity: 0.5,
       })
       const particles = new THREE.Points(pGeo, pMat)
       scene.add(particles)
@@ -137,8 +139,8 @@ export function HeroCanvas() {
         torusKnot.rotation.y += 0.006
 
         // light pulse
-        light1.intensity = 3 + Math.sin(t * 1.3) * 0.8
-        light2.intensity = 2 + Math.sin(t * 0.9 + 1) * 0.5
+        light1.intensity = 4 + Math.sin(t * 1.3) * 1.2
+        light2.intensity = 3 + Math.sin(t * 0.9 + 1) * 0.8
 
         // ico orbit
         ico.rotation.y += 0.012
