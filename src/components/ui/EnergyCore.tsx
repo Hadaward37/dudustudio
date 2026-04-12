@@ -79,13 +79,20 @@ export function EnergyCore() {
 
       let targetX = 0
       let targetY = 0
+      let scrollY = 0
+      let targetScroll = 0
 
       const handleMouse = (e: MouseEvent) => {
         targetX = (e.clientX / window.innerWidth  - 0.5) * 2
         targetY = (e.clientY / window.innerHeight - 0.5) * 2
       }
 
+      const handleScroll = () => {
+        targetScroll = window.scrollY
+      }
+
       window.addEventListener('mousemove', handleMouse)
+      window.addEventListener('scroll', handleScroll)
 
       function updateLines() {
         const pos = geo.attributes.position.array as Float32Array
@@ -122,6 +129,10 @@ export function EnergyCore() {
       function animate() {
         animId = requestAnimationFrame(animate)
 
+        scrollY += (targetScroll - scrollY) * 0.05
+        camera.position.z = 6 - scrollY * 0.002
+        camera.rotation.x = scrollY * 0.0003
+
         const pos = geo.attributes.position.array as Float32Array
 
         for (let i = 0; i < count; i++) {
@@ -138,8 +149,8 @@ export function EnergyCore() {
 
         updateLines()
 
-        points.rotation.y   += (targetX * 0.2 - points.rotation.y)   * 0.03
-        points.rotation.x   += (targetY * 0.2 - points.rotation.x)   * 0.03
+        points.rotation.y   += ((targetX * 0.2 + scrollY * 0.0002) - points.rotation.y) * 0.03
+        points.rotation.x   += ((targetY * 0.2 + scrollY * 0.0001) - points.rotation.x) * 0.03
         lineMesh.rotation.copy(points.rotation)
 
         renderer.render(scene, camera)
@@ -158,6 +169,7 @@ export function EnergyCore() {
       return () => {
         cancelAnimationFrame(animId)
         window.removeEventListener('mousemove', handleMouse)
+        window.removeEventListener('scroll', handleScroll)
         window.removeEventListener('resize', handleResize)
         geo.dispose()
         lineGeo.dispose()
