@@ -15,7 +15,7 @@ export default function HomePage() {
   useEffect(() => {
     // ── Scroll snap ativo apenas nesta página ──────────────────────────────
     const html = document.documentElement
-    html.style.scrollSnapType = 'y mandatory'
+    html.style.scrollSnapType = 'y proximity'
     html.style.overflowY = 'scroll'
 
     // ── GSAP ScrollTrigger ──────────────────────────────────────────────────
@@ -211,9 +211,8 @@ export default function HomePage() {
           border-radius: 2px; animation: scrollBounce 1.8s ease-in-out infinite;
         }
 
-        /* Última seção: sem snap, sem overflow, rola livremente */
+        /* Última seção: altura livre, sem overflow hidden */
         .fp-section-last {
-          scroll-snap-align: none !important;
           scroll-snap-stop: normal !important;
           height: auto !important;
           min-height: 100vh;
