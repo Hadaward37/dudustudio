@@ -211,6 +211,15 @@ export default function HomePage() {
           border-radius: 2px; animation: scrollBounce 1.8s ease-in-out infinite;
         }
 
+        /* Última seção: sem snap, sem overflow, rola livremente */
+        .fp-section-last {
+          scroll-snap-align: none !important;
+          scroll-snap-stop: normal !important;
+          height: auto !important;
+          min-height: 100vh;
+          overflow: visible !important;
+        }
+
         /* ── SOBRE ────────────────────────────────────────────── */
         .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; width: 100%; }
         .sobre-desc {
@@ -661,9 +670,9 @@ export default function HomePage() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════════════
-          SEÇÃO 6 — CONTATO
+          SEÇÃO 6 — CONTATO  (sem snap — rola livremente até o fim)
       ══════════════════════════════════════════════════════════════════════ */}
-      <section className="fp-section" style={{ zIndex: 2, background: 'rgba(10,10,18,0.55)' }}>
+      <section className="fp-section fp-section-last" style={{ zIndex: 2, background: 'rgba(10,10,18,0.55)' }}>
         <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 24px', position: 'relative', zIndex: 3, width: '100%' }}>
           <div className="contato-grid">
 
